@@ -2,5 +2,4 @@ env
 .env
 **/__pycache__
 **/*.DS_Store
-app/logs/files
-testing
+app/data/profs_job

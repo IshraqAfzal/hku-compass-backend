@@ -1,48 +1,49 @@
 professors_schema = {
   "title": "professors",
-  "bsonType": "object",
   "properties": {
-    "title": {
+    "PROF_ID": {
+      "bsonType": "objectId"
+    },
+    "FULLNAME": {
       "bsonType": "string"
     },
-    "firstname": {
+    "EMAIL": {
       "bsonType": "string"
     },
-    "lastname": {
+    "PROFILE_LINK": {
       "bsonType": "string"
     },
-    "faculty": {
+    "FACULTY": {
       "bsonType": "string"
     },
-    "department": {
+    "DEPARTMENT": {
       "bsonType": "string"
     },
-    "email": {
-      "bsonType": "string"
+    "ENGAGEMENT": {
+      "bsonType": "int"
     },
-    "courses": {
+    "CLARITY": {
+      "bsonType": "int"
+    },
+    "COURSES": {
       "bsonType": "array",
       "items": {
         "bsonType": "string"
       }
     },
-    "reviews": {
+    "COURSE_HISTORY": {
       "bsonType": "array",
       "items": {
-        "bsonType": "objectId"
+        "bsonType": "string"
       }
-    },
-    "profileLink": {
-      "bsonType": "string"
     }
   },
   "required": [
-    "firstname",
-    "lastname",
-    "faculty",
-    "department",
-    "email",
-    "profileLink"
+    "PROF_ID",
+    "FULLNAME",
+    "EMAIL",
+    "PROFILE_LINK",
+    "FACULTY"
   ]
 }
 professors_validator = {

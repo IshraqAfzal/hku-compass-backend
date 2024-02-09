@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "dev" : "cd app && uvicorn main:app --reload",
-    "verify-chromedriver" : "cd app/data/drivers && xattr -d com.apple.quarantine chromedriver"
+    "dev" : "cd app && uvicorn main:app --reload"
   }
 }

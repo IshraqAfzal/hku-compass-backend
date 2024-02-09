@@ -1,75 +1,87 @@
 courses_schema = {
   "properties": {
-    "code": {
+    "COURSE_ID": {
+      "bsonType": "objectId"
+    },
+    "STRM": {
       "bsonType": "string"
     },
-    "career": {
+    "COURSE_CODE": {
       "bsonType": "string"
     },
-    "title": {
+    "COURSE_TITLE": {
       "bsonType": "string"
     },
-    "department": {
-      "bsonType": "string"
-    },
-    "faculty": {
-      "bsonType": "string"
-    },
-    "description": {
-      "bsonType": "string"
-    },
-    "credit": {
+    "CREDITS": {
       "bsonType": "int"
     },
-    "subclasses": {
+    "SUBJECT_AREA": {
+      "bsonType": "string"
+    },
+    "CATALOG_NUMBER": {
+      "bsonType": "string"
+    },
+    "ACAD_GROUP": {
+      "bsonType": "string"
+    },
+    "FACULTY": {
+      "bsonType": "string"
+    },
+    "INSTRUCTORS": {
+      "bsonType": "array",
+      "items": {
+        "bsonType": "objectId"
+      }
+    },
+    "INSTRUCTORS_PLACEHOLDER": {
+      "bsonType": "string",
+    },
+    "ENROLLMENT_REQUIREMENTS": {
+      "bsonType": [ "null", "string" ]
+    },
+    "ENROLLMENT_REQ_COURSES": {
+      "bsonType": "array",
+      "items": {
+        "bsonType": "string"
+      }
+    },
+    "COURSE_DESCRIPTION": {
+      "bsonType": "string"
+    },"USEFULNESS": {
+      "bsonType": "int"
+    },
+    "WORKLOAD": {
+      "bsonType": "int"
+    },
+    "GRADING": {
+      "bsonType": "int"
+    },
+    "DIFFICULTY": {
+      "bsonType": "int"
+    },
+    "TNL": {
       "bsonType": "array",
       "items": {
         "bsonType": "object",
         "properties": {
-          "code": {
+          "DETAIL": {
             "bsonType": "string"
           },
-          "sem": {
-            "bsonType": "int"
+          "SHARE": {
+            "bsonType": "double"
           },
-          "profId": {
-            "bsonType": "objectId"
-          },
-          "timeslots": {
-            "bsonType": "array",
-            "items": {
-              "bsonType": "object",
-              "properties": {
-                "day": {
-                  "bsonType": "string"
-                },
-                "startTime": {
-                  "bsonType": "string"
-                },
-                "endTime": {
-                  "bsonType": "string"
-                }
-              }
-            }
+          "PERCENTAGE": {
+            "bsonType": "double"
           }
         }
-      }
-    },
-    "profIds": {
-      "bsonType": "array",
-      "items": {
-        "bsonType": "objectId"
-      }
-    },
-    "reviews": {
-      "bsonType": "array",
-      "items": {
-        "bsonType": "objectId"
       }
     }
   },
   "required": [
-    "code"
+    "COURSE_ID",
+    "STRM",
+    "COURSE_CODE",
+    "COURSE_TITLE"
   ]
 }
 courses_validator = {
