@@ -1,0 +1,5 @@
+env
+.env
+**/__pycache__
+**/*.DS_Store
+app/data/profs_job
