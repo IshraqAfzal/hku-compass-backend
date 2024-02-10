@@ -1,56 +1,55 @@
-# This file is a template, and might need editing before it works on your project.
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/ee/development/cicd/templates.html
-# This specific template is located at:
-# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Python.gitlab-ci.yml
+image:
+  name: hashicorp/terraform:1.2.3
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
-# Official language image. Look for the different tagged releases at:
-# https://hub.docker.com/r/library/python/tags/
-image: python:latest
-
-# Change pip's cache directory to be inside the project directory since we can
-# only cache local items.
 variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  GITLAB_TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state
 
-# https://pip.pypa.io/en/stable/topics/caching/
-cache:
-  paths:
-    - .cache/pip
+stages:
+  - Build and Push API
+  - Terraform Apply
+  - Terraform Destroy
 
-before_script:
-  - python --version ; pip --version  # For debugging
-  - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
-
-test:
+Build and Push API:
+  image: docker:19.03.5
+  services:
+    - docker:19.03.5-dind
+  stage: Build and Push API
   script:
-    - pip install ruff tox  # you can also use tox
-    - pip install --editable ".[test]"
-    - tox -e py,ruff
-
-run:
-  script:
-    - pip install .
-    # run the command here
-  artifacts:
-    paths:
-      - build/*
-
-pages:
-  script:
-    - pip install sphinx sphinx-rtd-theme
-    - cd doc
-    - make html
-    - mv build/html/ ../public/
-  artifacts:
-    paths:
-      - public
+    - apk add python3
+    - pip3 install awscli
+    - cd app
+    - docker build --compress -t $ECR_REPO_API:$CI_COMMIT_SHORT_SHA .
+    - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+    - docker push $ECR_REPO_API:$CI_COMMIT_SHORT_SHA
+    - docker tag $ECR_REPO_API:$CI_COMMIT_SHORT_SHA $ECR_REPO_API:latest
+    - docker push $ECR_REPO_API:latest
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
 
-deploy:
-  stage: deploy
-  script: echo "Define your deployment script!"
-  environment: production
+Terraform Apply:
+  stage: Terraform Apply
+  script:
+    - cd tf/dev/
+    - export TF_VAR_ecr_repo_api=${ECR_REPO_API}
+    - export TF_VAR_ecr_repo_proxy=${ECR_REPO_PROXY}
+    - export TF_VAR_image_tag=${CI_COMMIT_SHORT_SHA}
+    - terraform init -backend-config="address=${GITLAB_TF_ADDRESS}/dev" -backend-config="lock_address=${GITLAB_TF_ADDRESS}/dev/lock" -backend-config="unlock_address=${GITLAB_TF_ADDRESS}/dev/lock" -backend-config="username=sabaork" -backend-config="password=${GITLAB_TF_PASSWORD}" -backend-config="lock_method=POST" -backend-config="unlock_method=DELETE" -backend-config="retry_wait_min=5"
+    - terraform apply -auto-approve
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+Terraform Destroy:
+  stage: Terraform Destroy
+  script:
+    - cd tf/dev/
+    - export TF_VAR_ecr_repo_api=${ECR_REPO_API}
+    - export TF_VAR_ecr_repo_proxy=${ECR_REPO_PROXY}
+    - export TF_VAR_image_tag=${CI_COMMIT_SHORT_SHA}
+    - terraform init -backend-config="address=${GITLAB_TF_ADDRESS}/dev" -backend-config="lock_address=${GITLAB_TF_ADDRESS}/dev/lock" -backend-config="unlock_address=${GITLAB_TF_ADDRESS}/dev/lock" -backend-config="username=sabaork" -backend-config="password=${GITLAB_TF_PASSWORD}" -backend-config="lock_method=POST" -backend-config="unlock_method=DELETE" -backend-config="retry_wait_min=5"
+    - terraform destroy -auto-approve
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: manual
