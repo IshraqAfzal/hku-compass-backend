@@ -20,7 +20,7 @@ Build and Push API:
   script:
     - apk add python3
     - pip3 install awscli
-    # - cd app
+    - cd app
     - docker build --compress -t $ECR_REPO_API:$CI_COMMIT_SHORT_SHA .
     - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
     - docker push $ECR_REPO_API:$CI_COMMIT_SHORT_SHA
