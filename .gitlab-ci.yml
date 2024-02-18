@@ -1,55 +1,15 @@
-image:
-  name: hashicorp/terraform:1.2.3
-  entrypoint:
-    - '/usr/bin/env'
-    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+stages:
+  - build
+  - test
+  - review
+  - dast
+  - deploy
+  - production
+  - cleanup
 
 variables:
-  GITLAB_TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state
+  AUTO_DEVOPS_PLATFORM_TARGET: ECS
 
-stages:
-  - Build and Push API
-  - Terraform Apply
-  - Terraform Destroy
-
-Build and Push API:
-  image: docker:19.03.5
-  services:
-    - docker:19.03.5-dind
-  stage: Build and Push API
-  script:
-    - apk add python3
-    - pip3 install awscli
-    - cd app
-    - docker build --compress -t $ECR_REPO_API:$CI_COMMIT_SHORT_SHA .
-    - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
-    - docker push $ECR_REPO_API:$CI_COMMIT_SHORT_SHA
-    - docker tag $ECR_REPO_API:$CI_COMMIT_SHORT_SHA $ECR_REPO_API:latest
-    - docker push $ECR_REPO_API:latest
-  rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
-
-Terraform Apply:
-  stage: Terraform Apply
-  script:
-    - cd tf/dev/
-    - export TF_VAR_ecr_repo_api=${ECR_REPO_API}
-    - export TF_VAR_ecr_repo_proxy=${ECR_REPO_PROXY}
-    - export TF_VAR_image_tag=${CI_COMMIT_SHORT_SHA}
-    - terraform init -backend-config="address=${GITLAB_TF_ADDRESS}/dev" -backend-config="lock_address=${GITLAB_TF_ADDRESS}/dev/lock" -backend-config="unlock_address=${GITLAB_TF_ADDRESS}/dev/lock" -backend-config="username=sabaork" -backend-config="password=${GITLAB_TF_PASSWORD}" -backend-config="lock_method=POST" -backend-config="unlock_method=DELETE" -backend-config="retry_wait_min=5"
-    - terraform apply -auto-approve
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-
-Terraform Destroy:
-  stage: Terraform Destroy
-  script:
-    - cd tf/dev/
-    - export TF_VAR_ecr_repo_api=${ECR_REPO_API}
-    - export TF_VAR_ecr_repo_proxy=${ECR_REPO_PROXY}
-    - export TF_VAR_image_tag=${CI_COMMIT_SHORT_SHA}
-    - terraform init -backend-config="address=${GITLAB_TF_ADDRESS}/dev" -backend-config="lock_address=${GITLAB_TF_ADDRESS}/dev/lock" -backend-config="unlock_address=${GITLAB_TF_ADDRESS}/dev/lock" -backend-config="username=sabaork" -backend-config="password=${GITLAB_TF_PASSWORD}" -backend-config="lock_method=POST" -backend-config="unlock_method=DELETE" -backend-config="retry_wait_min=5"
-    - terraform destroy -auto-approve
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: manual
+include:
+  - template: Jobs/Build.gitlab-ci.yml
+  - template: Jobs/Deploy/ECS.gitlab-ci.yml
