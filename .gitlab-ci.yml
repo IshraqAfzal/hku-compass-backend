@@ -1,15 +1,2 @@
-stages:
-  - build
-  - test
-  - review
-  - dast
-  - deploy
-  - production
-  - cleanup
-
-variables:
-  AUTO_DEVOPS_PLATFORM_TARGET: ECS
-
 include:
-  - template: Jobs/Build.gitlab-ci.yml
-  - template: Jobs/Deploy/ECS.gitlab-ci.yml
+  - template: AWS/Deploy-ECS.gitlab-ci.yml
