@@ -10,10 +10,7 @@ from .schemas.enrollments import enrollments_validator
 from .schemas.sftl import sftl_validator
 from .schemas.subclasses import subclasses_validator
 from .schemas.users import users_validator
-
-import ultraimport
-logs = ultraimport('__dir__/../logs/logger.py')
-logger = logs.get_logger()
+from logs.logger import logger
 
 class MongoDBClient:
   def __init__(self, name = str(uuid.uuid1)):

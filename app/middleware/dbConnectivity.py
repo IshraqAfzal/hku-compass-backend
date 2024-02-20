@@ -1,11 +1,6 @@
 from starlette.middleware.base import BaseHTTPMiddleware
-import ultraimport
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-
-logs = ultraimport('__dir__/../logs/logger.py')
-logger = logs.get_logger()
-
 class DBMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
         response = JSONResponse(
