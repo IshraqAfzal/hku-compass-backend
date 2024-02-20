@@ -1,5 +1,2 @@
 include:
   - template: AWS/Deploy-ECS.gitlab-ci.yml
-
-before_script:
-  - sudo apt-get install git
