@@ -1,2 +1,5 @@
 include:
   - template: AWS/Deploy-ECS.gitlab-ci.yml
+
+before_script:
+  - apk add --update --no-cache git
