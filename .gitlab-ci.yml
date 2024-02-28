@@ -1,8 +1,0 @@
-include:
-  - template: Auto-DevOps.gitlab-ci.yml
-
-variables:
-  AUTO_DEVOPS_PLATFORM_TARGET: EC2
-
-test:
-    stage: test
