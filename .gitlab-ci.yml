@@ -1,7 +1,11 @@
-stages:          # List of stages for jobs, and their order of execution
+stages:
   - build
   - test
   - deploy
+
+variables:
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
 
 build-containerized-image:
     image: docker:20.10.16
@@ -12,8 +16,8 @@ build-containerized-image:
       - echo "Building containerized docker image."
       - docker info
       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-      - docker build -t $CI_REGISTRY/group/project/image:latest .
-      - docker push $CI_REGISTRY/group/project/image:latest
+      - docker build --pull -t $CONTAINER_TEST_IMAGE .
+      - docker push $CONTAINER_TEST_IMAGE
       # - docker run my-docker-image /script/to/run/tests
 
     
