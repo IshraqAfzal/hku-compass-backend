@@ -1,19 +1,20 @@
-default:
-  image: docker:24.0.5
-  services:
-    - docker:24.0.5-dind
-  before_script:
-    - docker info
-
 stages:          # List of stages for jobs, and their order of execution
   - build
   - test
   - deploy
 
 build-containerized-image:
+    image: docker:20.10.16
     stage: build
+    services:
+      - docker:20.10.16-dind
     script:
-        - echo "Building containerized docker image."
+      - echo "Building containerized docker image."
+      - docker info
+      - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+      - docker build -t $CI_REGISTRY/group/project/image:latest .
+      - docker push $CI_REGISTRY/group/project/image:latest
+      # - docker run my-docker-image /script/to/run/tests
 
     
 
