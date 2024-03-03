@@ -2,14 +2,14 @@ from dotenv import load_dotenv
 from pathlib import Path
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from middleware.catchExceptions import ExceptionsMiddleware
-from middleware.requestLogging import ReqLogMiddleware
-from logs.logger import get_logger
-from middleware.dbConnectivity import DBMiddleware
-from db.client import MongoDBClient
-from routes import test
-from data import router as dataRouter
-from data.data_collection_job import DataJob
+from .middleware.catchExceptions import ExceptionsMiddleware
+from .middleware.requestLogging import ReqLogMiddleware
+from .logs.logger import get_logger
+from .middleware.dbConnectivity import DBMiddleware
+from .db.client import MongoDBClient
+from .routes import test
+from .data import router as dataRouter
+from .data.data_collection_job import DataJob
 
 dotenv_path = Path('.env')
 load_dotenv(dotenv_path=dotenv_path)

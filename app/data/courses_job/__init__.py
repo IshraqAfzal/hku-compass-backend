@@ -2,9 +2,9 @@ import random
 import requests
 from fastapi import APIRouter
 from pymongo import UpdateOne
-from utils.data.create_driver import create_driver
-from utils.data.strm import calculate_strm
-from constants.data import acad_groups
+from ...utils.data.create_driver import create_driver
+from ...utils.data.strm import calculate_strm
+from ...constants.data import acad_groups
 from .token import get_bearer_token
 from .parser import parse_json
 

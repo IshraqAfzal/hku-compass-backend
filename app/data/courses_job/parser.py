@@ -1,5 +1,5 @@
 import re
-from utils.data.create_objectid import create_objectid
+from ...utils.data.create_objectid import create_objectid
 
 def parse_json(data, logger):
   courses_obj = {}

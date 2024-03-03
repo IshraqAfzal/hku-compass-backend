@@ -22,12 +22,13 @@ class DataJob:
     # For testing purposes
     # asyncio.run(general_courses_job(self.logger, self.db))
 
-  def __del__(self):
-    self.stop()
+  # def __del__(self):
+    # self.stop()
 
-  def stop(self):
-    self.logger.info("Stopping all jobs")
-    self.scheduler.shutdown()
-    loop = asyncio.get_running_loop()
-    loop.stop()
-    loop.close()
+  # def stop(self):
+    # self.logger.info("Stopping all jobs")
+    # self.scheduler.shutdown()
+    # loop = asyncio.get_running_loop()
+    # loop.stop()
+    # loop.close()
+    # x = 0

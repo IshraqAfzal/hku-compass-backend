@@ -10,12 +10,14 @@ from .schemas.enrollments import enrollments_validator
 from .schemas.sftl import sftl_validator
 from .schemas.subclasses import subclasses_validator
 from .schemas.users import users_validator
-from logs.logger import logger
+from ..logs.logger import logger
+# from logs.logger import logger
 
 class MongoDBClient:
   def __init__(self, name = str(uuid.uuid1)):
     self.name = name
     self.uri = os.getenv("MONGODB_URI")
+    print(self.uri)
     self.client = MongoClient(self.uri, server_api=ServerApi('1'))
     self.connection_status = False
     self.db = os.getenv("DB")
