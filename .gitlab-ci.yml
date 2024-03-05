@@ -7,6 +7,7 @@ before_script:
   # - echo "MONGODB_URI=$MONGODB_URI" >> ".env"
   # - echo "DB=$DB" >> ".env"
   - echo "$ENV" > ".env"
+  - chmod +r .env
   - cat '.env'
 
 include:

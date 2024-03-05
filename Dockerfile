@@ -4,6 +4,8 @@ ENV PIP_ROOT_USER_ACTION=ignore
 
 WORKDIR /build
 
+COPY .env /build/.env
+
 COPY ./requirements.txt /build/requirements.txt
 
 RUN pip install --upgrade pip
