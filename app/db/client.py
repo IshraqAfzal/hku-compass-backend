@@ -20,6 +20,7 @@ class MongoDBClient:
     self.client = MongoClient(self.uri, server_api=ServerApi('1'))
     self.connection_status = False
     self.db = str(os.getenv("DB"))
+    logger.info("Database client " + self.name + ": URI being used is " + str(self.uri))
     logger.info("Database client " + self.name + ": Database being used is " + str(self.db))
     self.connect()
     self.add_schemas()
