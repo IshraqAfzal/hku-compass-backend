@@ -1,5 +1,5 @@
 before_script:
-  - ecoh "" > "".env"
+  - echo "" > ".env"
   - echo "HKU_USERNAME=$HKU_USERNAME" >> ".env"
   - echo "HKU_PASSWORD=$HKU_PASSWORD" >> ".env"
   - echo "MONGODB_USERNAME=$MONGODB_USERNAME" >> ".env"
