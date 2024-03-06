@@ -23,7 +23,6 @@ class MongoDBClient:
     logger.info("Database client " + self.name + ": URI being used is " + str(self.uri))
     logger.info("Database client " + self.name + ": Database being used is " + str(self.db))
     self.connect()
-    self.add_schemas()
 
   def __del__(self):
     self.close()
@@ -33,6 +32,7 @@ class MongoDBClient:
       self.client.admin.command('ping')
       logger.info("Database client " + self.name + ": Pinged the deployment. Successfully connected to MongoDB.")
       self.connection_status = True
+      self.add_schemas()
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in connecting to MongoDB. Error: " + str(e))
       self.connection_status = False
