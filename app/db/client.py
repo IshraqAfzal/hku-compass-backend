@@ -17,6 +17,7 @@ class MongoDBClient:
   def __init__(self, name = str(uuid.uuid1)):
     self.name = name
     self.uri = str(os.getenv("MONGODB_URI"))
+    logger.info(self.uri)
     self.client = MongoClient(self.uri, server_api=ServerApi('1'))
     self.connection_status = False
     self.db = str(os.getenv("DB"))
