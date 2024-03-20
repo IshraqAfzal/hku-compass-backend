@@ -20,7 +20,7 @@ def get_bearer_token(driver, logger):
     )
     time.sleep(2)
     email_input = driver.find_element(By.TAG_NAME, 'input')
-    email_input.send_keys(os.getenv("HKU_USERNAME"))
+    email_input.send_keys(os.getenv("HKU_USERNAME")+"@connect.hku.hk")
     email_input.send_keys(Keys.RETURN)
     time.sleep(2)
     WebDriverWait(driver, 10).until(

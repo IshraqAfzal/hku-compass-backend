@@ -10,25 +10,10 @@ class DataJob:
     self.setup()
 
   def setup(self):
-    # asyncio.get_event_loop().run_forever()
     self.logger.info("Setting up jobs")
-    self.scheduler.add_job(general_courses_job, 'cron', month='8-9', hour='7,19', minute='0', args=(self.logger, self.db))
+    # self.scheduler.add_job(general_courses_job, 'cron', month='8-9', hour='7,19', minute='0', args=(self.logger, self.db))
     # self.scheduler.add_job(my_weekly_job, 'cron', month='8-9', day_of_week=0, hour=12, args=('value1', 'value2'))
-    return
 
   def run(self):
     self.logger.info("Running jobs")
-    self.scheduler.start()
-    # For testing purposes
-    # asyncio.run(general_courses_job(self.logger, self.db))
-
-  # def __del__(self):
-    # self.stop()
-
-  # def stop(self):
-    # self.logger.info("Stopping all jobs")
-    # self.scheduler.shutdown()
-    # loop = asyncio.get_running_loop()
-    # loop.stop()
-    # loop.close()
-    # x = 0
+    # self.scheduler.start()

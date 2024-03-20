@@ -23,11 +23,11 @@ async def lifespan(app: FastAPI):
     app.state.logger.info("Creating Server Context.")
     app.state.db = server_db_instance
     app.state.logger.info("Created Server Context sucessfully.")
-    # data_collection_job.run()
+    data_collection_job.run()
     yield
     app.state.db.close()
+    data_collection_job.stop()
     app.state.logger.info("Server stopped successfully.")
-    # data_collection_job.stop()
 
 app = FastAPI(lifespan=lifespan)
 
