@@ -30,7 +30,7 @@ subclasses_schema = {
             "bsonType": "string"
           },
           "VENUE": {
-            "bsonType": "string"
+            "bsonType": ["string", "null"]
           },
           "START_TIME": {
             "bsonType": "string"

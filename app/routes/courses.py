@@ -18,11 +18,12 @@ async def getJustAllCoursesTest(request: Request):
 
 @router.get("/getJustAllCourseSubclasses")
 async def getJustAllCoursesTest(request: Request, course_id = Query(0)):
-  data = request.app.state.db.find('subclassses', {"COURSE_ID" : course_id})
+  data = request.app.state.db.find('subclasses', {"COURSE_ID" : create_objectid(course_id)})
   return {'data' : data}
 
 @router.get("/getJustAllCourseSubclassesTest")
 async def getJustAllCoursesTest(request: Request):
-  data = request.app.state.db.find('subclassses', {"COURSE_ID" : create_objectid('038434')})
+  print(create_objectid('031406'))
+  data = request.app.state.db.find('subclasses', {"COURSE_ID" : create_objectid('031406')})
   return {'data' : data}
 

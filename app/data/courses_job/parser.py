@@ -55,7 +55,8 @@ def parse_json(data, logger):
       subclasses_obj[sub_id]['TIMINGS'].append({
         'DAY': datum['day_str'],
         'START_TIME': datum['stime'],
-        'END_TIME': datum['etime']
+        'END_TIME': datum['etime'],
+        'VENUE': datum['descr'],
       })
   except Exception as ex:
     logger.error(ex)
