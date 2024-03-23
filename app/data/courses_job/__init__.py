@@ -18,7 +18,7 @@ last_subclasses = []
 last_sftl = []
 last_enrollments = []
 
-def general_courses_job(logger, db):
+async def general_courses_job(logger, db):
   token = None
   last_courses = []
   last_subclasses = []
@@ -73,19 +73,21 @@ def general_courses_job(logger, db):
       ]
 
       logger.info("Bulk writing beginning")
-      db.bulk_write('courses', courses_update_operations)
-      db.bulk_write('subclasses', subclasses_update_operations)
-      db.bulk_write('sftl', sftl_update_operations)
-      db.bulk_write('enrollments', enrollments_update_operations)
+      db.bulk_write('courses', courses_update_operations) if len(courses_update_operations) > 0 else None
+      db.bulk_write('subclasses', subclasses_update_operations) if len(subclasses_update_operations) > 0 else None
+      db.bulk_write('sftl', sftl_update_operations) if len(sftl_update_operations) > 0 else None
+      db.bulk_write('enrollments', enrollments_update_operations) if len(enrollments_update_operations) > 0 else None
       logger.info("Bulk writing done")
       
-      last_courses += random.sample(courses, 5)
-      last_subclasses += random.sample(subclasses, 5)
-      last_sftl += random.sample(sftl, 5)
-      last_enrollments += random.sample(enrollments, 5)
-
+      last_courses += random.sample(courses, 5) if len(courses) > 5 else courses
+      last_subclasses += random.sample(subclasses, 5) if len(subclasses) > 5 else subclasses
+      last_sftl += random.sample(sftl, 5) if len(sftl) > 5 else sftl
+      last_enrollments += random.sample(enrollments, 5) if len(enrollments) > 5 else enrollments
+    logger.info("Courses job finished.")
+    return True
   except Exception as ex:
     logger.error(ex)
+    return False
 
 def get_response(logger, acad_group, bearer_token):
   token = get_bearer_token(create_driver(), logger) if bearer_token is None else bearer_token

@@ -3,6 +3,9 @@ courses_schema = {
     "COURSE_ID": {
       "bsonType": "objectId"
     },
+    "CRSE_ID": {
+      "bsonType": "string"
+    },
     "STRM": {
       "bsonType": "string"
     },
@@ -47,17 +50,21 @@ courses_schema = {
     },
     "COURSE_DESCRIPTION": {
       "bsonType": "string"
-    },"USEFULNESS": {
-      "bsonType": "int"
+    },
+    "RATING": {
+      "bsonType": "double"
+    },
+    "USEFULNESS": {
+      "bsonType": "double"
     },
     "WORKLOAD": {
-      "bsonType": "int"
+      "bsonType": "double"
     },
     "GRADING": {
-      "bsonType": "int"
+      "bsonType": "double"
     },
     "DIFFICULTY": {
-      "bsonType": "int"
+      "bsonType": "double"
     },
     "TNL": {
       "bsonType": "array",

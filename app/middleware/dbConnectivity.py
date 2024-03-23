@@ -11,8 +11,10 @@ class DBMiddleware(BaseHTTPMiddleware):
         if (request.app.state.db.connection_status):
             response = await call_next(request)
         else:
+            request.app.state.db.connect()
+            if (request.app.state.db.connection_status):
+                response = await call_next(request)
             request.app.state.logger.info(
                 "DB Middleware: Database is not connected.",
             )
-            request.app.state.db.connect()
         return response

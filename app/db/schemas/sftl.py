@@ -9,6 +9,9 @@ sftl_schema = {
     "YEAR": {
       "bsonType": "string"
     },
+    "SEM": {
+      "bsonType": "string"
+    },
     "ENROLLMENT": {
       "bsonType": "int"
     },

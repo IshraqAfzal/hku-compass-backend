@@ -10,9 +10,27 @@ users_schema = {
       "bsonType": "string"
     },
     "DEPARTMENT": {
+      "bsonType": ['null', "string"]
+    },
+    "FACULTY": {
       "bsonType": "string"
     },
-    "COURSES_COMPLETED": {
+    "MAJORS": {
+      "bsonType": "array",
+      "items": {
+        "bsonType": "string"
+      }
+    },
+    "MINORS": {
+      "bsonType": "array",
+      "items": {
+        "bsonType": "string"
+      }
+    },
+    "DEGREE": {
+      "bsonType": "string"
+    }, 
+    "COURSE_HISTORY": {
       "bsonType": "array",
       "items": {
         "bsonType": "string"

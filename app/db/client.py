@@ -11,17 +11,16 @@ from .schemas.sftl import sftl_validator
 from .schemas.subclasses import subclasses_validator
 from .schemas.users import users_validator
 from ..logs.logger import logger
-# from logs.logger import logger
+from bson.json_util import dumps
+import json
 
 class MongoDBClient:
   def __init__(self, name = str(uuid.uuid1)):
     self.name = name
     self.uri = str(os.getenv("MONGODB_URI"))
-    logger.info(self.uri)
     self.client = MongoClient(self.uri, server_api=ServerApi('1'))
     self.connection_status = False
     self.db = str(os.getenv("DB"))
-    logger.info("Database client " + self.name + ": URI being used is " + str(self.uri))
     logger.info("Database client " + self.name + ": Database being used is " + str(self.db))
     self.connect()
 
@@ -30,10 +29,11 @@ class MongoDBClient:
 
   def connect(self):
     try:
-      self.client.admin.command('ping')
-      logger.info("Database client " + self.name + ": Pinged the deployment. Successfully connected to MongoDB.")
-      self.connection_status = True
-      self.add_schemas()
+      if not self.connection_status:
+        self.client.admin.command('ping')
+        logger.info("Database client " + self.name + ": Pinged the deployment. Successfully connected to MongoDB.")
+        self.connection_status = True
+        self.add_schemas()
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in connecting to MongoDB. Error: " + str(e))
       self.connection_status = False
@@ -44,10 +44,8 @@ class MongoDBClient:
 
   def add_schemas(self):
     db = self.client[self.db]
-
     collection_names = ['course_reviews', 'courses', 'enrollments', 'prof_reviews', 'professors', 'sftl', 'subclasses', 'users']
     collection_validators = [course_reviews_validator, courses_validator, enrollments_validator, prof_reviews_validator, professors_validator, sftl_validator, subclasses_validator, users_validator]
-    
     for i, name in enumerate(collection_names):
       try:
         res = db.command("collMod", name, validator = collection_validators[i])
@@ -61,12 +59,42 @@ class MongoDBClient:
     try:
       col = db[collection]
     except Exception as e:
-      logger.error("Database client " + self.name + ": Could not find collection " + collection + " in Database: " + os.getenv('DB') + ". Error: " + str(e))
+      logger.error("Database client " + self.name + ": Could not find collection " + collection + ". Error: " + str(e))
       return False
     try:
       col.bulk_write(array_of_operations)
       logger.info("Database client " + self.name + ": Bulk writing to collection: " + collection + " completed successfully.")
       return True
     except Exception as e:
-      logger.error("Database client " + self.name + ": Error while bulk writing to collection: " + collection + " in Database: " + os.getenv('DB') + ". Error: " + str(e))
+      logger.error("Database client " + self.name + ": Error while bulk writing to collection: " + collection + ". Error: " + str(e))
       return False
+  
+  def find_all(self, collection):
+    db = self.client[self.db]
+    try:
+      col = db[collection]
+    except Exception as e:
+      logger.error("Database client " + self.name + ": Could not find collection: " + collection + ". Error: " + str(e))
+      return []
+    try:
+      res = col.find({})
+      data = json.loads(dumps(res))
+      return data
+    except Exception as e:
+      logger.error("Database client " + self.name + ": Error in operation finding all objects from collection: " + collection + ". Error: " + str(e))
+      return []
+  
+  def find(self, collection, obj_of_filters):
+    db = self.client[self.db]
+    try:
+      col = db[collection]
+    except Exception as e:
+      logger.error("Database client " + self.name + ": Could not find collection: " + collection + ". Error: " + str(e))
+      return []
+    try:
+      res = col.find(obj_of_filters)
+      data = json.loads(dumps(res))
+      return data
+    except Exception as e:
+      logger.error("Database client " + self.name + ": Error in operation finding all objects from collection: " + collection + ". Error: " + str(e))
+      return []

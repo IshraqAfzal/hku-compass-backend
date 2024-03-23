@@ -1,5 +1,7 @@
 TODO:
 
+cahnge strm to year and sem
+
 dashboard for cron jobs
 translation for comments in other languages
 disclaimers

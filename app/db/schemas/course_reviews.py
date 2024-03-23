@@ -6,33 +6,48 @@ course_reviews_schema = {
     "USER_ID": {
       "bsonType": "objectId"
     },
-    "PROF_ID": {
-      "bsonType": "objectId"
-    },
-    "SUBCLASS_CODE": {
-      "bsonType": "string"
+    "PROF_IDS": {
+      "bsonType": "array",
+      "items": {
+        "bsonType": "objectId"
+      }
     },
     "COMMENT": {
       "bsonType": "string"
     },
-    "USEFULNESS": {
+    "RATING": {
       "bsonType": "int"
+    },
+    "USEFULNESS": {
+      "bsonType": "double"
     },
     "WORKLOAD": {
-      "bsonType": "int"
+      "bsonType": "double"
     },
     "GRADING": {
-      "bsonType": "int"
+      "bsonType": "double"
     },
     "DIFFICULTY": {
-      "bsonType": "int"
+      "bsonType": "double"
     },
     "DATETIME": {
       "bsonType": "date"
     },
-    "VALIDATED": {
+    "IS_VERIFIED": {
       "bsonType": "bool"
-    }
+    },
+    "YEAR": {
+      "bsonType": "string"
+    },
+    "SEM": {
+      "bsonType": "string"
+    },
+    "HELPFUL": {
+      "bsonType": "int"
+    },
+    "NOT_HELPFUL": {
+      "bsonType": "int"
+    },
   },
   "required": [
     "COURSE_ID",

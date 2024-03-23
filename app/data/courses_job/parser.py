@@ -1,5 +1,6 @@
 import re
 from ...utils.data.create_objectid import create_objectid
+from ...utils.data.strm import decode_strm
 
 def parse_json(data, logger):
   courses_obj = {}
@@ -15,6 +16,7 @@ def parse_json(data, logger):
       if course_id not in courses_obj:
         courses_obj[course_id] = {}
         courses_obj[course_id]['COURSE_ID'] = create_objectid(course_id)
+        courses_obj[course_id]['CRSE_ID'] = str(course_id)
         courses_obj[course_id]['TNL'] = []
       courses_obj[course_id]['STRM'] = datum['STRM']
       courses_obj[course_id]['COURSE_CODE'] = datum['SUBJECT_AREA'] + datum['CATALOG_NBR']
@@ -65,6 +67,8 @@ def parse_json(data, logger):
           "COURSE_ID" : create_objectid(course_code),
           "YEAR" : s['acad_year'],
           "STRM" : s['strm'],
+          "YEAR" : decode_strm(s['strm'])[0],
+          "SEM" : decode_strm(s['strm'])[1],
           "ENROLLMENT" : s['enrollment'],
           "RESPONSE" : s['response'],
           "RESPONSE_RATE" : s['response_rate'],

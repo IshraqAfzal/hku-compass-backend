@@ -16,17 +16,32 @@ prof_reviews_schema = {
       "bsonType": "string"
     },
     "ENGAGEMENT": {
-      "bsonType": "int"
+      "bsonType": "double"
     },
     "CLARITY": {
-      "bsonType": "int"
-    },
-    "VALIDATED": {
-      "bsonType": "bool"
+      "bsonType": "double"
     },
     "DATETIME": {
       "bsonType": "date"
-    }
+    },
+    "YEAR": {
+      "bsonType": "string"
+    },
+    "SEM": {
+      "bsonType": "string"
+    },
+    "IS_VERIFIED": {
+      "bsonType": "bool"
+    },
+    "RATING": {
+      "bsonType": "int"
+    },
+    "HELPFUL": {
+      "bsonType": "int"
+    },
+    "NOT_HELPFUL": {
+      "bsonType": "int"
+    },
   },
   "required": [
     "COURSE_ID",
