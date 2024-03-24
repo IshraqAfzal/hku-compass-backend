@@ -1,7 +1,7 @@
 from ..logs.logger import logger
 from transformers import BertTokenizer, BertModel, AutoModelForSequenceClassification, AutoTokenizer
 import nltk, ssl, spacy
-import relevance.relevanceModel as rm
+from .relevance import description_relevance, action_verbs_count, length as rm_length, roberta_polarity_scores
 
 class MLModels:
   def __init__(self):
@@ -34,7 +34,7 @@ class MLModels:
     self.setup_nlp()
 
   def relevance_score(self, description, text):
-    return rm.description_relevance(self.bert_base_uncased_model, self.bert_tokenizer, description, text) + rm.action_verbs_count(self.nlp, text) + rm.length(text) + rm.roberta_polarity_scores(self.roberta_model, self.roberta_tokenizer, text)
+    return description_relevance(self.bert_base_uncased_model, self.bert_tokenizer, description, text) + action_verbs_count(self.nlp, text) + rm_length(text) + roberta_polarity_scores(self.roberta_model, self.roberta_tokenizer, text)
 
   def sort_list_relevance(self, course_description, course_reviews):
     relevance_scores = {}    
@@ -48,7 +48,7 @@ class MLModels:
     return ret
 
   def sentiment_score(self, text):
-    return rm.roberta_polarity_scores(self.roberta_model, self.roberta_tokenizer, text)
+    return roberta_polarity_scores(self.roberta_model, self.roberta_tokenizer, text)
 
 
 
