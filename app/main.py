@@ -11,18 +11,21 @@ from .db.client import MongoDBClient
 from .routes import test, courses, docs, utils
 from .data import router as dataRouter
 from .data.data_collection_job import DataJob
+from .models.ml_models import MLModels
 
 dotenv_path = Path('.env')
 load_dotenv(dotenv_path=dotenv_path)
 logger = get_logger()
 server_db_instance = MongoDBClient(name='SERVER-DB')
 data_collection_job = DataJob(logger, server_db_instance)
+ml_models = MLModels()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     app.state.logger = logger
     app.state.logger.info("Creating Server Context.")
     app.state.db = server_db_instance
+    app.state.model = ml_models
     app.state.logger.info("Created Server Context sucessfully.")
     data_collection_job.run()
     yield
