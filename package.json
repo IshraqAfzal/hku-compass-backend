@@ -1,5 +1,5 @@
 {
   "scripts": {
-    "dev" : "cd app && uvicorn main:app --reload"
+    "dev" : "uvicorn app.main:app --reload"
   }
 }
