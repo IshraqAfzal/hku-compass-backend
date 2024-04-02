@@ -5,7 +5,7 @@ import time
 from .....utils.data.create_objectid import create_objectid
 
 def generate_random_number(x, y):
-  return random.randint(x, y)
+  return float(random.randint(x, y))
 
 def collect_prof_data(driver, logger):
   try:

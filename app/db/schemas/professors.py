@@ -20,10 +20,10 @@ professors_schema = {
       "bsonType": "string"
     },
     "ENGAGEMENT": {
-      "bsonType": "int"
+      "bsonType": "double"
     },
     "CLARITY": {
-      "bsonType": "int"
+      "bsonType": "double"
     },
     "COURSES": {
       "bsonType": "array",

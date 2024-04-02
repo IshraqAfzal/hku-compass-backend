@@ -3,7 +3,7 @@ from ...utils.data.create_objectid import create_objectid
 from ...utils.data.strm import decode_strm
 
 def generate_random_number(x, y):
-  return random.randint(x, y)
+  return float(random.randint(x, y))
 
 def parse_json(data, logger):
   courses_obj = {}
