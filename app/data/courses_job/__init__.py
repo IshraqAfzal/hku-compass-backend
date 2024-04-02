@@ -36,7 +36,7 @@ async def general_courses_job(logger, db):
         continue
       logger.info("Response Received")
       
-      courses, subclasses, sftl, enrollments = parse_json(res_json, logger)
+      courses, subclasses, sftl, enrollments, history = parse_json(res_json, logger)
       logger.info("JSON Parsed")
       
       courses_update_operations = [
@@ -63,6 +63,14 @@ async def general_courses_job(logger, db):
         )
         for obj in sftl
       ]
+      course_history_operations = [
+        UpdateOne(
+            {"STRM": obj["STRM"], "COURSE_CODE" : obj["COURSE_ID"]},
+            {"$set": obj},
+            upsert=True
+        )
+        for obj in history
+      ]
       enrollments_update_operations = [
         UpdateOne(
             {"SUBCLASS_ID": obj["SUBCLASS_ID"], "COURSE_ID" : obj["COURSE_ID"]},
@@ -77,6 +85,7 @@ async def general_courses_job(logger, db):
       db.bulk_write('subclasses', subclasses_update_operations) if len(subclasses_update_operations) > 0 else None
       db.bulk_write('sftl', sftl_update_operations) if len(sftl_update_operations) > 0 else None
       db.bulk_write('enrollments', enrollments_update_operations) if len(enrollments_update_operations) > 0 else None
+      db.bulk_write('course_history', course_history_operations) if len(course_history_operations) > 0 else None
       logger.info("Bulk writing done")
       
       last_courses += random.sample(courses, 5) if len(courses) > 5 else courses

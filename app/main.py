@@ -8,7 +8,7 @@ from .middleware.requestLogging import ReqLogMiddleware
 from .logs.logger import get_logger
 from .middleware.dbConnectivity import DBMiddleware
 from .db.client import MongoDBClient
-from .routes import test, courses, docs, utils
+from .routes import test, courses, docs, utils, mock
 from .data import router as dataRouter
 from .data.data_collection_job import DataJob
 from .models.ml_models import MLModels
@@ -51,3 +51,4 @@ app.include_router(test.router)
 app.include_router(courses.router) 
 app.include_router(docs.router) 
 app.include_router(utils.router) 
+app.include_router(mock.router) 

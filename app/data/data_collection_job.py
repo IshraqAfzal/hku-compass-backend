@@ -17,8 +17,5 @@ class DataJob:
     self.logger.info("Running jobs")
     self.scheduler.start()
 
-  def __del__(self):
-    self.scheduler.shutdown()
-
   def stop(self):
     self.scheduler.shutdown()

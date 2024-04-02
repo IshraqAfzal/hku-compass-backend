@@ -1,6 +1,9 @@
-import re
+import re, random
 from ...utils.data.create_objectid import create_objectid
 from ...utils.data.strm import decode_strm
+
+def generate_random_number(x, y):
+  return random.randint(x, y)
 
 def parse_json(data, logger):
   courses_obj = {}
@@ -9,17 +12,23 @@ def parse_json(data, logger):
   subclasses = []
   sftl = []
   enrollments = []
-  
+  history_obj = {}
+  history = []
   try:
     for datum in data['mainTable']:
       course_id = datum['CRSE_ID']
       if course_id not in courses_obj:
         courses_obj[course_id] = {}
+        history_obj[course_id] = {}
         courses_obj[course_id]['COURSE_ID'] = create_objectid(course_id)
+        history_obj[course_id]['COURSE_ID'] = create_objectid(course_id)
         courses_obj[course_id]['CRSE_ID'] = str(course_id)
+        history_obj[course_id]['CRSE_ID'] = str(course_id)
         courses_obj[course_id]['TNL'] = []
       courses_obj[course_id]['STRM'] = datum['STRM']
+      history_obj[course_id]['STRM'] = datum['STRM']
       courses_obj[course_id]['COURSE_CODE'] = datum['SUBJECT_AREA'] + datum['CATALOG_NBR']
+      history_obj[course_id]['COURSE_CODE'] = datum['SUBJECT_AREA'] + datum['CATALOG_NBR']
       courses_obj[course_id]['SUBJECT_AREA'] = datum['SUBJECT_AREA']
       courses_obj[course_id]['CATALOG_NUMBER'] = datum['CATALOG_NBR']
       courses_obj[course_id]['COURSE_TITLE'] = datum['COURSE_TITLE_LONG']
@@ -29,6 +38,11 @@ def parse_json(data, logger):
       courses_obj[course_id]['INSTRUCTORS_PLACEHOLDER'] = datum['INSTRUCTOR_DISP']
       courses_obj[course_id]['ENROLLMENT_REQUIREMENTS'] = datum['ENROLLMENT_REQUIREMENTS']
       courses_obj[course_id]['ENROLLMENT_REQ_COURSES'] = []
+      courses_obj[course_id]['RATING'] = generate_random_number(0,5)
+      courses_obj[course_id]['USEFULNESS'] = generate_random_number(0,5)
+      courses_obj[course_id]['GRADING'] = generate_random_number(0,5)
+      courses_obj[course_id]['WORKLOAD'] = generate_random_number(0,5)
+      courses_obj[course_id]['DIFFICULTY'] = generate_random_number(0,5)
       if datum['ENROLLMENT_REQUIREMENTS'] is not None:
         courses_obj[course_id]['ENROLLMENT_REQ_COURSES'] = re.compile(r'\b[A-Z]{4}\d{4}\b').findall(datum['ENROLLMENT_REQUIREMENTS'])
       courses_obj[course_id]['COURSE_DESCRIPTION'] = datum['COURSE_DESCRIPTION']
@@ -92,7 +106,10 @@ def parse_json(data, logger):
   for course in courses_obj:
     courses.append(courses_obj[course])
 
+  for his in history_obj:
+    history.append(history_obj[his])
+
   for sub in subclasses_obj:
     subclasses.append(subclasses_obj[sub])
 
-  return (courses, subclasses, sftl, enrollments)
+  return (courses, subclasses, sftl, enrollments, history)

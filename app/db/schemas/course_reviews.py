@@ -64,7 +64,7 @@ course_reviews_schema = {
   "required": [
     "COURSE_ID",
     "USER_ID",
-    "PROF_ID",
+    "PROF_IDS",
     "USEFULNESS",
     "WORKLOAD",
     "GRADING",

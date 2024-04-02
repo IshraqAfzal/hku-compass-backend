@@ -1,8 +1,11 @@
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
-import re
+import re, random
 import time
 from .....utils.data.create_objectid import create_objectid
+
+def generate_random_number(x, y):
+  return random.randint(x, y)
 
 def collect_prof_data(driver, logger):
   try:
@@ -46,4 +49,6 @@ def get_prof_info(driver, url):
   ret["FACULTY"] = "Engineering"
   ret["DEPARTMENT"] = "Computer Science"
   ret["PROF_ID"] = create_objectid(ret["EMAIL"].split("@")[0] + "_cs")
+  ret["ENGAGEMENT"] = generate_random_number(0,5)
+  ret["CLARITY"] = generate_random_number(0,5)
   return ret

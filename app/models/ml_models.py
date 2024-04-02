@@ -28,7 +28,7 @@ class MLModels:
     self.nlp = spacy.load("en_core_web_sm")
 
   def setup_models(self):
-    nltk.download('all')
+    # nltk.download('all')
     self.setup_bert_base_uncased()
     self.setup_roberta()
     self.setup_nlp()

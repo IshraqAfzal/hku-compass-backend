@@ -4,6 +4,7 @@ from pymongo.server_api import ServerApi
 import os, uuid
 from .schemas.professors import professors_validator
 from .schemas.courses import courses_validator
+from .schemas.course_history import course_history_validator
 from .schemas.prof_reviews import prof_reviews_validator
 from .schemas.course_reviews import course_reviews_validator
 from .schemas.enrollments import enrollments_validator
@@ -44,8 +45,8 @@ class MongoDBClient:
 
   def add_schemas(self):
     db = self.client[self.db]
-    collection_names = ['course_reviews', 'courses', 'enrollments', 'prof_reviews', 'professors', 'sftl', 'subclasses', 'users']
-    collection_validators = [course_reviews_validator, courses_validator, enrollments_validator, prof_reviews_validator, professors_validator, sftl_validator, subclasses_validator, users_validator]
+    collection_names = ['course_reviews', 'courses', 'enrollments', 'prof_reviews', 'professors', 'sftl', 'subclasses', 'users', 'course_history']
+    collection_validators = [course_reviews_validator, courses_validator, enrollments_validator, prof_reviews_validator, professors_validator, sftl_validator, subclasses_validator, users_validator, course_history_validator]
     for i, name in enumerate(collection_names):
       try:
         res = db.command("collMod", name, validator = collection_validators[i])

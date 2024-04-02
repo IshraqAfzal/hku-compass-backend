@@ -2,8 +2,8 @@ from fastapi import APIRouter, Request, Query
 from ..utils.data.create_objectid import create_objectid
 
 router = APIRouter(
-  prefix="/courses",
-  tags=["courses", "API"]
+  prefix="/api",
+  tags=["API"]
 )
 
 @router.get("/getCourse", tags=['Course Details Page'])

@@ -15,6 +15,9 @@ users_schema = {
     "FACULTY": {
       "bsonType": "string"
     },
+    "PROFILE_PIC": {
+      "bsonType": "string"
+    },
     "MAJORS": {
       "bsonType": "array",
       "items": {
