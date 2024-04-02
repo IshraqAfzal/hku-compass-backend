@@ -10,7 +10,7 @@ users_schema = {
       "bsonType": "string"
     },
     "DEPARTMENT": {
-      "bsonType": ['null', "string"]
+      "bsonType": ["null", "string"]
     },
     "FACULTY": {
       "bsonType": "string"
