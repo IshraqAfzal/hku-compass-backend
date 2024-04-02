@@ -36,7 +36,21 @@ users_schema = {
     "COURSE_HISTORY": {
       "bsonType": "array",
       "items": {
-        "bsonType": "string"
+        "bsonType": "object",
+        "properties": {
+          "COURSE_ID": {
+            "bsonType": "objectId"
+          },
+          "COURSE_CODE": {
+            "bsonType": "string"
+          },
+          "YEAR": {
+            "bsonType": "string"
+          },
+          "SEM": {
+            "bsonType": "string"
+          }
+        }
       }
     },
     "BOOKMARKS": {
