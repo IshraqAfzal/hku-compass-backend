@@ -15,7 +15,15 @@ course_history_schema = {
     "INSTRUCTORS": {
       "bsonType": "array",
       "items": {
-        "bsonType": "objectId"
+        "bsonType": "object",
+        "properties": {
+          "NAME": {
+            "bsonType": "string"
+          },
+          "PROF_ID": {
+            "bsonType": "objectid"
+          },
+        }
       }
     }
   },

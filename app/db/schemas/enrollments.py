@@ -11,7 +11,10 @@ enrollements_schema = {
     },
     "APPROVED_HEAD_COUNT": {
       "bsonType": ["int", "null"]
-    }
+    },
+    "LAST_UPDATED": {
+      "bsonType": "date"
+    },
   },
   "required": [
     "COURSE_ID",

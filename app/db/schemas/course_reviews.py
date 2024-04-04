@@ -45,21 +45,9 @@ course_reviews_schema = {
     "HELPFUL": {
       "bsonType": "int"
     },
-    "HELPFUL_USERS": {
-      "bsonType": "array",
-      "items": {
-        "bsonType": "objectId"
-      }
-    },
     "NOT_HELPFUL": {
       "bsonType": "int"
-    },
-    "NOT_HELPFUL_USERS": {
-      "bsonType": "array",
-      "items": {
-        "bsonType": "objectId"
-      }
-    },
+    }
   },
   "required": [
     "COURSE_ID",

@@ -9,9 +9,6 @@ prof_reviews_schema = {
     "PROF_ID": {
       "bsonType": "objectId"
     },
-    "SUBLCASS_CODE": {
-      "bsonType": "string"
-    },
     "COMMENT": {
       "bsonType": "string"
     },
@@ -41,7 +38,7 @@ prof_reviews_schema = {
     },
     "NOT_HELPFUL": {
       "bsonType": "int"
-    },
+    }
   },
   "required": [
     "COURSE_ID",

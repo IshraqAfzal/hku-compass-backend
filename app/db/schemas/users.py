@@ -18,6 +18,12 @@ users_schema = {
     "PROFILE_PIC": {
       "bsonType": "string"
     },
+    "PASSWORD": {
+      "bsonType": "string"
+    },
+    "YEAR_OF_STUDY": {
+      "bsonType": "string"
+    },
     "MAJORS": {
       "bsonType": "array",
       "items": {
@@ -33,6 +39,9 @@ users_schema = {
     "DEGREE": {
       "bsonType": "string"
     }, 
+    "IS_ONBOARDED": {
+      "bsonType": "boolean"
+    },
     "COURSE_HISTORY": {
       "bsonType": "array",
       "items": {
@@ -49,6 +58,9 @@ users_schema = {
           },
           "SEM": {
             "bsonType": "string"
+          },
+          "IS_REVIEWED": {
+            "bsonType" : "boolean"
           }
         }
       }
@@ -64,7 +76,19 @@ users_schema = {
       "items": {
         "bsonType": "string"
       }
-    }
+    },
+    "HELPFUL_REVIEWS": {
+      "bsonType": "array",
+      "items": {
+        "bsonType": "objectId"
+      }
+    },
+    "NOT_HELPFUL_REVIEWS": {
+      "bsonType": "array",
+      "items": {
+        "bsonType": "objectId"
+      }
+    },
   },
   "required": [
     "USER_ID",
