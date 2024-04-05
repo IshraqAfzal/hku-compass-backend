@@ -39,6 +39,7 @@ def parse_json(data, logger):
       courses_obj[course_id]['ENROLLMENT_REQUIREMENTS'] = datum['ENROLLMENT_REQUIREMENTS']
       courses_obj[course_id]['ENROLLMENT_REQ_COURSES'] = []
       courses_obj[course_id]['RATING'] = generate_random_number(0,5)
+      courses_obj[course_id]['RATING_COUNT'] = random.randint(0, 100)
       courses_obj[course_id]['USEFULNESS'] = generate_random_number(0,5)
       courses_obj[course_id]['GRADING'] = generate_random_number(0,5)
       courses_obj[course_id]['WORKLOAD'] = generate_random_number(0,5)

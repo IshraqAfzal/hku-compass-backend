@@ -30,15 +30,6 @@ courses_schema = {
     "FACULTY": {
       "bsonType": "string"
     },
-    # "INSTRUCTORS": {
-    #   "bsonType": "array",
-    #   "items": {
-    #     "bsonType": "objectId"
-    #   }
-    # },
-    # "INSTRUCTORS_PLACEHOLDER": {
-    #   "bsonType": "string",
-    # },
     "ENROLLMENT_REQUIREMENTS": {
       "bsonType": [ "null", "string" ]
     },
@@ -65,6 +56,9 @@ courses_schema = {
     },
     "DIFFICULTY": {
       "bsonType": "double"
+    },
+    "RATING_COUNT": {
+      "bsonType": "int"
     },
     "TNL": {
       "bsonType": "array",

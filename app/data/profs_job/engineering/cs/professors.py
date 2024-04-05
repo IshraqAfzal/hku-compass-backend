@@ -51,4 +51,6 @@ def get_prof_info(driver, url):
   ret["PROF_ID"] = create_objectid(ret["EMAIL"].split("@")[0] + "_cs")
   ret["ENGAGEMENT"] = generate_random_number(0,5)
   ret["CLARITY"] = generate_random_number(0,5)
+  ret['RATING'] = generate_random_number(0,5)
+  ret['RATING_COUNT'] = random.randint(0, 100)
   return ret

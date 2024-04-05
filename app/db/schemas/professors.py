@@ -25,17 +25,11 @@ professors_schema = {
     "CLARITY": {
       "bsonType": "double"
     },
-    "COURSES": {
-      "bsonType": "array",
-      "items": {
-        "bsonType": "string"
-      }
+    "RATING": {
+      "bsonType": "double"
     },
-    "COURSE_HISTORY": {
-      "bsonType": "array",
-      "items": {
-        "bsonType": "string"
-      }
+    "RATING_COUNT": {
+      "bsonType": "int"
     }
   },
   "required": [
