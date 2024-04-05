@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request
 
 router = APIRouter(
   prefix="/test",
-  tags=["test"]
+  tags=["Testing"]
 )
 
 @router.get("/helloWorld")

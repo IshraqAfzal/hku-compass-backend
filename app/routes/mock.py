@@ -4,7 +4,7 @@ from ..mock_data.mock_data_job import push_mock_data
 
 router = APIRouter(
   prefix="/mock",
-  tags=["mock"]
+  tags=["Mock Data"]
 )
 
 @router.get("/pushMockReviews")

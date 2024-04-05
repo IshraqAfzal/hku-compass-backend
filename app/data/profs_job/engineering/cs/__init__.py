@@ -4,7 +4,7 @@ from .db import write
 
 router = APIRouter(
   prefix="/cs",
-  tags=["cs"]
+  tags=["Professor Data Collection - Faculty of Engineering - Department of Computer Science"]
 )
 
 last_profs = []
@@ -20,7 +20,7 @@ def collect(db, logger, driver):
   write(db, logger, prof_data)
   logger.info("CS Job completed")
 
-@router.get("/profs", tags=["profs"])
+@router.get("/profs")
 async def profs():
   return last_profs
 

@@ -3,7 +3,7 @@ from .engineering import router as enggRouter, job as enggJob
 
 router = APIRouter(
   prefix="/profs",
-  tags=["profs"]
+  tags=["Professor Data Collection"]
 )
 router.include_router(enggRouter)
 

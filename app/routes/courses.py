@@ -6,7 +6,7 @@ router = APIRouter(
   tags=["Courses"]
 )
 
-@router.get("/get-courses", tags=['Explore Page'])
+@router.get("/get-courses")
 async def getCourse(request: Request):
   data = request.app.state.db.find_all('courses')
   return {'data' : data}

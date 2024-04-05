@@ -5,7 +5,7 @@ from .cs import router as csRouter, collect as csCollect
 
 router = APIRouter(
   prefix="/engineering",
-  tags=["engineering"]
+  tags=["Professor Data Collection - Faculty of Engineering"]
 )
 
 router.include_router(csRouter)

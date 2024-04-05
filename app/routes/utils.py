@@ -6,7 +6,7 @@ import datetime
 
 router = APIRouter(
   prefix="/utils",
-  tags=["utils"]
+  tags=["Utility Functions"]
 )
 
 @router.get("/triggerGeneralCoursesJob")

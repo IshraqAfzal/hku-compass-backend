@@ -4,7 +4,7 @@ from .courses_job import router as coursesRouter
 
 router = APIRouter(
   prefix="/data",
-  tags=["data"]
+  tags=["Data Collection"]
 )
 
 router.include_router(profsRouter)

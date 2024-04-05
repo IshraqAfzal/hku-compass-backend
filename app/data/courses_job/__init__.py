@@ -10,7 +10,7 @@ from .parser import parse_json
 
 router = APIRouter(
   prefix="/courses_job",
-  tags=["courses"]
+  tags=["Course Data Collection"]
 )
 
 last_courses = []
@@ -114,19 +114,19 @@ def get_response(logger, acad_group, bearer_token):
   return (token, data)
 
 
-@router.get("/courses", tags=["courses"])
+@router.get("/courses")
 async def courses():
     return last_courses
 
-@router.get("/subclasses", tags=["subclasses"])
+@router.get("/subclasses")
 async def subclasses():
     return last_subclasses
 
-@router.get("/sftl", tags=["sftl"])
+@router.get("/sftl")
 async def sftl():
     return last_sftl
 
-@router.get("/enrollments", tags=["enrollments"])
+@router.get("/enrollments")
 async def enrollments():
     return last_enrollments
 
