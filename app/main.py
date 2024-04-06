@@ -25,7 +25,7 @@ async def lifespan(app: FastAPI):
     app.state.logger = logger
     app.state.logger.info("Creating Server Context.")
     app.state.db = server_db_instance
-    app.state.model = ml_models
+    app.state.models = ml_models
     app.state.logger.info("Created Server Context sucessfully.")
     data_collection_job.run()
     yield

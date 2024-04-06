@@ -6,9 +6,10 @@ router = APIRouter(
   tags=["Course"]
 )
 
-@router.get("/get-course")
+@router.get("/get")
 async def getCourse(request: Request, course_code = Query(0)):
   data = request.app.state.db.find('courses', {"COURSE_CODE" : course_code})
+  del data["ACAD_GROUP"]
   return {'data' : data}
 
 @router.get("/get-subclasses")
