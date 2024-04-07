@@ -3,6 +3,7 @@ from pathlib import Path
 from fastapi import FastAPI, Depends
 from fastapi.openapi.utils import get_openapi
 from contextlib import asynccontextmanager
+from fastapi.middleware.cors import CORSMiddleware
 
 from .routes import courses
 from .middleware.catchExceptions import ExceptionsMiddleware
@@ -17,6 +18,7 @@ from .models.ml_models import MLModels
 
 dotenv_path = Path('.env')
 load_dotenv(dotenv_path=dotenv_path)
+origins = ["*"]
 logger = get_logger()
 server_db_instance = MongoDBClient(name='SERVER-DB')
 data_collection_job = DataJob(logger, server_db_instance)
@@ -44,6 +46,13 @@ app = FastAPI(lifespan=lifespan,
 async def openapi(username: str = Depends(docs.get_current_username)):
     return get_openapi(title=app.title, version=app.version, routes=app.routes)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ["*"],
+    allow_headers = ["*"]
+)
 app.add_middleware(ExceptionsMiddleware) # This has to be on top of all other middleware
 app.add_middleware(ReqLogMiddleware)
 app.add_middleware(DBMiddleware)
