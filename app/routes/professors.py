@@ -1,51 +1,42 @@
 from fastapi import APIRouter, Request, Query
 from ..utils.data.create_objectid import create_objectid
 import random
-from bson import ObjectId
 
 router = APIRouter(
-  prefix="/courses",
-  tags=["Courses"]
+  prefix="/professors",
+  tags=["Professors"]
 )
 
 @router.get("/get-all")
 async def getCourse(request: Request):
-  data = request.app.state.db.find_all('courses')
-  for i in data:
-    del i["ACAD_GROUP"]
-    del i["TNL"]
+  data = request.app.state.db.find_all('professors')
   return {'data' : data}
 
 @router.get("/get")
-async def getCourse(request: Request, course_code = Query(0)):
-  data = request.app.state.db.find('courses', {"COURSE_CODE" : create_objectid(course_code)})
-  for i in data:
-    del i['ACAD_GROUP']
+async def getCourse(request: Request, prof_code = Query(0)):
+  data = request.app.state.db.find('courses', {"PROF_ID" : create_objectid(prof_code)})
   return {'data' : data}
 
-@router.get("/get-subclasses")
-async def getCourseSubclasses(request: Request, course_id = Query(0)):
-  subclasses = request.app.state.db.find('subclasses', {"COURSE_ID" : create_objectid(course_id)})
-  enrollments = request.app.state.db.find('enrollments', {"COURSE_ID" : create_objectid(course_id)})
-  data = {
-    "subclasses" : subclasses,
-    "enrollments" : enrollments
-  }
+@router.get("/get-all-reviews")
+async def getCourseReviews(request: Request, prof_code = Query(0)):
+  data = request.app.state.db.find('prof_reviews', {"PROF_ID" : create_objectid(prof_code)})
+  for datum in data:
+    # TODO: aggregate and fetch user data
+    # TODO: aggregate and fetch instructor details
+    # Placeholder for mock data
+    if datum['COURSE_ID'] == create_objectid("030837"):
+      prof = request.app.state.db.find('professors', {"PROF_ID" : create_objectid('atctam_cs')})[0]
+      # TODO: store it in the comment too?
+      datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
+      datum['USER_FACULTY'] = "Engineering"
+      datum['USER_DEPARTMENT'] = "Computer Science"
+      datum['USER_PROFILE_PIC'] = random.randint(0, 3)
+    pass
   return {'data' : data}
 
-@router.get("/get-enrollments")
-async def getCourseEnrollments(request: Request, course_id = Query(0)):
-  data = request.app.state.db.find('enrollments', {"COURSE_ID" : create_objectid(course_id)})
-  return {'data' : data}
-
-@router.get("/get-sftl")
-async def getCourseSFTL(request: Request, course_id = Query(0)):
-  data = request.app.state.db.find('sftl', {"COURSE_ID" : create_objectid(course_id)})
-  return {'data' : data}
-
-@router.get("/get-reviews")
+@router.get("/get-reviews-by-course")
 async def getCourseReviews(request: Request, course_id = Query(0)):
-  data = request.app.state.db.find('course_reviews', {"COURSE_ID" : create_objectid(course_id)})
+  data = request.app.state.db.find('prof_reviews', {"COURSE_ID" : create_objectid(course_id)})
   for datum in data:
     # TODO: aggregate and fetch user data
     # TODO: aggregate and fetch instructor details
@@ -62,7 +53,7 @@ async def getCourseReviews(request: Request, course_id = Query(0)):
 
 @router.get("/get-reviews-by-user")
 async def getCourseReviews(request: Request, course_id = Query(0), user_id = Query(1)):
-  data = request.app.state.db.find('course_reviews', {"COURSE_ID" : create_objectid(course_id), "USER_ID" : ObjectId(user_id)})
+  data = request.app.state.db.find('prof_reviews', {"COURSE_ID" : create_objectid(course_id), "USER_ID" : ObjectId(user_id)})
   for datum in data:
     # TODO: aggregate and fetch user data
     # TODO: aggregate and fetch instructor details
@@ -76,3 +67,4 @@ async def getCourseReviews(request: Request, course_id = Query(0), user_id = Que
       datum['USER_PROFILE_PIC'] = random.randint(0, 3)
     pass
   return {'data' : data}
+

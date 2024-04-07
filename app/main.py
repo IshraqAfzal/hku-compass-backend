@@ -3,12 +3,14 @@ from pathlib import Path
 from fastapi import FastAPI, Depends
 from fastapi.openapi.utils import get_openapi
 from contextlib import asynccontextmanager
+
+from .routes import courses
 from .middleware.catchExceptions import ExceptionsMiddleware
 from .middleware.requestLogging import ReqLogMiddleware
 from .logs.logger import get_logger
 from .middleware.dbConnectivity import DBMiddleware
 from .db.client import MongoDBClient
-from .routes import test, courses, docs, utils, mock, course, auth, user
+from .routes import test, courses, docs, utils, mock, auth, user
 from .data import router as dataRouter
 from .data.data_collection_job import DataJob
 from .models.ml_models import MLModels
@@ -51,7 +53,6 @@ app.include_router(test.router)
 app.include_router(courses.router) 
 app.include_router(docs.router) 
 app.include_router(utils.router) 
-app.include_router(mock.router) 
-app.include_router(course.router) 
+app.include_router(mock.router)
 app.include_router(auth.router) 
 app.include_router(user.router) 
