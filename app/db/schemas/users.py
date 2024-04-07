@@ -40,7 +40,7 @@ users_schema = {
       "bsonType": "string"
     }, 
     "IS_ONBOARDED": {
-      "bsonType": "boolean"
+      "bsonType": "bool"
     },
     "COURSE_HISTORY": {
       "bsonType": "array",
@@ -60,7 +60,7 @@ users_schema = {
             "bsonType": "string"
           },
           "IS_REVIEWED": {
-            "bsonType" : "boolean"
+            "bsonType" : "bool"
           }
         }
       }

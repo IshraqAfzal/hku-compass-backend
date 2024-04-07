@@ -8,15 +8,21 @@ router = APIRouter(
   prefix="/utils",
   tags=["Utility Functions"]
 )
+# TODO: add passwords for these routes
 
-@router.get("/triggerGeneralCoursesJob")
-async def triggerGeneralCoursesJob(request : Request, background_tasks: BackgroundTasks):
+@router.get("/trigger-general-courses-job")
+async def trigger_general_courses_job(request : Request, background_tasks: BackgroundTasks):
   time = str(datetime.datetime.now())
   background_tasks.add_task(general_courses_job, request.app.state.logger, request.app.state.db)
   return "Job started at time " + time + ", check server logs for state."
 
-@router.get("/triggerProfJobCS")
-async def triggerProfJobCS(request : Request, background_tasks: BackgroundTasks):
+@router.get("/trigger-prof-job-cs")
+async def trigger_prof_job_cs(request : Request, background_tasks: BackgroundTasks):
   time = str(datetime.datetime.now())
   background_tasks.add_task(csCollect, request.app.state.db, request.app.state.logger, create_driver())
   return "Job started at time " + time + ", check server logs for state."
+
+@router.get("/clear-collection-enrollments")
+async def clear_collection_enrollments(request : Request, background_tasks: BackgroundTasks):
+  request.app.state.db.clear('enrollments')
+  return "The collection 'enrollments' was cleared."

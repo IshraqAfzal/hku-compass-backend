@@ -6,14 +6,14 @@ import joblib
 
 class SpamDetection():
   def __init__(self) -> None:
-    self.model_path = './trained_model.pkl'
+    self.model_path = 'app/models/spam_detection/trained_model.pkl'
     try:
         self.model = joblib.load(self.model_path)
     except FileNotFoundError:
         self.train_model()
 
   def train_model(self):
-    df = pd.read_csv('./traindata.csv')
+    df = pd.read_csv('app/models/spam_detection/traindata.csv')
     df = df.where((pd.notnull(df)), '')
     df.loc[df['Category'] == 'spam', 'Category'] = 0
     df.loc[df['Category'] == 'ham', 'Category'] = 1

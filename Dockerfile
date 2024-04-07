@@ -8,9 +8,13 @@ COPY .env /build/.env
 
 COPY ./requirements.txt /build/requirements.txt
 
+COPY ./setup.py /build/setup.py
+
 RUN pip install --upgrade pip
 
 RUN pip install --no-cache-dir --upgrade -r /build/requirements.txt
+
+RUN python /build/setup.py
 
 COPY ./app /build/app
 

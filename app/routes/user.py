@@ -7,11 +7,11 @@ router = APIRouter(
 )
 
 @router.get("/get-user-data")
-async def getCourse(request: Request, user_id = Query(0)):
+async def get_user_data(request: Request, user_id = Query(0)):
   data = request.app.state.db.find('users', {"USER_ID" : user_id})
   return {'data' : data}
 
-@router.post("/extract-transcript-info", tags=["Profile Page"])
+@router.post("/extract-transcript-info")
 async def extract_transcript_info(request: Request):
     pdf_file = await request.form()
     pdf_text = request.app.state.models.transcript_parser(pdf_file)

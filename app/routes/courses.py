@@ -9,7 +9,7 @@ router = APIRouter(
 )
 
 @router.get("/get-all")
-async def getCourse(request: Request):
+async def get_all(request: Request):
   data = request.app.state.db.find_all('courses')
   for i in data:
     del i["ACAD_GROUP"]
@@ -17,14 +17,14 @@ async def getCourse(request: Request):
   return {'data' : data}
 
 @router.get("/get")
-async def getCourse(request: Request, course_code = Query(0)):
-  data = request.app.state.db.find('courses', {"COURSE_CODE" : create_objectid(course_code)})
+async def get(request: Request, course_id = Query(0)):
+  data = request.app.state.db.find('courses', {"COURSE_ID" : create_objectid(course_id)})
   for i in data:
     del i['ACAD_GROUP']
   return {'data' : data}
 
 @router.get("/get-subclasses")
-async def getCourseSubclasses(request: Request, course_id = Query(0)):
+async def get_subclasses(request: Request, course_id = Query(0)):
   subclasses = request.app.state.db.find('subclasses', {"COURSE_ID" : create_objectid(course_id)})
   enrollments = request.app.state.db.find('enrollments', {"COURSE_ID" : create_objectid(course_id)})
   data = {
@@ -34,17 +34,17 @@ async def getCourseSubclasses(request: Request, course_id = Query(0)):
   return {'data' : data}
 
 @router.get("/get-enrollments")
-async def getCourseEnrollments(request: Request, course_id = Query(0)):
+async def get_enrollments(request: Request, course_id = Query(0)):
   data = request.app.state.db.find('enrollments', {"COURSE_ID" : create_objectid(course_id)})
   return {'data' : data}
 
 @router.get("/get-sftl")
-async def getCourseSFTL(request: Request, course_id = Query(0)):
+async def get_sftl(request: Request, course_id = Query(0)):
   data = request.app.state.db.find('sftl', {"COURSE_ID" : create_objectid(course_id)})
   return {'data' : data}
 
 @router.get("/get-reviews")
-async def getCourseReviews(request: Request, course_id = Query(0)):
+async def get_reviews(request: Request, course_id = Query(0)):
   data = request.app.state.db.find('course_reviews', {"COURSE_ID" : create_objectid(course_id)})
   for datum in data:
     # TODO: aggregate and fetch user data
@@ -61,7 +61,7 @@ async def getCourseReviews(request: Request, course_id = Query(0)):
   return {'data' : data}
 
 @router.get("/get-reviews-by-user")
-async def getCourseReviews(request: Request, course_id = Query(0), user_id = Query(1)):
+async def get_reviews_by_user(request: Request, course_id = Query(0), user_id = Query(1)):
   data = request.app.state.db.find('course_reviews', {"COURSE_ID" : create_objectid(course_id), "USER_ID" : ObjectId(user_id)})
   for datum in data:
     # TODO: aggregate and fetch user data

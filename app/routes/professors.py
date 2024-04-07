@@ -8,17 +8,17 @@ router = APIRouter(
 )
 
 @router.get("/get-all")
-async def getCourse(request: Request):
+async def get_all(request: Request):
   data = request.app.state.db.find_all('professors')
   return {'data' : data}
 
 @router.get("/get")
-async def getCourse(request: Request, prof_code = Query(0)):
+async def get(request: Request, prof_code = Query(0)):
   data = request.app.state.db.find('courses', {"PROF_ID" : create_objectid(prof_code)})
   return {'data' : data}
 
-@router.get("/get-all-reviews")
-async def getCourseReviews(request: Request, prof_code = Query(0)):
+@router.get("/get-reviews")
+async def get_reviews(request: Request, prof_code = Query(0)):
   data = request.app.state.db.find('prof_reviews', {"PROF_ID" : create_objectid(prof_code)})
   for datum in data:
     # TODO: aggregate and fetch user data
@@ -35,7 +35,7 @@ async def getCourseReviews(request: Request, prof_code = Query(0)):
   return {'data' : data}
 
 @router.get("/get-reviews-by-course")
-async def getCourseReviews(request: Request, course_id = Query(0)):
+async def get_reviwews_by_course(request: Request, course_id = Query(0)):
   data = request.app.state.db.find('prof_reviews', {"COURSE_ID" : create_objectid(course_id)})
   for datum in data:
     # TODO: aggregate and fetch user data
@@ -52,7 +52,7 @@ async def getCourseReviews(request: Request, course_id = Query(0)):
   return {'data' : data}
 
 @router.get("/get-reviews-by-user")
-async def getCourseReviews(request: Request, course_id = Query(0), user_id = Query(1)):
+async def get_reviews_by_user(request: Request, course_id = Query(0), user_id = Query(1)):
   data = request.app.state.db.find('prof_reviews', {"COURSE_ID" : create_objectid(course_id), "USER_ID" : ObjectId(user_id)})
   for datum in data:
     # TODO: aggregate and fetch user data

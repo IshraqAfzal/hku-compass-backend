@@ -24,7 +24,7 @@ subclasses_schema = {
             "bsonType": "string"
           },
           "PROF_ID": {
-            "bsonType": "objectid"
+            "bsonType": "objectId"
           },
         }
       }

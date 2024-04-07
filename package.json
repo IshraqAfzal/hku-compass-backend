@@ -1,5 +1,5 @@
 {
   "scripts": {
-    "dev" : "uvicorn app.main:app --reload"
+    "dev" : "python3 setup.py && uvicorn app.main:app --reload"
   }
 }
