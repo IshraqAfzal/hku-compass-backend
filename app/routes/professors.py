@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Request, Query
 from ..utils.data.create_objectid import create_objectid
 import random
+from bson import ObjectId
 
 router = APIRouter(
   prefix="/professors",
@@ -68,3 +69,17 @@ async def get_reviews_by_user(request: Request, course_id = Query(0), user_id = 
     pass
   return {'data' : data}
 
+@router.post("/create-review")
+async def create_review(request: Request):
+    form_data = await request.form()
+    user_id = form_data.get("USER_ID")
+    course_id = form_data.get("COURSE_ID")
+    prof_id = form_data.get("PROF_ID")
+    new_data = form_data.get("NEW_DATA")
+    success = request.app.state.db.update_one('course_reviews', {"USER_ID" : ObjectId(user_id), "COURSE_ID" : ObjectId(course_id), "PROF_ID" : ObjectId(prof_id)}, new_data, True)
+    return {'data' : success}
+
+@router.get("/delete-review")
+async def delete_review(request: Request, id = Query(0)):
+  success = request.app.state.db.delete_one('prof_reviews', {"_id" : ObjectId(id)})
+  return {'data' : success}

@@ -55,7 +55,7 @@ class MongoDBClient:
       except Exception as e:
           logger.error("Database client " + self.name + ": Error in adding schema to the " + name + " collection. Error: " + str(e))
 
-  def bulk_write(self, collection, array_of_operations):
+  def bulk_write(self, collection, ops_array):
     db = self.client[self.db]
     try:
       col = db[collection]
@@ -63,7 +63,7 @@ class MongoDBClient:
       logger.error("Database client " + self.name + ": Could not find collection " + collection + ". Error: " + str(e))
       return False
     try:
-      col.bulk_write(array_of_operations)
+      col.bulk_write(ops_array)
       logger.info("Database client " + self.name + ": Bulk writing to collection: " + collection + " completed successfully.")
       return True
     except Exception as e:
@@ -85,7 +85,7 @@ class MongoDBClient:
       logger.error("Database client " + self.name + ": Error in operation finding all objects from collection: " + collection + ". Error: " + str(e))
       return []
   
-  def find(self, collection, obj_of_filters):
+  def find(self, collection, filter_obj):
     db = self.client[self.db]
     try:
       col = db[collection]
@@ -93,7 +93,7 @@ class MongoDBClient:
       logger.error("Database client " + self.name + ": Could not find collection: " + collection + ". Error: " + str(e))
       return []
     try:
-      res = col.find(obj_of_filters)
+      res = col.find(filter_obj)
       data = json.loads(dumps(res))
       return data
     except Exception as e:
@@ -106,8 +106,41 @@ class MongoDBClient:
       col = db[collection]
     except Exception as e:
       logger.error("Database client " + self.name + ": Could not find collection: " + collection + ". Error: " + str(e))
-      return []
+      return False
     try:
       col.delete_many({})
+      return True
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in operation deleting all objects from collection: " + collection + ". Error: " + str(e))
+      return False
+
+  def delete_one(self, collection, filter_obj):
+    db = self.client[self.db]
+    try:
+      col = db[collection]
+    except Exception as e:
+      logger.error("Database client " + self.name + ": Could not find collection: " + collection + ". Error: " + str(e))
+      return False
+    try:
+      col.delete_one(filter_obj)
+      return True
+    except Exception as e:
+      logger.error("Database client " + self.name + ": Error in operation deleting object from collection: " + collection + ". Error: " + str(e))
+      return False
+
+  def update_one(self, collection, filter_obj, new_data, upsert = False):
+    db = self.client[self.db]
+    try:
+      col = db[collection]
+    except Exception as e:
+      logger.error("Database client " + self.name + ": Could not find collection: " + collection + ". Error: " + str(e))
+      return False
+    try:
+      result = col.update_one(filter_obj,  {"$set": new_data}, upsert)
+      if result.modified_count != 1:
+        logger.error("Database client " + self.name + ": Error in updating object in collection: " + collection + ". Error: Object not found in collection or no changes made.")
+        return False
+      return True
+    except Exception as e:
+      logger.error("Database client " + self.name + ": Error in updating object in collection: " + collection + ". Error: " + str(e))
+      return False

@@ -76,3 +76,18 @@ async def get_reviews_by_user(request: Request, course_id = Query(0), user_id = 
       datum['USER_PROFILE_PIC'] = random.randint(0, 3)
     pass
   return {'data' : data}
+
+@router.post("/create-review")
+async def create_review(request: Request):
+    form_data = await request.form()
+    user_id = form_data.get("USER_ID")
+    course_id = form_data.get("COURSE_ID")
+    prof_id = form_data.get("PROF_ID")
+    new_data = form_data.get("NEW_DATA")
+    success = request.app.state.db.update_one('prof_reviews', {"USER_ID" : ObjectId(user_id), "COURSE_ID" : ObjectId(course_id), "PROF_ID" : ObjectId(prof_id)}, new_data, True)
+    return {'data' : success}
+
+@router.get("/delete-review")
+async def delete_review(request: Request, id = Query(0)):
+  success = request.app.state.db.delete_one('course_reviews', {"_id" : ObjectId(id)})
+  return {'data' : success}
