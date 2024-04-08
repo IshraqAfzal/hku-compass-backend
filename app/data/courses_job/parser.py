@@ -75,7 +75,7 @@ def parse_json(data, logger):
       subclasses_obj[sub_id]['STRM'] = datum['strm']
       subclasses_obj[sub_id]['YEAR'] = decode_strm(datum['strm'])[0]
       subclasses_obj[sub_id]['SEM'] = decode_strm(datum['strm'])[1]
-      subclasses_obj[sub_id]['SUBCLASS_CODE'] = datum['course_subclass'][-2:]
+      subclasses_obj[sub_id]['SUBCLASS_CODE'] = datum['course_subclass'].split("-")[-1]
       subclasses_obj[sub_id]['TIMINGS'].append({
         'DAY': datum['day_str'],
         'START_TIME': datum['stime'],

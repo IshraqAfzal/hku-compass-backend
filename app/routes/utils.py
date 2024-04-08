@@ -26,3 +26,8 @@ async def trigger_prof_job_cs(request : Request, background_tasks: BackgroundTas
 async def clear_collection_enrollments(request : Request, background_tasks: BackgroundTasks):
   s = request.app.state.db.clear('enrollments')
   return "The collection 'enrollments' was cleared." if s else "The collection 'enrollments' was not cleared, check error logs for details."
+
+@router.get("/clear-collection-subclasses")
+async def clear_collection_enrollments(request : Request, background_tasks: BackgroundTasks):
+  s = request.app.state.db.clear('subclasses')
+  return "The collection 'subclasses' was cleared." if s else "The collection 'enrollments' was not cleared, check error logs for details."
