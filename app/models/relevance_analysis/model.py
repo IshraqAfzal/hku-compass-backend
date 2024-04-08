@@ -1,7 +1,7 @@
 from transformers import BertTokenizer, BertModel
 import torch
 from sklearn.metrics.pairwise import cosine_similarity
-import spacy
+import spacy, json
 from ..sentiment_analysis.model import SentimentAnalysis
 
 class RelevanceAnalysis():
@@ -66,12 +66,13 @@ class RelevanceAnalysis():
   
   def sort_texts_on_relevance(self, description, texts):
     relevance_scores = {}
-    for text in texts:
+    for t in texts:
+      text = t['COMMENT']
       score = self.calculate_relevance_score(description, text)
-      relevance_scores[text] = score
+      relevance_scores[json.dumps(t)] = score
     relevance_scores = dict(sorted(relevance_scores.items(), key=lambda x: x[1], reverse=True))
     sorted_list = []
     for key, value in relevance_scores.items():
-      sorted_list.append(key)
+      sorted_list.append(json.loads(key))
     sorted_list = sorted_list[::-1]
     return sorted_list

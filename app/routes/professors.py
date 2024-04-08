@@ -21,6 +21,7 @@ async def get(request: Request, prof_id = Query(0)):
 @router.get("/get-reviews")
 async def get_reviews(request: Request, prof_id = Query(0)):
   data = request.app.state.db.find('prof_reviews', {"PROF_ID" : create_objectid(prof_id)})
+  data = [ datum for datum in data if datum["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(datum["COMMENT"]))]
   for datum in data:
     # TODO: aggregate and fetch user data
     # TODO: aggregate and fetch instructor details
@@ -38,6 +39,7 @@ async def get_reviews(request: Request, prof_id = Query(0)):
 @router.get("/get-reviews-by-course")
 async def get_reviews_by_course(request: Request, course_id = Query(0)):
   data = request.app.state.db.find('prof_reviews', {"COURSE_ID" : create_objectid(course_id)})
+  data = [ datum for datum in data if datum["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(datum["COMMENT"]))]
   for datum in data:
     # TODO: aggregate and fetch user data
     # TODO: aggregate and fetch instructor details
@@ -55,6 +57,7 @@ async def get_reviews_by_course(request: Request, course_id = Query(0)):
 @router.get("/get-reviews-by-user")
 async def get_reviews_by_user(request: Request, course_id = Query(0), user_id = Query(1)):
   data = request.app.state.db.find('prof_reviews', {"COURSE_ID" : create_objectid(course_id), "USER_ID" : ObjectId(user_id)})
+  data = [ datum for datum in data if datum["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(datum["COMMENT"]))]
   for datum in data:
     # TODO: aggregate and fetch user data
     # TODO: aggregate and fetch instructor details
