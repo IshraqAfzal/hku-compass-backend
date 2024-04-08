@@ -4,7 +4,7 @@ enrollments_schema = {
       "bsonType": "objectId"
     },
     "SUBCLASS_ID": {
-      "bsonType": "string"
+      "bsonType": "objectId"
     },
     "QUOTA": {
       "bsonType": ["int", "null"]

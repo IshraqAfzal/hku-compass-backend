@@ -49,7 +49,7 @@ def parse_json(data, logger):
       courses_obj[course_id]['COURSE_DESCRIPTION'] = datum['COURSE_DESCRIPTION']
       enrollments.append({
         "COURSE_ID" : create_objectid(course_id),
-        "SUBCLASS_ID" : datum['COURSE_SUBCLASS'].split('-')[-1],
+        "SUBCLASS_ID" : create_objectid(datum['COURSE_SUBCLASS']),
         "QOUTA" : datum['CLASS_QUOTA'],
         "APPROVED_HEAD_COUNT" : datum['APPROVED_HEAD_CNT']
       })
