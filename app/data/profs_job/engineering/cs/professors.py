@@ -48,7 +48,7 @@ def get_prof_info(driver, url):
   ret["PROFILE_LINK"] = url
   ret["FACULTY"] = "Engineering"
   ret["DEPARTMENT"] = "Computer Science"
-  ret["PROF_ID"] = create_objectid(ret["EMAIL"].split("@")[0] + "_cs")
+  ret["PROF_ID"] = create_objectid(ret["EMAIL"].split("@")[0] + "_" + ret["EMAIL"].split("@")[1].split(".")[0])
   ret["ENGAGEMENT"] = generate_random_number(0,5)
   ret["CLARITY"] = generate_random_number(0,5)
   ret['RATING'] = generate_random_number(0,5)

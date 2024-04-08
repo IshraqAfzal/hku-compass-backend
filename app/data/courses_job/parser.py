@@ -1,4 +1,4 @@
-import re, random
+import re, random, datetime
 from ...utils.data.create_objectid import create_objectid
 from ...utils.data.strm import decode_strm
 
@@ -17,6 +17,7 @@ def parse_json(data, logger):
   try:
     for datum in data['mainTable']:
       course_id = datum['CRSE_ID']
+      sub_id = datum['COURSE_SUBCLASS']
       if course_id not in courses_obj:
         courses_obj[course_id] = {}
         history_obj[course_id] = {}
@@ -25,6 +26,11 @@ def parse_json(data, logger):
         courses_obj[course_id]['CRSE_ID'] = str(course_id)
         history_obj[course_id]['CRSE_ID'] = str(course_id)
         courses_obj[course_id]['TNL'] = []
+      if sub_id not in subclasses_obj:
+        subclasses_obj[sub_id] = {}
+        subclasses_obj[sub_id]['COURSE_ID'] = create_objectid(course_id)
+        subclasses_obj[sub_id]['SUBCLASS_ID'] = create_objectid(sub_id)
+        subclasses_obj[sub_id]['TIMINGS'] = []
       courses_obj[course_id]['STRM'] = datum['STRM']
       history_obj[course_id]['STRM'] = datum['STRM']
       courses_obj[course_id]['COURSE_CODE'] = datum['SUBJECT_AREA'] + datum['CATALOG_NBR']
@@ -35,7 +41,7 @@ def parse_json(data, logger):
       courses_obj[course_id]['CREDITS'] = int(datum['CRSE_UNITS']) if datum['CRSE_UNITS'] is not None else None
       courses_obj[course_id]['ACAD_GROUP'] = datum['ACAD_GROUP']
       courses_obj[course_id]['FACULTY'] = datum['FACULTY_DESC']
-      courses_obj[course_id]['INSTRUCTORS_PLACEHOLDER'] = datum['INSTRUCTOR_DISP']
+      subclasses_obj[sub_id]['INSTRUCTORS_PLACEHOLDER'] = datum['INSTRUCTOR_DISP']
       courses_obj[course_id]['ENROLLMENT_REQUIREMENTS'] = datum['ENROLLMENT_REQUIREMENTS']
       courses_obj[course_id]['ENROLLMENT_REQ_COURSES'] = []
       courses_obj[course_id]['RATING'] = generate_random_number(0,5)
@@ -50,8 +56,9 @@ def parse_json(data, logger):
       enrollments.append({
         "COURSE_ID" : create_objectid(course_id),
         "SUBCLASS_ID" : create_objectid(datum['COURSE_SUBCLASS']),
-        "QOUTA" : datum['CLASS_QUOTA'],
-        "APPROVED_HEAD_COUNT" : datum['APPROVED_HEAD_CNT']
+        "QUOTA" : datum['CLASS_QUOTA'],
+        "APPROVED_HEAD_COUNT" : datum['APPROVED_HEAD_CNT'],
+        "LAST_UPDATED" : datetime.datetime.now()
       })
   except Exception as ex:
     logger.error(ex)
@@ -60,11 +67,11 @@ def parse_json(data, logger):
     for datum in data['patterns']:
       course_id = datum['crse_id']
       sub_id = datum['course_subclass']
-      if sub_id not in subclasses_obj:
-        subclasses_obj[sub_id] = {}
-        subclasses_obj[sub_id]['COURSE_ID'] = create_objectid(course_id)
-        subclasses_obj[sub_id]['SUBCLASS_ID'] = create_objectid(sub_id)
-        subclasses_obj[sub_id]['TIMINGS'] = []
+      # if sub_id not in subclasses_obj:
+      #   subclasses_obj[sub_id] = {}
+      #   subclasses_obj[sub_id]['COURSE_ID'] = create_objectid(course_id)
+      #   subclasses_obj[sub_id]['SUBCLASS_ID'] = create_objectid(sub_id)
+      #   subclasses_obj[sub_id]['TIMINGS'] = []
       subclasses_obj[sub_id]['STRM'] = datum['strm']
       subclasses_obj[sub_id]['YEAR'] = decode_strm(datum['strm'])[0]
       subclasses_obj[sub_id]['SEM'] = decode_strm(datum['strm'])[1]
