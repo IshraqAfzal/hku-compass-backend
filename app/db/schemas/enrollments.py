@@ -1,4 +1,4 @@
-enrollements_schema = {
+enrollments_schema = {
   "properties": {
     "COURSE_ID": {
       "bsonType": "objectId"
@@ -22,5 +22,5 @@ enrollements_schema = {
   ]
 }
 enrollments_validator = {
-  "$jsonSchema" : enrollements_schema
+  "$jsonSchema" : enrollments_schema
 }

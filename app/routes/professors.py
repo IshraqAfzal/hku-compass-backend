@@ -14,13 +14,13 @@ async def get_all(request: Request):
   return {'data' : data}
 
 @router.get("/get")
-async def get(request: Request, prof_code = Query(0)):
-  data = request.app.state.db.find('courses', {"PROF_ID" : create_objectid(prof_code)})
+async def get(request: Request, prof_id = Query(0)):
+  data = request.app.state.db.find('courses', {"PROF_ID" : create_objectid(prof_id)})
   return {'data' : data}
 
 @router.get("/get-reviews")
-async def get_reviews(request: Request, prof_code = Query(0)):
-  data = request.app.state.db.find('prof_reviews', {"PROF_ID" : create_objectid(prof_code)})
+async def get_reviews(request: Request, prof_id = Query(0)):
+  data = request.app.state.db.find('prof_reviews', {"PROF_ID" : create_objectid(prof_id)})
   for datum in data:
     # TODO: aggregate and fetch user data
     # TODO: aggregate and fetch instructor details
@@ -36,7 +36,7 @@ async def get_reviews(request: Request, prof_code = Query(0)):
   return {'data' : data}
 
 @router.get("/get-reviews-by-course")
-async def get_reviwews_by_course(request: Request, course_id = Query(0)):
+async def get_reviews_by_course(request: Request, course_id = Query(0)):
   data = request.app.state.db.find('prof_reviews', {"COURSE_ID" : create_objectid(course_id)})
   for datum in data:
     # TODO: aggregate and fetch user data
@@ -79,7 +79,7 @@ async def create_review(request: Request):
     success = request.app.state.db.update_one('course_reviews', {"USER_ID" : ObjectId(user_id), "COURSE_ID" : ObjectId(course_id), "PROF_ID" : ObjectId(prof_id)}, new_data, True)
     return {'data' : success}
 
-@router.get("/delete-review")
+@router.delete("/delete-review")
 async def delete_review(request: Request, id = Query(0)):
   success = request.app.state.db.delete_one('prof_reviews', {"_id" : ObjectId(id)})
   return {'data' : success}

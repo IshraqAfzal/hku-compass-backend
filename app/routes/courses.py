@@ -87,7 +87,7 @@ async def create_review(request: Request):
     success = request.app.state.db.update_one('prof_reviews', {"USER_ID" : ObjectId(user_id), "COURSE_ID" : ObjectId(course_id), "PROF_ID" : ObjectId(prof_id)}, new_data, True)
     return {'data' : success}
 
-@router.get("/delete-review")
+@router.delete("/delete-review")
 async def delete_review(request: Request, id = Query(0)):
   success = request.app.state.db.delete_one('course_reviews', {"_id" : ObjectId(id)})
   return {'data' : success}

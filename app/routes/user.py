@@ -20,9 +20,8 @@ async def update_user_data(request: Request):
     success = request.app.state.db.update_one('users', {"USER_ID" : ObjectId(user_id)}, new_data)
     return {'data' : success}
 
-@router.post("/extract-transcript-info")
-async def extract_transcript_info(request: Request):
+@router.post("/set-transcript-info")
+async def set_transcript_info(request: Request):
     pdf_file = await request.form()
-    pdf_text = request.app.state.models.transcript_parser(pdf_file)
-    transcript_info = extract_transcript_info(pdf_text)
-    return transcript_info
+    data = request.app.state.models.transcript_parser(pdf_file)
+    return {"data" : data}
