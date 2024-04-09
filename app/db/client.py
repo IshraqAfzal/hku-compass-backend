@@ -100,6 +100,23 @@ class MongoDBClient:
       logger.error("Database client " + self.name + ": Error in operation finding all objects from collection: " + collection + ". Error: " + str(e))
       return []
 
+  def find_one(self, collection, filter_obj):
+    db = self.client[self.db]
+    try:
+      col = db[collection]
+    except Exception as e:
+      logger.error("Database client " + self.name + ": Could not find collection: " + collection + ". Error: " + str(e))
+      return {}
+    try:
+      res = col.find(filter_obj)
+      data = json.loads(dumps(res))
+      if len(data) > 0:
+        return data[0]
+      return {}
+    except Exception as e:
+      logger.error("Database client " + self.name + ": Error in operation finding one object from collection: " + collection + ". Error: " + str(e))
+      return {}
+
   def clear(self, collection):
     db = self.client[self.db]
     try:

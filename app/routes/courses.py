@@ -18,9 +18,8 @@ async def get_all(request: Request):
 
 @router.get("/get")
 async def get(request: Request, course_code = Query(0)):
-  data = request.app.state.db.find('courses', {"COURSE_CODE" : course_code})
-  for i in data:
-    del i['ACAD_GROUP']
+  data = request.app.state.db.find_one('courses', {"COURSE_CODE" : course_code})
+  del data['ACAD_GROUP']
   return {'data' : data}
 
 @router.get("/get-subclasses")
@@ -69,7 +68,7 @@ async def get_reviews_by_user(request: Request, course_code = Query(0), user_id 
     # TODO: aggregate and fetch instructor details
     # Placeholder for mock data
     if course_code == "COMP3322":
-      prof = request.app.state.db.find('professors', {"PROF_ID" : create_objectid('atctam_cs')})[0]
+      prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
       # TODO: store it in the comment too?
       datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
   return {'data' : data}
@@ -83,7 +82,7 @@ async def get_all_reviews_bu_user_and_course_code(request: Request, course_code 
     # TODO: aggregate and fetch instructor details
     # Placeholder for mock data
     if course_code == "COMP3322":
-      prof = request.app.state.db.find('professors', {"PROF_ID" : create_objectid('atctam_cs')})[0]
+      prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
       # TODO: store it in the comment too?
       datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
   prof_reviews = request.app.state.db.find('prof_reviews', {"COURSE_CODE" : course_code, "_id" : ObjectId(user_id)})
@@ -93,7 +92,7 @@ async def get_all_reviews_bu_user_and_course_code(request: Request, course_code 
     # TODO: aggregate and fetch instructor details
     # Placeholder for mock data
     if course_code == "COMP3322":
-      prof = request.app.state.db.find('professors', {"PROF_ID" : create_objectid('atctam_cs')})[0]
+      prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
       # TODO: store it in the comment too?
       datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
   return {'data' : {

@@ -7,8 +7,8 @@ class UBA():
   def __init__(self) -> None:
     pass
 
-  def give_recommendations(self, title, courses):
-    overviews = [course['overview'] for course in courses]
+  def give_recommendations(self, title, courses, number):
+    overviews = [course['COURSE_DESCRIPTION'] for course in courses]
     
     # Vectorize the course overviews
     tfv = TfidfVectorizer(min_df=3, max_features=None,
@@ -22,7 +22,7 @@ class UBA():
     sig = sigmoid_kernel(tfv_matrix, tfv_matrix)
 
     # Map course titles to their indices
-    indices = {course['title']: idx for idx, course in enumerate(courses)}
+    indices = {course['COURSE_TITLE']: idx for idx, course in enumerate(courses)}
 
     # Get index of the input course title
     idx = indices[title]
@@ -30,9 +30,9 @@ class UBA():
     # Get sigmoid scores for courses
     sig_scores = list(enumerate(sig[idx]))
     sig_scores = sorted(sig_scores, key=lambda x: x[1], reverse=True)
-    sig_scores = sig_scores[1:6]  # Exclude the input course itself
+    sig_scores = sig_scores[1:number] if number < len(sig_scores) else sig_scores  # Exclude the input course itself
     course_indices = [i[0] for i in sig_scores]
-    recommended_courses = [courses[i]['title'] for i in course_indices]
+    recommended_courses = [courses[i] for i in course_indices]
 
     return recommended_courses
 

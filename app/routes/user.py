@@ -9,7 +9,7 @@ router = APIRouter(
 
 @router.get("/get-user-data")
 async def get_user_data(request: Request, user_id = Query(0)):
-  data = request.app.state.db.find('users', {"_id" : user_id})
+  data = request.app.state.db.find_one('users', {"_id" : user_id})
   return {'data' : data}
 
 @router.post("/update-user-data")

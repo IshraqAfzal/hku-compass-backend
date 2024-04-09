@@ -15,7 +15,7 @@ async def get_all(request: Request):
 
 @router.get("/get")
 async def get(request: Request, prof_id = Query(0)):
-  data = request.app.state.db.find('courses', {"PROF_ID" : create_objectid(prof_id)})
+  data = request.app.state.db.find_one('courses', {"PROF_ID" : create_objectid(prof_id)})
   return {'data' : data}
 
 @router.get("/get-reviews")
@@ -27,7 +27,7 @@ async def get_reviews(request: Request, prof_id = Query(0)):
     # TODO: aggregate and fetch instructor details
     # Placeholder for mock data
     if datum['COURSE_CODE'] == "COMP3322":
-      prof = request.app.state.db.find('professors', {"PROF_ID" : create_objectid('atctam_cs')})[0]
+      prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
       # TODO: store it in the comment too?
       datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
       datum['USER_FACULTY'] = "Engineering"
@@ -44,7 +44,7 @@ async def get_reviews_by_course(request: Request, course_code = Query(0)):
     # TODO: aggregate and fetch instructor details
     # Placeholder for mock data
     if course_code == "COMP3322":
-      prof = request.app.state.db.find('professors', {"PROF_ID" : create_objectid('atctam_cs')})[0]
+      prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
       # TODO: store it in the comment too?
       datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
       datum['USER_FACULTY'] = "Engineering"
@@ -61,7 +61,7 @@ async def get_reviews_by_user(request: Request, course_code = Query(0), user_id 
     # TODO: aggregate and fetch instructor details
     # Placeholder for mock data
     if course_code == "COMP3322":
-      prof = request.app.state.db.find('professors', {"PROF_ID" : create_objectid('atctam_cs')})[0]
+      prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
       # TODO: store it in the comment too?
       datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
       datum['USER_FACULTY'] = "Engineering"

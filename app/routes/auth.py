@@ -11,7 +11,7 @@ async def login(request: Request):
     form_data = await request.form()
     email = form_data.get("EMAIL")
     password = form_data.get("PASSWORD")
-    user = request.app.state.db.find('users', {"EMAIL" : email, "PASSWORD": password})
+    user = request.app.state.db.find_one('users', {"EMAIL" : email, "PASSWORD": password})
     return {"data" : user}
 
 @router.post("/does-user-exist")
