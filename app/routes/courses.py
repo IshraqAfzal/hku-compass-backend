@@ -42,6 +42,11 @@ async def get_sftl(request: Request, course_code = Query(0)):
   data = request.app.state.db.find('sftl', {"COURSE_CODE" : course_code})
   return {'data' : data}
 
+@router.get("/get-history")
+async def get_history(request: Request, course_code = Query(0)):
+  data = request.app.state.db.find('course_history', {"COURSE_CODE" : course_code})
+  return {'data' : data}
+
 @router.get("/get-reviews")
 async def get_reviews(request: Request,course_code = Query(0)):
   data = request.app.state.db.find('course_reviews', {"COURSE_CODE" : course_code})
