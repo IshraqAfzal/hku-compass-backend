@@ -108,11 +108,9 @@ class MongoDBClient:
       logger.error("Database client " + self.name + ": Could not find collection: " + collection + ". Error: " + str(e))
       return {}
     try:
-      res = col.find(filter_obj)
+      res = col.find_one(filter_obj)
       data = json.loads(dumps(res))
-      if len(data) > 0:
-        return data[0]
-      return {}
+      return data if data is not None else {}
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in operation finding one object from collection: " + collection + ". Error: " + str(e))
       return {}

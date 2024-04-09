@@ -2,8 +2,8 @@ from dotenv import load_dotenv
 from pathlib import Path
 from fastapi import FastAPI, Depends
 from fastapi.openapi.utils import get_openapi
-from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 
 from .routes import courses
 from .middleware.catchExceptions import ExceptionsMiddleware
