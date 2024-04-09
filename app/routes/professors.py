@@ -34,13 +34,13 @@ async def get_reviews(request: Request, prof_id = Query(0)):
     # TODO: aggregate and fetch user data
     # TODO: aggregate and fetch instructor details
     # Placeholder for mock data
-    if datum['COURSE_CODE'] == "COMP3322":
-      prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
+    # if datum['COURSE_CODE'] == "COMP3322":
+    #   prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
       # TODO: store it in the comment too?
-      datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
-      datum['USER_FACULTY'] = "Engineering"
-      datum['USER_DEPARTMENT'] = "Computer Science"
-      datum['USER_PROFILE_PIC'] = random.randint(0, 3)
+      # datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
+    datum['USER_FACULTY'] = "Engineering"
+    datum['USER_DEPARTMENT'] = "Computer Science"
+    datum['USER_PROFILE_PIC'] = random.randint(0, 3)
   return {'data' : data}
 
 @router.get("/get-reviews-by-course")
@@ -51,13 +51,13 @@ async def get_reviews_by_course(request: Request, course_code = Query(0)):
     # TODO: aggregate and fetch user data
     # TODO: aggregate and fetch instructor details
     # Placeholder for mock data
-    if course_code == "COMP3322":
-      prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
+    # if course_code == "COMP3322":
+      # prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
       # TODO: store it in the comment too?
-      datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
-      datum['USER_FACULTY'] = "Engineering"
-      datum['USER_DEPARTMENT'] = "Computer Science"
-      datum['USER_PROFILE_PIC'] = random.randint(0, 3)
+      # datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
+    datum['USER_FACULTY'] = "Engineering"
+    datum['USER_DEPARTMENT'] = "Computer Science"
+    datum['USER_PROFILE_PIC'] = random.randint(0, 3)
   return {'data' : data}
 
 @router.get("/get-reviews-by-user")
@@ -68,13 +68,13 @@ async def get_reviews_by_user(request: Request, course_code = Query(0), user_id 
     # TODO: aggregate and fetch user data
     # TODO: aggregate and fetch instructor details
     # Placeholder for mock data
-    if course_code == "COMP3322":
-      prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
+    # if course_code == "COMP3322":
+      # prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
       # TODO: store it in the comment too?
-      datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
-      datum['USER_FACULTY'] = "Engineering"
-      datum['USER_DEPARTMENT'] = "Computer Science"
-      datum['USER_PROFILE_PIC'] = random.randint(0, 3)
+      # datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
+    datum['USER_FACULTY'] = "Engineering"
+    datum['USER_DEPARTMENT'] = "Computer Science"
+    datum['USER_PROFILE_PIC'] = random.randint(0, 3)
   return {'data' : data}
 
 @router.post("/create-review")
