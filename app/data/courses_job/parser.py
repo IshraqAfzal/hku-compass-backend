@@ -49,6 +49,7 @@ def parse_json(data, logger):
       courses_obj[course_code]['CREDITS'] = int(datum['CRSE_UNITS']) if datum['CRSE_UNITS'] is not None else None
       # courses_obj[course_code]['ACAD_GROUP'] = datum['ACAD_GROUP']
       courses_obj[course_code]['FACULTY'] = datum['FACULTY_DESC']
+      history_obj[course_code]['INSTRUCTORS_PLACEHOLDER'] = datum['INSTRUCTOR_DISP']
       subclasses_obj[sub_code]['INSTRUCTORS_PLACEHOLDER'] = datum['INSTRUCTOR_DISP']
       courses_obj[course_code]['ENROLLMENT_REQUIREMENTS'] = datum['ENROLLMENT_REQUIREMENTS']
       # courses_obj[course_code]['ENROLLMENT_REQ_COURSES'] = []

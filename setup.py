@@ -1,2 +1,2 @@
-import nltk
-nltk.download('all')
+# import nltk
+# nltk.download('all')

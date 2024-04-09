@@ -12,6 +12,9 @@ course_history_schema = {
     "SEM": {
       "bsonType": "string"
     },
+    "INSTRUCTORS_PLACEHOLDER": {
+      "bsonType": "string",
+    },
     "INSTRUCTORS": {
       "bsonType": "array",
       "items": {
