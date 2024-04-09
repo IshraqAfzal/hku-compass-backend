@@ -50,12 +50,13 @@ def parse_json(data, logger):
       subclasses_obj[sub_code]['INSTRUCTORS_PLACEHOLDER'] = datum['INSTRUCTOR_DISP']
       courses_obj[course_code]['ENROLLMENT_REQUIREMENTS'] = datum['ENROLLMENT_REQUIREMENTS']
       # courses_obj[course_code]['ENROLLMENT_REQ_COURSES'] = []
-      courses_obj[course_code]['RATING'] = generate_random_number(1,5)
+      # TODO: rename the fields
       courses_obj[course_code]['RATING_COUNT'] = random.randint(10, 100)
-      courses_obj[course_code]['USEFULNESS'] = generate_random_number(1,5)
-      courses_obj[course_code]['GRADING'] = generate_random_number(1,5)
-      courses_obj[course_code]['WORKLOAD'] = generate_random_number(1,5)
-      courses_obj[course_code]['DIFFICULTY'] = generate_random_number(1,5)
+      courses_obj[course_code]['RATING'] = generate_random_number(1,5) * courses_obj[course_code]['RATING_COUNT']
+      courses_obj[course_code]['USEFULNESS'] = generate_random_number(1,5) * courses_obj[course_code]['RATING_COUNT']
+      courses_obj[course_code]['GRADING'] = generate_random_number(1,5) * courses_obj[course_code]['RATING_COUNT']
+      courses_obj[course_code]['WORKLOAD'] = generate_random_number(1,5) * courses_obj[course_code]['RATING_COUNT']
+      courses_obj[course_code]['DIFFICULTY'] = generate_random_number(1,5) * courses_obj[course_code]['RATING_COUNT']
       # if datum['ENROLLMENT_REQUIREMENTS'] is not None:
       #   courses_obj[course_code]['ENROLLMENT_REQ_COURSES'] = re.compile(r'\b[A-Z]{4}\d{4}\b').findall(datum['ENROLLMENT_REQUIREMENTS'])
       courses_obj[course_code]['COURSE_DESCRIPTION'] = datum['COURSE_DESCRIPTION']

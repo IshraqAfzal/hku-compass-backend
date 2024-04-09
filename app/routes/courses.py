@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Query
 from ..utils.data.create_objectid import create_objectid
-import random
+import random, threading
 from bson import ObjectId
 
 router = APIRouter(
@@ -14,12 +14,23 @@ async def get_all(request: Request):
   for i in data:
     del i["ACAD_GROUP"]
     del i["TNL"]
+    # TODO: change the naming of the fields
+    i["RATING"] /= i["RATING_COUNT"]
+    i["USEFULNESS"] /= i["RATING_COUNT"]
+    i["GRADING"] /= i["RATING_COUNT"]
+    i["WORKLOAD"] /= i["RATING_COUNT"]
+    i["DIFFICULTY"] /= i["RATING_COUNT"]
   return {'data' : data}
 
 @router.get("/get")
 async def get(request: Request, course_code = Query(0)):
   data = request.app.state.db.find_one('courses', {"COURSE_CODE" : course_code})
   del data['ACAD_GROUP']
+  data["RATING"] /= data["RATING_COUNT"]
+  data["USEFULNESS"] /= data["RATING_COUNT"]
+  data["GRADING"] /= data["RATING_COUNT"]
+  data["WORKLOAD"] /= data["RATING_COUNT"]
+  data["DIFFICULTY"] /= data["RATING_COUNT"]
   return {'data' : data}
 
 @router.get("/get-subclasses")
@@ -112,10 +123,40 @@ async def create_review(request: Request):
     course_code = form_data.get("COURSE_CODE")
     prof_id = form_data.get("PROF_ID")
     new_data = form_data.get("NEW_DATA")
-    success = request.app.state.db.update_one('course_reviews', {"USER_ID" : ObjectId(user_id), "COURSE_CODE" : course_code, "PROF_ID" : ObjectId(prof_id)}, new_data, True)
-    return {'data' : success}
+    # TODO: maybe use upsered_id instead?
+    old_data = request.app.state.db.find_one('course_reviews', {"USER_ID" : ObjectId(user_id), "COURSE_CODE" : course_code, "PROF_ID" : ObjectId(prof_id)})
+    if "RATING" not in old_data:
+      old_data = {
+        "RATING" : 0,
+        "USEFULNESS" : 0,
+        "GRADING" : 0,
+        "WORKLOAD" : 0,
+        "DIFFICULTY" : 0,
+        "RATING_COUNT" : new_data["RATING_COUNT"],
+      }
+    success_review = request.app.state.db.update_one('course_reviews', {"USER_ID" : ObjectId(user_id), "COURSE_CODE" : course_code, "PROF_ID" : ObjectId(prof_id)}, new_data, True)
+    success_course = request.app.state.db.update_one( 'courses', 
+                                                      {"COURSE_CODE" : course_code}, 
+                                                      {"$inc": {"RATING": new_data["RATING"] - old_data["RATING"], 
+                                                                "USEFULNESS": new_data["USEFULNESS"] - old_data["USEFULNESS"], 
+                                                                "GRADING": new_data["GRADING"] - old_data["GRADING"], 
+                                                                "WORKLOAD": new_data["WORKLOAD"] - old_data["WORKLOAD"], 
+                                                                "DIFFICULTY": new_data["DIFFICULTY"] - old_data["DIFFICULTY"], 
+                                                                "RATING_COUNT": new_data["RATING_COUNT"] - old_data["RATING_COUNT"], 
+                                                              }})
+    return {'data' : success_review and success_course}
 
 @router.delete("/delete-review")
 async def delete_review(request: Request, id = Query(0)):
-  success = request.app.state.db.delete_one('course_reviews', {"_id" : ObjectId(id)})
-  return {'data' : success}
+  old_data = request.app.state.db.find_one('course_reviews', {"_id" : ObjectId(id)})
+  success_review = request.app.state.db.delete_one('course_reviews', {"_id" : ObjectId(id)})
+  success_course = request.app.state.db.update_one( 'courses', 
+                                                    {"COURSE_CODE" : old_data["COURSE_CODE"]}, 
+                                                    {"$inc": {"RATING": 0 - old_data["RATING"], 
+                                                              "USEFULNESS": 0 - old_data["USEFULNESS"], 
+                                                              "GRADING": 0 - old_data["GRADING"], 
+                                                              "WORKLOAD": 0 - old_data["WORKLOAD"], 
+                                                              "DIFFICULTY": 0 - old_data["DIFFICULTY"], 
+                                                              "RATING_COUNT": 0 - old_data["RATING_COUNT"], 
+                                                            }})
+  return {'data' : success_course and success_review}
