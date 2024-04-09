@@ -1,7 +1,7 @@
 sftl_schema = {
   "properties": {
-    "COURSE_ID": {
-      "bsonType": "objectId"
+    "COURSE_CODE": {
+      "bsonType": "string"
     },
     "STRM": {
       "bsonType": "string"
@@ -26,7 +26,7 @@ sftl_schema = {
     }
   },
   "required": [
-    "COURSE_ID"
+    "COURSE_CODE"
   ]
 }
 sftl_validator = {

@@ -1,10 +1,10 @@
 enrollments_schema = {
   "properties": {
-    "COURSE_ID": {
-      "bsonType": "objectId"
+    "COURSE_CODE": {
+      "bsonType": "string"
     },
-    "SUBCLASS_ID": {
-      "bsonType": "objectId"
+    "SUBCLASS_CODE": {
+      "bsonType": "string"
     },
     "QUOTA": {
       "bsonType": ["int", "null"]
@@ -17,8 +17,8 @@ enrollments_schema = {
     },
   },
   "required": [
-    "COURSE_ID",
-    "SUBCLASS_ID"
+    "COURSE_CODE",
+    "SUBCLASS_CODE"
   ]
 }
 enrollments_validator = {

@@ -9,7 +9,7 @@ router = APIRouter(
 
 @router.get("/get-user-data")
 async def get_user_data(request: Request, user_id = Query(0)):
-  data = request.app.state.db.find('users', {"USER_ID" : user_id})
+  data = request.app.state.db.find('users', {"_id" : user_id})
   return {'data' : data}
 
 @router.post("/update-user-data")
@@ -17,7 +17,7 @@ async def update_user_data(request: Request):
     form_data = await request.form()
     user_id = form_data.get("USER_ID")
     new_data = form_data.get("NEW_DATA")
-    success = request.app.state.db.update_one('users', {"USER_ID" : ObjectId(user_id)}, new_data, True)
+    success = request.app.state.db.update_one('users', {"_id" : ObjectId(user_id)}, new_data, True)
     return {'data' : success}
 
 @router.post("/set-transcript-info")
@@ -35,7 +35,7 @@ async def set_transcript_info(request: Request):
         "IS_REVIEWED" : False
       } for course in courses]
     }
-    success = request.app.state.db.update_one('users', {"USER_ID" : ObjectId(user_id)}, data)
+    success = request.app.state.db.update_one('users', {"_id" : ObjectId(user_id)}, data)
     return {"data" : {
         "PARSED_DATA": parsed_pdf,
         "SUCCESS": success

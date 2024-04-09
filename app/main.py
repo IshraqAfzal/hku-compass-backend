@@ -37,7 +37,8 @@ async def lifespan(app: FastAPI):
     data_collection_job.stop()
     app.state.logger.info("Server stopped successfully.")
 
-app = FastAPI(lifespan=lifespan,     
+app = FastAPI(root_path="/api",
+            lifespan=lifespan,     
             docs_url=None,
             redoc_url=None,
             openapi_url = None)
@@ -46,14 +47,8 @@ app = FastAPI(lifespan=lifespan,
 async def openapi(username: str = Depends(docs.get_current_username)):
     return get_openapi(title=app.title, version=app.version, routes=app.routes)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins = origins,
-    allow_credentials = True,
-    allow_methods = ["*"],
-    allow_headers = ["*"]
-)
-app.add_middleware(ExceptionsMiddleware) # This has to be on top of all other middleware
+app.add_middleware(CORSMiddleware, allow_origins = origins, allow_credentials = True, allow_methods = ["*"], allow_headers = ["*"])
+app.add_middleware(ExceptionsMiddleware) # This has to be on top of all other middleware except cors
 app.add_middleware(ReqLogMiddleware)
 app.add_middleware(DBMiddleware)
 

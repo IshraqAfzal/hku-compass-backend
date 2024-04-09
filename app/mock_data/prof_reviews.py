@@ -3,7 +3,7 @@ import datetime
 
 mock_prof_reviews = [
   {
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f1"),
     "PROF_ID": ObjectId("00000061746374616d5f6373"),
     "SUBLCASS_CODE": "COMP3322-2B",
@@ -19,7 +19,7 @@ mock_prof_reviews = [
     "NOT_HELPFUL": 2
   },
   {
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f2"),
     "PROF_ID": ObjectId("00000061746374616d5f6373"),
     "SUBLCASS_CODE": "COMP3322-2B",
@@ -35,7 +35,7 @@ mock_prof_reviews = [
     "NOT_HELPFUL": 2
   },
   {
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f3"),
     "PROF_ID": ObjectId("00000061746374616d5f6373"),
     "SUBLCASS_CODE": "COMP3322-2B",
@@ -51,7 +51,7 @@ mock_prof_reviews = [
     "NOT_HELPFUL": 2
   },
   {
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f4"),
     "PROF_ID": ObjectId("00000061746374616d5f6373"),
     "SUBLCASS_CODE": "COMP3322-2B",
@@ -67,7 +67,7 @@ mock_prof_reviews = [
     "NOT_HELPFUL": 2
   },
   {
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f5"),
     "PROF_ID": ObjectId("00000061746374616d5f6373"),
     "SUBLCASS_CODE": "COMP3322-2B",
@@ -83,7 +83,7 @@ mock_prof_reviews = [
     "NOT_HELPFUL": 2
   },
   {
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f6"),
     "PROF_ID": ObjectId("00000061746374616d5f6373"),
     "SUBLCASS_CODE": "COMP3322-2B",
@@ -99,7 +99,7 @@ mock_prof_reviews = [
     "NOT_HELPFUL": 2
   },
   {
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f7"),
     "PROF_ID": ObjectId("00000061746374616d5f6373"),
     "SUBLCASS_CODE": "COMP3322-2B",
@@ -115,7 +115,7 @@ mock_prof_reviews = [
     "NOT_HELPFUL": 2
   },
   {
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f8"),
     "PROF_ID": ObjectId("00000061746374616d5f6373"),
     "SUBLCASS_CODE": "COMP3322-2B",

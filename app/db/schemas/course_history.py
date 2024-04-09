@@ -1,15 +1,9 @@
 course_history_schema = {
   "properties": {
-    "COURSE_ID": {
-      "bsonType": "objectId"
-    },
-    "CRSE_ID": {
+    "COURSE_CODE": {
       "bsonType": "string"
     },
     "STRM": {
-      "bsonType": "string"
-    },
-    "COURSE_CODE": {
       "bsonType": "string"
     },
     "INSTRUCTORS": {
@@ -28,7 +22,6 @@ course_history_schema = {
     }
   },
   "required": [
-    "COURSE_ID",
     "STRM",
     "COURSE_CODE"
   ]

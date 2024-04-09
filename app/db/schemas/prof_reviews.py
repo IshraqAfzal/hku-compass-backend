@@ -1,7 +1,7 @@
 prof_reviews_schema = {
   "properties": {
-    "COURSE_ID": {
-      "bsonType": "objectId"
+    "COURSE_CODE": {
+      "bsonType": "string"
     },
     "USER_ID": {
       "bsonType": "objectId"
@@ -41,7 +41,7 @@ prof_reviews_schema = {
     }
   },
   "required": [
-    "COURSE_ID",
+    "COURSE_CODE",
     "USER_ID",
     "PROF_ID",
     "ENGAGEMENT",

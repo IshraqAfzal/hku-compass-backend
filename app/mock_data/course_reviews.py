@@ -4,7 +4,7 @@ import datetime
 mock_course_reviews = [
   {
     "COMMENT": "Great practical approach! Loved getting hands-on experience with web development languages like PHP and JavaScript.",
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "DATETIME": datetime.datetime.now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
@@ -23,7 +23,7 @@ mock_course_reviews = [
   },
   {
     "COMMENT": "Appreciated the emphasis on staying current with industry trends. Learning about HTML5 and web services was particularly insightful.",
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "DATETIME": datetime.datetime.now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
@@ -42,7 +42,7 @@ mock_course_reviews = [
   },
   {
     "COMMENT": "Wished there was more focus on theoretical concepts behind internet protocols. Understanding the fundamentals would've been beneficial.",
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "DATETIME": datetime.datetime.now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
@@ -61,7 +61,7 @@ mock_course_reviews = [
   },
   {
     "COMMENT": "Found the heavy reliance on continuous assessment a bit overwhelming. It felt like a constant pressure to perform.",
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "DATETIME": datetime.datetime.now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
@@ -80,7 +80,7 @@ mock_course_reviews = [
   },
   {
     "COMMENT": "Meh, didn't like it.",
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "DATETIME": datetime.datetime.now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
@@ -99,7 +99,7 @@ mock_course_reviews = [
   },
   {
     "COMMENT": "Boring course.",
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "DATETIME": datetime.datetime.now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
@@ -118,7 +118,7 @@ mock_course_reviews = [
   },
   {
     "COMMENT": "GET RICH QUICK! Learn web development with our super-secret techniques and become a millionaire overnight! Click here for more info! $$$",
-    "COURSE_ID": ObjectId("000000000000303330383337"),
+    "COURSE_CODE": "COMP3322",
     "DATETIME": datetime.datetime.now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,

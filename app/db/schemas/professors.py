@@ -2,7 +2,7 @@ professors_schema = {
   "title": "professors",
   "properties": {
     "PROF_ID": {
-      "bsonType": "objectId"
+      "bsonType": "objectId" #TODO: Make this string as well
     },
     "FULLNAME": {
       "bsonType": "string"

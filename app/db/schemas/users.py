@@ -1,8 +1,5 @@
 users_schema = {
   "properties": {
-    "USER_ID": {
-      "bsonType": "objectId"
-    },
     "EMAIL": {
       "bsonType": "string"
     },
@@ -47,9 +44,6 @@ users_schema = {
       "items": {
         "bsonType": "object",
         "properties": {
-          "COURSE_ID": {
-            "bsonType": "objectId"
-          },
           "COURSE_CODE": {
             "bsonType": "string"
           },
@@ -91,7 +85,6 @@ users_schema = {
     },
   },
   "required": [
-    "USER_ID",
     "EMAIL",
     "FULLNAME"
   ]

@@ -1,12 +1,9 @@
 subclasses_schema = {
   "properties": {
-    "SUBCLASS_ID": {
-      "bsonType": "objectId"
+    "SUBCLASS_CODE": {
+      "bsonType": "string"
     },
-    "COURSE_ID": {
-      "bsonType": "objectId"
-    },
-    "STRM": {
+    "COURSE_CODE": {
       "bsonType": "string"
     },
     "YEAR": {
@@ -32,7 +29,7 @@ subclasses_schema = {
     "INSTRUCTORS_PLACEHOLDER": {
       "bsonType": "string",
     },
-    "SUBCLASS_CODE": {
+    "SUBCLASS": {
       "bsonType": "string"
     },
     "TIMINGS": {
@@ -57,9 +54,9 @@ subclasses_schema = {
     }
   },
   "required": [
-    "SUBCLASS_ID",
-    "COURSE_ID",
-    "SUBCLASS_CODE"
+    "SUBCLASS_CODE",
+    "COURSE_CODE",
+    "SUBCLASS"
   ]
 }
 subclasses_validator = {

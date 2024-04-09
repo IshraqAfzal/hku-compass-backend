@@ -8,7 +8,7 @@ def push_mock_data(logger, db):
     course_reviews = mock_course_reviews
     course_reviews_update_operations = [
       UpdateOne(
-          {"USER_ID": obj["USER_ID"], "COURSE_ID" : obj["COURSE_ID"]},
+          {"USER_ID": obj["USER_ID"], "COURSE_CODE" : obj["COURSE_CODE"]},
           {"$set": obj},
           upsert=True
       )
@@ -18,7 +18,7 @@ def push_mock_data(logger, db):
     prof_reviews = mock_prof_reviews
     prof_reviews_update_operations = [
       UpdateOne(
-          {"USER_ID": obj["USER_ID"], "COURSE_ID" : obj["COURSE_ID"]},
+          {"USER_ID": obj["USER_ID"], "COURSE_CODE" : obj["COURSE_CODE"]},
           {"$set": obj},
           upsert=True
       )

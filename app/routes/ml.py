@@ -11,9 +11,9 @@ router = APIRouter(
 @router.post("/sort-by-relevance-for-course")
 async def sort_by_relevance_for_course(request: Request):
     form_data = await request.form()
-    course_id = form_data.get("COURSE_ID")
+    course_code = form_data.get("COURSE_CODE")
     reviews = form_data.get("REVIEWS")
-    course = request.app.state.db.find('courses', {"COURSE_ID" : ObjectId(course_id)})
+    course = request.app.state.db.find('courses', {"COURSE_CODE" : course_code})
     if len(course) != 1:
         return {'data' : reviews}
     description = course[0]["DESCRIPTION"]
