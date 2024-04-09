@@ -37,9 +37,9 @@ async def lifespan(app: FastAPI):
     data_collection_job.stop()
     app.state.logger.info("Server stopped successfully.")
 
-app = FastAPI(lifespan=lifespan,     
-            docs_url=None,
-            redoc_url=None,
+app = FastAPI(lifespan = lifespan,     
+            docs_url = None,
+            redoc_url = None,
             openapi_url = None)
 
 @app.get("/openapi.json", include_in_schema=False)
