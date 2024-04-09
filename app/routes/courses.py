@@ -12,9 +12,10 @@ router = APIRouter(
 async def get_all(request: Request):
   data = request.app.state.db.find_all('courses')
   for i in data:
-    del i["ACAD_GROUP"]
     del i["TNL"]
     # TODO: change the naming of the fields
+    # TODO: check the case for 0 ratings
+    # TODO: check why its returning an int
     i["RATING"] /= i["RATING_COUNT"]
     i["USEFULNESS"] /= i["RATING_COUNT"]
     i["GRADING"] /= i["RATING_COUNT"]
@@ -25,7 +26,6 @@ async def get_all(request: Request):
 @router.get("/get")
 async def get(request: Request, course_code = Query(0)):
   data = request.app.state.db.find_one('courses', {"COURSE_CODE" : course_code})
-  del data['ACAD_GROUP']
   data["RATING"] /= data["RATING_COUNT"]
   data["USEFULNESS"] /= data["RATING_COUNT"]
   data["GRADING"] /= data["RATING_COUNT"]

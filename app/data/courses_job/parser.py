@@ -39,6 +39,8 @@ def parse_json(data, logger):
         subclasses_obj[sub_code]['TIMINGS'] = []
       # courses_obj[course_code]['STRM'] = datum['STRM']
       history_obj[course_code]['STRM'] = datum['STRM']
+      history_obj[course_code]['YEAR'] = decode_strm(datum['STRM'])[0]
+      history_obj[course_code]['SEM'] = decode_strm(datum['STRM'])[1]
       # courses_obj[course_code]['COURSE_CODE'] = datum['SUBJECT_AREA'] + datum['CATALOG_NBR']
       # history_obj[course_code]['COURSE_CODE'] = datum['SUBJECT_AREA'] + datum['CATALOG_NBR']
       # courses_obj[course_code]['SUBJECT_AREA'] = datum['SUBJECT_AREA']
