@@ -1,14 +1,5 @@
-from fastapi import APIRouter
-from selenium import webdriver
 from ....utils.data.create_driver import create_driver
-from .cs import router as csRouter, collect as csCollect
-
-router = APIRouter(
-  prefix="/engineering",
-  tags=["Professor Data Collection - Faculty of Engineering"]
-)
-
-router.include_router(csRouter)
+from .cs import collect as csCollect
 
 def job(db, logger):
   logger.info("ENGG Job: Starting ENGG Job.")

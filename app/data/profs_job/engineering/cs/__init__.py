@@ -1,13 +1,5 @@
-from fastapi import APIRouter
 from .professors import collect_prof_data
 from .db import write
-
-router = APIRouter(
-  prefix="/cs",
-  tags=["Professor Data Collection - Faculty of Engineering - Department of Computer Science"]
-)
-
-last_profs = []
 
 def collect(db, logger, driver):
   global last_profs
@@ -19,8 +11,4 @@ def collect(db, logger, driver):
   logger.info("Prof data for CS: starting write")
   write(db, logger, prof_data)
   logger.info("CS Job completed")
-
-@router.get("/profs")
-async def profs():
-  return last_profs
 

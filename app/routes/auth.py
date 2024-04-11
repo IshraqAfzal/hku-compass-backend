@@ -1,40 +1,39 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 from ..utils.data.create_objectid import create_objectid
+from pydantic import BaseModel
+from typing import Union
 
 router = APIRouter(
-  prefix="/auth",
-  tags=["Authentication"]
+  prefix = "/auth",
+  tags = ["Authentication"]
 )
 
+@router.get("/does-user-exist")
+async def does_user_exist(request : Request, email : str = "test@hku.hk"):
+  user = request.app.state.db.find("users", {"EMAIL" : email})
+  return len(user) == 1
+
+class LoginModel(BaseModel):
+  EMAIL : str
+  PASSWORD : str
+
 @router.post("/login")
-async def login(request: Request):
-    form_data = await request.form()
-    email = form_data.get("EMAIL")
-    password = form_data.get("PASSWORD")
-    user = request.app.state.db.find_one('users', {"EMAIL" : email, "PASSWORD": password})
-    return {"data" : user}
-
-@router.post("/does-user-exist")
-async def does_user_exist(request: Request):
-    form_data = await request.form()
-    email = form_data.get("EMAIL")
-    user = request.app.state.db.find('users', {"EMAIL" : email})
-    exists = len(user) == 0
-    return {"data" : exists}
-
-@router.post("/register")
-async def register(request: Request):
-    form_data = await request.form()
-    user_data = form_data.get('USER_DATA')
-    success = request.app.state.db.update_one('users', {"_id" : create_objectid("Dummy")}, user_data, True)
-    return {"data" : success}
+async def login(data : LoginModel, request : Request):
+  data = BaseModel.model_dump(data)
+  user = request.app.state.db.find_one("users", {"EMAIL" : data["EMAIL"], "PASSWORD" : data["PASSWORD"]})
+  return {"LOGIN_STATUS" : "EMAIL" in user , "USER_DATA" : user}
 
 @router.post("/change-password")
-async def change_password(request: Request):
-    form_data = await request.form()
-    email = form_data.get("EMAIL")
-    password = form_data.get("PASSWORD")
-    success = request.app.state.db.update_one('users', {"EMAIL" : email}, {
-      'PASSWORD' : password
-    })
-    return {"data" : success}
+async def change_password(request: Request, data : LoginModel):
+  data = BaseModel.model_dump(data)
+  success = request.app.state.db.update_one('users', {"EMAIL" : data["EMAIL"]}, {'PASSWORD' : data["PASSWORD"]})
+  return success
+
+class RegisterModel(LoginModel):
+  FULLNAME : str
+
+@router.post("/register")
+async def register(request: Request, data : RegisterModel):
+  user_data = BaseModel.model_dump(data)
+  success = request.app.state.db.update_one('users', {}, user_data, True)
+  return success

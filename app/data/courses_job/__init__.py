@@ -1,22 +1,11 @@
 import random
 import requests
-from fastapi import APIRouter
 from pymongo import UpdateOne
 from ...utils.data.create_driver import create_driver
 from ...utils.data.strm import calculate_strm
 from ...constants.data import acad_groups
 from .token import get_bearer_token
 from .parser import parse_json
-
-router = APIRouter(
-  prefix="/courses_job",
-  tags=["Course Data Collection"]
-)
-
-last_courses = []
-last_subclasses = []
-last_sftl = []
-last_enrollments = []
 
 # TODO: Maybe add a toggle for the loggin?
 
@@ -121,21 +110,5 @@ def get_response(logger, strm, acad_group, bearer_token):
   else:
     logger.error("Error in fetching from the API, server responded with status " + str(res.status_code))
   return (token, data)
-
-@router.get("/courses")
-async def courses():
-    return last_courses
-
-@router.get("/subclasses")
-async def subclasses():
-    return last_subclasses
-
-@router.get("/sftl")
-async def sftl():
-    return last_sftl
-
-@router.get("/enrollments")
-async def enrollments():
-    return last_enrollments
 
 

@@ -67,7 +67,7 @@ async def get_history(request: Request, course_code = Query(0)):
 async def get_reviews(request: Request,course_code = Query(0)):
   data = request.app.state.db.find('course_reviews', {"COURSE_CODE" : course_code})
   data = [ datum for datum in data if datum["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(datum["COMMENT"]))]
-  for datum in data:
+  # for datum in data:
     # TODO: aggregate and fetch user data
     # TODO: aggregate and fetch instructor details
     # Placeholder for mock data
@@ -75,9 +75,9 @@ async def get_reviews(request: Request,course_code = Query(0)):
       # prof = request.app.state.db.find('professors', {"PROF_ID" : create_objectid('atctam_cs')})[0]
       # TODO: store it in the comment too?
       # datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
-    datum['USER_FACULTY'] = "Engineering"
-    datum['USER_DEPARTMENT'] = "Computer Science"
-    datum['USER_PROFILE_PIC'] = random.randint(0, 3)
+    # datum['USER_FACULTY'] = "Engineering"
+    # datum['USER_DEPARTMENT'] = "Computer Science"
+    # datum['USER_PROFILE_PIC'] = random.randint(0, 3)
   return {'data' : data}
 
 @router.get("/get-reviews-by-user")

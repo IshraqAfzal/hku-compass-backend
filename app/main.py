@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 from pathlib import Path
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException, Request
+from fastapi.responses import JSONResponse
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -11,8 +12,7 @@ from .middleware.requestLogging import ReqLogMiddleware
 from .logs.logger import get_logger
 from .middleware.dbConnectivity import DBMiddleware
 from .db.client import MongoDBClient
-from .routes import test, courses, docs, utils, mock, auth, user, professors
-from .data import router as dataRouter
+from .routes import test, courses, docs, utils, mock, auth, user, professors, ml
 from .data.data_collection_job import DataJob
 from .models.ml_models import MLModels
 
@@ -22,7 +22,7 @@ origins = ["*"]
 logger = get_logger()
 server_db_instance = MongoDBClient(name='SERVER-DB')
 data_collection_job = DataJob(logger, server_db_instance)
-ml_models = MLModels()
+ml_models = MLModels(server_db_instance)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -51,12 +51,12 @@ app.add_middleware(ExceptionsMiddleware) # This has to be on top of all other mi
 app.add_middleware(ReqLogMiddleware)
 app.add_middleware(DBMiddleware)
 
-app.include_router(dataRouter)
-app.include_router(test.router) 
-app.include_router(courses.router) 
-app.include_router(professors.router) 
-app.include_router(docs.router) 
-app.include_router(utils.router) 
-app.include_router(mock.router)
 app.include_router(auth.router) 
+app.include_router(courses.router) 
+app.include_router(docs.router) 
+app.include_router(ml.router) 
+app.include_router(mock.router)
+app.include_router(professors.router) 
+app.include_router(test.router) 
 app.include_router(user.router) 
+app.include_router(utils.router) 

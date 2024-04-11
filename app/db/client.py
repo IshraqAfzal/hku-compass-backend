@@ -15,6 +15,8 @@ from ..logs.logger import logger
 from bson.json_util import dumps
 import json
 
+# TODO: raise exceptions vs returning values? Using HTTP exception
+
 class MongoDBClient:
   def __init__(self, name = str(uuid.uuid1)):
     self.name = name

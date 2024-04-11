@@ -7,5 +7,5 @@ class ExceptionsMiddleware(BaseHTTPMiddleware):
         try:
             return await call_next(request)
         except Exception as e:
-            request.state.logger.exception(e)
-            return Response("Internal server error", status_code=500)
+            request.state.logger.error(e)
+            return Response("Internal server error: " + str(e), status_code=500)
