@@ -14,7 +14,7 @@ mock_prof_reviews = [
     "YEAR": "2023-24",
     "SEM": "2",
     "IS_VERIFIED": True,
-    "RATING": 5,
+    "RATING": 5.0,
     "HELPFUL": 10,
     "NOT_HELPFUL": 2
   },
@@ -30,7 +30,7 @@ mock_prof_reviews = [
     "YEAR": "2023-24",
     "SEM": "2",
     "IS_VERIFIED": True,
-    "RATING": 5,
+    "RATING": 5.0,
     "HELPFUL": 10,
     "NOT_HELPFUL": 2
   },
@@ -46,7 +46,7 @@ mock_prof_reviews = [
     "YEAR": "2023-24",
     "SEM": "2",
     "IS_VERIFIED": True,
-    "RATING": 5,
+    "RATING": 5.0,
     "HELPFUL": 10,
     "NOT_HELPFUL": 2
   },
@@ -62,7 +62,7 @@ mock_prof_reviews = [
     "YEAR": "2023-24",
     "SEM": "2",
     "IS_VERIFIED": True,
-    "RATING": 5,
+    "RATING": 5.0,
     "HELPFUL": 10,
     "NOT_HELPFUL": 2
   },
@@ -78,7 +78,7 @@ mock_prof_reviews = [
     "YEAR": "2023-24",
     "SEM": "2",
     "IS_VERIFIED": True,
-    "RATING": 5,
+    "RATING": 5.0,
     "HELPFUL": 10,
     "NOT_HELPFUL": 2
   },
@@ -94,7 +94,7 @@ mock_prof_reviews = [
     "YEAR": "2023-24",
     "SEM": "2",
     "IS_VERIFIED": True,
-    "RATING": 5,
+    "RATING": 5.0,
     "HELPFUL": 10,
     "NOT_HELPFUL": 2
   },
@@ -110,7 +110,7 @@ mock_prof_reviews = [
     "YEAR": "2023-24",
     "SEM": "2",
     "IS_VERIFIED": True,
-    "RATING": 5,
+    "RATING": 5.0,
     "HELPFUL": 10,
     "NOT_HELPFUL": 2
   },
@@ -126,7 +126,7 @@ mock_prof_reviews = [
     "YEAR": "2023-24",
     "SEM": "2",
     "IS_VERIFIED": True,
-    "RATING": 5,
+    "RATING": 5.0,
     "HELPFUL": 10,
     "NOT_HELPFUL": 2
   }

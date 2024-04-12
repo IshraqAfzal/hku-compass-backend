@@ -50,7 +50,7 @@ def get_prof_info(driver, url):
   ret["DEPARTMENT"] = "Computer Science"
   ret["PROF_ID"] = create_objectid(ret["EMAIL"].split("@")[0] + "_" + ret["EMAIL"].split("@")[1].split(".")[0])
   ret['RATING_COUNT'] = random.randint(10, 100)
-  ret["ENGAGEMENT"] = generate_random_number(1,5) * ret["ENGAGEMENT"]
-  ret["CLARITY"] = generate_random_number(1,5) * ret["ENGAGEMENT"]
-  ret['RATING'] = generate_random_number(1,5) * ret["ENGAGEMENT"]
+  ret["ENGAGEMENT"] = generate_random_number(1,5) * ret["RATING_COUNT"]
+  ret["CLARITY"] = generate_random_number(1,5) * ret["RATING_COUNT"]
+  ret['RATING'] = generate_random_number(1,5) * ret["RATING_COUNT"]
   return ret

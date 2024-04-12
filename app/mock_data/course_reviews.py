@@ -14,7 +14,7 @@ mock_course_reviews = [
     "PROF_IDS": [
       ObjectId("00000061746374616d5f6373")
     ],
-    "RATING": 4,
+    "RATING": 4.0,
     "SEM": "1",
     "USEFULNESS": 4.0,
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f1"),
@@ -33,7 +33,7 @@ mock_course_reviews = [
     "PROF_IDS": [
       ObjectId("00000061746374616d5f6373")
     ],
-    "RATING": 4,
+    "RATING": 4.0,
     "SEM": "1",
     "USEFULNESS": 4.0,
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f2"),
@@ -52,7 +52,7 @@ mock_course_reviews = [
     "PROF_IDS": [
       ObjectId("00000061746374616d5f6373")
     ],
-    "RATING": 4,
+    "RATING": 4.0,
     "SEM": "1",
     "USEFULNESS": 4.0,
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f3"),
@@ -71,7 +71,7 @@ mock_course_reviews = [
     "PROF_IDS": [
       ObjectId("00000061746374616d5f6373")
     ],
-    "RATING": 4,
+    "RATING": 4.0,
     "SEM": "1",
     "USEFULNESS": 4.0,
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f4"),
@@ -90,7 +90,7 @@ mock_course_reviews = [
     "PROF_IDS": [
       ObjectId("00000061746374616d5f6373")
     ],
-    "RATING": 4,
+    "RATING": 4.0,
     "SEM": "1",
     "USEFULNESS": 4.0,
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f5"),
@@ -109,7 +109,7 @@ mock_course_reviews = [
     "PROF_IDS": [
       ObjectId("00000061746374616d5f6373")
     ],
-    "RATING": 4,
+    "RATING": 4.0,
     "SEM": "1",
     "USEFULNESS": 4.0,
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f6"),
@@ -128,7 +128,7 @@ mock_course_reviews = [
     "PROF_IDS": [
       ObjectId("00000061746374616d5f6373")
     ],
-    "RATING": 4,
+    "RATING": 4.0,
     "SEM": "1",
     "USEFULNESS": 4.0,
     "USER_ID": ObjectId("5f94a577fcaee5e5f36dc0f7"),

@@ -7,7 +7,7 @@ router = APIRouter(
   tags=["Mock Data"]
 )
 
-@router.get("/pushMockReviews")
+@router.get("/push-mock-reviews")
 async def push_mock_reviews(request: Request, background_tasks: BackgroundTasks):
   time = str(datetime.datetime.now())
   background_tasks.add_task(push_mock_data, request.app.state.logger, request.app.state.db)

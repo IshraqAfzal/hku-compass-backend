@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Request, Query
 from ..utils.data.create_objectid import create_objectid
 from bson import ObjectId
+from pydantic import BaseModel, ConfigDict
+from typing import Optional, List
 
 router = APIRouter(
   prefix="/user",
@@ -8,35 +10,66 @@ router = APIRouter(
 )
 
 @router.get("/get-user-data")
-async def get_user_data(request: Request, user_id = Query(0)):
-  data = request.app.state.db.find_one('users', {"_id" : user_id})
-  return {'data' : data}
+async def get_user_data(request: Request, user_id = "0000000000000044756d6d79"):
+  user = request.app.state.db.find_one('users', {"_id" : ObjectId(user_id)})
+  return user
+
+user_model_test = {
+  "USER_ID" : "0000000000000044756d6d79",
+  "EMAIL" : "test@hku.hk",
+  "IS_ONBOARDED" : False
+}
+
+class CourseHistoryModel(BaseModel):
+  COURSE_CODE : str
+  YEAR : str
+  SEM : str
+  IS_REVIEWED : bool
+
+class UserUpdateModel(BaseModel):
+  USER_ID : str
+  EMAIL : str
+  FULLNAME : Optional[str] = None
+  DEGREE : Optional[str] = None
+  YEAR_OF_STUDY : Optional[str] = None 
+  MAJORS : Optional[List[str]] = None
+  MINORS : Optional[List[str]]  = None
+  COURSE_HISTORY : Optional[List[CourseHistoryModel]] = None
+  BOOKMARKS : Optional[List[str]] = None
+  CART : Optional[List[str]] = None
+  IS_ONBOARDED : Optional[bool] = None
+  model_config = ConfigDict(
+    arbitrary_types_allowed = True,
+    json_encoders={ObjectId: str},
+    json_schema_extra={
+      "example": user_model_test
+    },
+  )
 
 @router.post("/update-user-data")
-async def update_user_data(request: Request):
-    form_data = await request.form()
-    user_id = form_data.get("USER_ID")
-    new_data = form_data.get("NEW_DATA")
-    success = request.app.state.db.update_one('users', {"_id" : ObjectId(user_id)}, new_data, True)
-    return {'data' : success}
+async def update_user_data(request: Request, user : UserUpdateModel):
+  user = BaseModel.model_dump(user)
+  user["_id"] = ObjectId(user["USER_ID"])
+  del user["USER_ID"]
+  keys = [key for key in user]
+  for key in keys:
+    if user[key] is None:
+      del user[key]
+  success = request.app.state.db.update_one('users', {"_id" : user["_id"]}, user)
+  return success
 
 @router.post("/set-transcript-info")
-async def set_transcript_info(request: Request):
-    form_data = await request.form()
-    user_id = form_data.get("USER_ID")
-    pdf_file = form_data.get("PDF")
-    parsed_pdf = request.app.state.models.transcript_parser(pdf_file)
-    courses = parsed_pdf["Courses"]
-    data = {
-      "COURSE_HISTORY" : [{
-        "COURSE_CODE" : course['Course Code'].split(" ")[0] + course['Course Code'].split(" ")[1],
-        "YEAR" : course["Term"].split(" ")[0],
-        "SEM" : course["Grade"],
-        "IS_REVIEWED" : False
-      } for course in courses]
-    }
-    success = request.app.state.db.update_one('users', {"_id" : ObjectId(user_id)}, data)
-    return {"data" : {
-        "PARSED_DATA": parsed_pdf,
-        "SUCCESS": success
-    }}
+async def set_transcript_info(request: Request, user_id):
+  pdf_file = await request.form()
+  parsed_pdf = request.app.state.models.transcript_parser(pdf_file)
+  courses = parsed_pdf["Courses"]
+  course_history = {
+    "COURSE_HISTORY" : [{
+      "COURSE_CODE" : course['Course Code'].split(" ")[0] + course['Course Code'].split(" ")[1],
+      "YEAR" : course["Term"].split(" ")[0],
+      "SEM" : course["Grade"],
+      "IS_REVIEWED" : False
+    } for course in courses]
+  }
+  success = request.app.state.db.update_one('users', {"_id" : ObjectId(user_id)}, course_history)
+  return {"PARSED_DATA": parsed_pdf, "SUCCESS": success}

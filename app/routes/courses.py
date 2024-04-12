@@ -5,18 +5,17 @@ from bson import ObjectId
 from pydantic import BaseModel, ConfigDict
 from typing import List, Any
 from pymongo import UpdateOne
-import datetime
+import datetime, random
 
 # TODO: For reviews
 # TODO: aggregate and fetch user data
 # TODO: aggregate and fetch instructor details
+# TODO: pur routes and types in seperate folders and different files
 
 # TODO: For create-reviews
 # TODO: maybe use upserted_id instead?
 # TODO: use HTTP errors for all
 # TODO: use a pipeline instead
-
-
 
 router = APIRouter(
   prefix="/courses",
@@ -33,7 +32,7 @@ async def get_all(request: Request):
     course["GRADING"] /= float(course["RATING_COUNT"])
     course["WORKLOAD"] /= float(course["RATING_COUNT"])
     course["DIFFICULTY"] /= float(course["RATING_COUNT"])
-  return {"COURSES" : courses}
+  return courses
 
 @router.get("/get")
 async def get(request: Request, course_code = "COMP3322"):
@@ -43,7 +42,7 @@ async def get(request: Request, course_code = "COMP3322"):
   course["GRADING"] /= float(course["RATING_COUNT"])
   course["WORKLOAD"] /= float(course["RATING_COUNT"])
   course["DIFFICULTY"] /= float(course["RATING_COUNT"])
-  return {"COURSE_DETAILS" : course}
+  return course
 
 @router.get("/get-subclasses")
 async def get_subclasses(request: Request, course_code = "COMP3322"):
@@ -53,12 +52,12 @@ async def get_subclasses(request: Request, course_code = "COMP3322"):
     "SUBCLASSES" : subclasses,
     "ENROLLMENTS" : enrollments
   }
-  return {"SUBCLASSES" : data}
+  return data
 
 @router.get("/get-sftl")
 async def get_sftl(request: Request, course_code = "COMP3322"):
   sftl = request.app.state.db.find("sftl", {"COURSE_CODE" : course_code})
-  return {"SFTL" : sftl}
+  return sftl
 
 @router.get("/get-history")
 async def get_history(request: Request, course_code = "COMP3322"):
@@ -74,9 +73,12 @@ async def get_history(request: Request):
 async def get_reviews(request: Request, course_code = "COMP3322"):
   reviews = request.app.state.db.find("course_reviews", {"COURSE_CODE" : course_code})
   reviews = [review for review in reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
-  if course_code == "COMP3322":
-    for review in reviews:
+  for review in reviews:
+    if course_code == "COMP3322":
       review["INSTRUCTOR_NAME"] = "Tam Tat Chun"
+    review["USER_DEPARTMENT"] = "Computer Science"
+    review["USER_FACULTY"] = "Engineering"
+    review["USER_PROFILE_PIC"] = random.randint(1,3)
   return reviews
 
 @router.get("/get-reviews-by-user")
@@ -133,7 +135,7 @@ class ReviewModel(BaseModel):
   )
 
 @router.post("/create-or-update-review")
-async def create_or_update_review(request: Request, data : ReviewModel = review_model_test):
+async def create_or_update_review(request: Request, data : ReviewModel):
   given_review = BaseModel.model_dump(data)
   given_review["DATETIME"] = datetime.datetime.now()
   given_review["USER_ID"] = ObjectId(given_review["USER_ID"])

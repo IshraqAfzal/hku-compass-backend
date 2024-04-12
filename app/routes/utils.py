@@ -14,7 +14,6 @@ router = APIRouter(
 async def trigger_general_courses_job(request: Request, background_tasks: BackgroundTasks):
   time = str(datetime.datetime.now())
   background_tasks.add_task(general_courses_job, request.app.state.logger, request.app.state.db)
-  # await general_courses_job(request.app.state.logger, request.app.state.db)
   return "Job started at time " + time + ", check server logs for state."
 
 @router.get("/trigger-prof-job-cs")

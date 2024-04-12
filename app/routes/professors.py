@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Request, Query
 from ..utils.data.create_objectid import create_objectid
-import random
+import random, datetime
 from bson import ObjectId
+from pydantic import BaseModel, ConfigDict
+from typing import List, Any
 
 router = APIRouter(
   prefix="/professors",
@@ -10,108 +12,117 @@ router = APIRouter(
 
 @router.get("/get-all")
 async def get_all(request: Request):
-  data = request.app.state.db.find_all('professors')
-  for i in data:
-    # TODO: change the naming of the fields
-    i["RATING"] /= i["RATING_COUNT"]
-    i["CLARITY"] /= i["RATING_COUNT"]
-    i["ENGAGEMENT"] /= i["RATING_COUNT"]
-  return {'data' : data}
+  professors = request.app.state.db.find_all("professors")
+  for professor in professors:
+    professor["RATING"] /= professor["RATING_COUNT"]
+    professor["CLARITY"] /= professor["RATING_COUNT"]
+    professor["ENGAGEMENT"] /= professor["RATING_COUNT"]
+  return professors
 
 @router.get("/get")
-async def get(request: Request, prof_id = Query(0)):
-  data = request.app.state.db.find_one('courses', {"PROF_ID" : create_objectid(prof_id)})
-  data["RATING"] /= data["RATING_COUNT"]
-  data["CLARITY"] /= data["RATING_COUNT"]
-  data["ENGAGEMENT"] /= data["RATING_COUNT"]
-  return {'data' : data}
+async def get(request: Request, prof_id = 'atctam_cs'):
+  professor = request.app.state.db.find_one("professors", {"PROF_ID" : create_objectid(prof_id)})
+  professor["RATING"] /= float(professor["RATING_COUNT"])
+  professor["CLARITY"] /= float(professor["RATING_COUNT"])
+  professor["ENGAGEMENT"] /= float(professor["RATING_COUNT"])
+  return professor
 
 @router.get("/get-reviews")
-async def get_reviews(request: Request, prof_id = Query(0)):
-  data = request.app.state.db.find('prof_reviews', {"PROF_ID" : create_objectid(prof_id)})
-  data = [ datum for datum in data if datum["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(datum["COMMENT"]))]
-  for datum in data:
-    # TODO: aggregate and fetch user data
-    # TODO: aggregate and fetch instructor details
-    # Placeholder for mock data
-    # if datum['COURSE_CODE'] == "COMP3322":
-    #   prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
-      # TODO: store it in the comment too?
-      # datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
-    datum['USER_FACULTY'] = "Engineering"
-    datum['USER_DEPARTMENT'] = "Computer Science"
-    datum['USER_PROFILE_PIC'] = random.randint(0, 3)
-  return {'data' : data}
+async def get_reviews(request: Request, prof_id = "atctam_cs"):
+  reviews = request.app.state.db.find("prof_reviews", {"PROF_ID" : create_objectid(prof_id)})
+  reviews = [review for review in reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
+  for review in reviews:
+    review["USER_DEPARTMENT"] = "Computer Science"
+    review["USER_FACULTY"] = "Engineering"
+    review["USER_PROFILE_PIC"] = random.randint(1,3)
+  return reviews
 
 @router.get("/get-reviews-by-course")
-async def get_reviews_by_course(request: Request, course_code = Query(0)):
-  data = request.app.state.db.find('prof_reviews', {"COURSE_CODE" : course_code})
-  data = [ datum for datum in data if datum["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(datum["COMMENT"]))]
-  for datum in data:
-    # TODO: aggregate and fetch user data
-    # TODO: aggregate and fetch instructor details
-    # Placeholder for mock data
-    # if course_code == "COMP3322":
-      # prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
-      # TODO: store it in the comment too?
-      # datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
-    datum['USER_FACULTY'] = "Engineering"
-    datum['USER_DEPARTMENT'] = "Computer Science"
-    datum['USER_PROFILE_PIC'] = random.randint(0, 3)
-  return {'data' : data}
+async def get_reviews_by_course(request: Request, course_code = "COMP3322"):
+  reviews = request.app.state.db.find("prof_reviews", {"COURSE_CODE" : course_code})
+  reviews = [review for review in reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
+  for review in reviews:
+    review["USER_DEPARTMENT"] = "Computer Science"
+    review["USER_FACULTY"] = "Engineering"
+    review["USER_PROFILE_PIC"] = random.randint(1,3)
+  return reviews
 
 @router.get("/get-reviews-by-user")
-async def get_reviews_by_user(request: Request, course_code = Query(0), user_id = Query(1)):
-  data = request.app.state.db.find('prof_reviews', {"COURSE_CODE" : course_code, "USER_ID" : ObjectId(user_id)})
-  data = [ datum for datum in data if datum["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(datum["COMMENT"]))]
-  for datum in data:
-    # TODO: aggregate and fetch user data
-    # TODO: aggregate and fetch instructor details
-    # Placeholder for mock data
-    # if course_code == "COMP3322":
-      # prof = request.app.state.db.find_one('professors', {"PROF_ID" : create_objectid('atctam_cs')})
-      # TODO: store it in the comment too?
-      # datum['INSTRUCTOR_NAME'] = prof['FULLNAME']
-    datum['USER_FACULTY'] = "Engineering"
-    datum['USER_DEPARTMENT'] = "Computer Science"
-    datum['USER_PROFILE_PIC'] = random.randint(0, 3)
-  return {'data' : data}
+async def get_reviews_by_user(request: Request, course_code = "COMP3322", user_id = "5f94a577fcaee5e5f36dc0f1"):
+  reviews = request.app.state.db.find("prof_reviews", {"COURSE_CODE" : course_code, "USER_ID" : ObjectId(user_id)})
+  reviews = [review for review in reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
+  for review in reviews:
+    review["USER_FACULTY"] = "Engineering"
+    review["USER_DEPARTMENT"] = "Computer Science"
+    review["USER_PROFILE_PIC"] = random.randint(1, 3)
+  return reviews
 
-@router.post("/create-review")
-async def create_review(request: Request):
-    form_data = await request.form()
-    user_id = form_data.get("USER_ID")
-    course_code = form_data.get("COURSE_CODE")
-    prof_id = form_data.get("PROF_ID")
-    new_data = form_data.get("NEW_DATA")
-    # TODO: maybe use upsered_id instead?
-    old_data = request.app.state.db.find_one('prof_reviews', {"USER_ID" : ObjectId(user_id), "COURSE_CODE" : course_code, "PROF_ID" : ObjectId(prof_id)})
-    if "RATING" not in old_data:
-      old_data = {
-        "RATING" : 0,
-        "ENGAGEMENT" : 0,
-        "CLARITY" : 0,
-        "RATING_COUNT" : new_data["RATING_COUNT"],
-      }
-    success_review = request.app.state.db.update_one('prof_reviews', {"USER_ID" : ObjectId(user_id), "COURSE_CODE" : course_code, "PROF_ID" : ObjectId(prof_id)}, new_data, True)
-    success_course = request.app.state.db.update_one( 'professors', 
-                                                      {"PROF_ID" : prof_id}, 
-                                                      {"$inc": {"RATING": new_data["RATING"] - old_data["RATING"], 
-                                                                "ENGAGEMENT": new_data["ENGAGEMENT"] - old_data["ENGAGEMENT"], 
-                                                                "CLARITY": new_data["CLARITY"] - old_data["CLARITY"], 
-                                                                "RATING_COUNT": new_data["RATING_COUNT"] - old_data["RATING_COUNT"], 
-                                                              }})
-    return {'data' : success_review and success_course}
+review_model_test = {
+  "COURSE_CODE": "COMP3322",
+  "USER_ID": "5f94a577fcaee5e5f36dc0f1",
+  "PROF_ID": "00000061746374616d5f6373",
+  "COMMENT": "This is a test comment",
+  "RATING": 2,
+  "CLARITY": 1,
+  "ENGAGEMENT": 5,
+  "IS_VERIFIED": False,
+  "YEAR": "2023-24",
+  "SEM": "1"
+}
+
+class ReviewModel(BaseModel):
+  COURSE_CODE : str
+  USER_ID : str
+  PROF_ID : str
+  COMMENT : str
+  RATING : float 
+  CLARITY : float
+  ENGAGEMENT : float 
+  IS_VERIFIED : bool 
+  YEAR : str 
+  SEM : str
+  model_config = ConfigDict(
+    arbitrary_types_allowed=True,
+    json_encoders={ObjectId: str},
+    json_schema_extra={
+      "example": review_model_test
+    },
+  )
+
+@router.post("/create-or-update-review")
+async def create_or_update_review(request: Request, data : ReviewModel):
+  given_review = BaseModel.model_dump(data)
+  given_review["DATETIME"] = datetime.datetime.now()
+  given_review["USER_ID"] = ObjectId(given_review["USER_ID"])
+  given_review["PROF_ID"] = ObjectId(given_review["PROF_ID"])
+  review_from_collection = request.app.state.db.find_one("prof_reviews", {"COURSE_CODE" : given_review["COURSE_CODE"], "USER_ID" : given_review["USER_ID"], "PROF_ID" : given_review["PROF_ID"]})
+  rating_count_inc = 0
+  if "COURSE_CODE" not in review_from_collection:
+    review_from_collection = {
+      "RATING" : 0,
+      "CLARITY": 0,
+      "ENGAGEMENT" : 0
+    }
+    rating_count_inc = 1
+  prof_update_obj = {"$inc" : {
+    "RATING" : given_review["RATING"] - review_from_collection["RATING"],
+    "CLARITY" : given_review["CLARITY"] - review_from_collection["CLARITY"],
+    "ENGAGEMENT" : given_review["ENGAGEMENT"] - review_from_collection["ENGAGEMENT"],
+    "RATING_COUNT" : rating_count_inc
+  }}
+  success_review = request.app.state.db.update_one("prof_reviews", {"COURSE_CODE" : given_review["COURSE_CODE"], "USER_ID" : given_review["USER_ID"], "PROF_ID" : given_review["PROF_ID"]}, given_review, True)
+  success_prof = request.app.state.db.update_one_with_custom_fields("professors", {"PROF_ID" : given_review["PROF_ID"]}, prof_update_obj) if success_review else False
+  return success_prof and success_review
 
 @router.delete("/delete-review")
-async def delete_review(request: Request, id = Query(0)):
-  old_data = request.app.state.db.find_one('prof_reviews', {"_id" : ObjectId(id)})
-  success_review = request.app.state.db.delete_one('prof_reviews', {"_id" : ObjectId(id)})
-  success_course = request.app.state.db.update_one( 'professors', 
-                                                    {"PROF_ID" : old_data["PROF_ID"]}, 
-                                                    {"$inc": {"RATING": 0 - old_data["RATING"], 
-                                                              "ENGAGEMENT": 0 - old_data["ENGAGEMENT"], 
-                                                              "CLARITY": 0 - old_data["CLARITY"],
-                                                              "RATING_COUNT": 0 - old_data["RATING_COUNT"], 
-                                                            }})
-  return {'data' : success_course and success_review}
+async def delete_review(request: Request, id : str):
+  review = request.app.state.db.find_one("prof_reviews", {"_id" : ObjectId(id)})
+  success_review = request.app.state.db.delete_one("prof_reviews", {"_id" : ObjectId(id)})
+  prof_update_obj = {"$inc" : {
+    "RATING" : 0 - review["RATING"],
+    "CLARITY" : 0 - review["CLARITY"],
+    "ENGAGEMENT" : 0 - review["ENGAGEMENT"],
+    "RATING_COUNT" : 0 - 1
+  }}
+  success_prof = request.app.state.db.update_one_with_custom_fields("professors", {"PROF_ID" : review["PROF_ID"]}, prof_update_obj) if success_review else False
+  return success_prof and success_review

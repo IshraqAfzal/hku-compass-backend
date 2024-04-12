@@ -7,8 +7,8 @@ router = APIRouter(
 
 @router.get("/hello-world")
 async def hello_world():
-  return {'hello' : 'world'}
+  return "Hello World"
 
 @router.get("/db-connectivity")
 async def db_connectivity(request: Request):
-  return {'connection_status' : request.app.state.db.connection_status}
+  return request.app.state.db.connection_status

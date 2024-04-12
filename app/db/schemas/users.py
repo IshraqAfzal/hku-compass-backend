@@ -85,8 +85,7 @@ users_schema = {
     },
   },
   "required": [
-    "EMAIL",
-    "FULLNAME"
+    "EMAIL"
   ]
 }
 users_validator = {
