@@ -10,7 +10,7 @@ from .recommendation_engine.model import RecommendationEngine
 class MLModels():
   def __init__(self, db) -> None:
     self.db = db
-    # self.setup()
+    self.setup()
     self.uba = UBA(db)
     self.spam = SpamDetection()
     self.sentiment = SentimentAnalysis()
