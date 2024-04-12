@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from .routes import courses
-from .middleware.catchExceptions import ExceptionsMiddleware
+from .middleware.catchExceptions import CatchExceptionsMiddleware
 from .middleware.requestLogging import ReqLogMiddleware
 from .logs.logger import get_logger
 from .middleware.dbConnectivity import DBMiddleware
@@ -47,7 +47,7 @@ async def openapi(username: str = Depends(docs.get_current_username)):
     return get_openapi(title=app.title, version=app.version, routes=app.routes)
 
 app.add_middleware(CORSMiddleware, allow_origins = origins, allow_credentials = True, allow_methods = ["*"], allow_headers = ["*"])
-app.add_middleware(ExceptionsMiddleware) # This has to be on top of all other middleware except cors
+app.add_middleware(CatchExceptionsMiddleware) # This has to be on top of all other middleware except cors
 app.add_middleware(ReqLogMiddleware)
 app.add_middleware(DBMiddleware)
 
