@@ -16,7 +16,7 @@ course_reviews_schema = {
       "bsonType": "string"
     },
     "RATING": {
-      "bsonType": "int"
+      "bsonType": "double"
     },
     "USEFULNESS": {
       "bsonType": "double"

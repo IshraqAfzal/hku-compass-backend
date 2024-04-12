@@ -39,4 +39,4 @@ class SpamDetection():
       review = [review]
       input_features = self.feature_extraction.transform(review)
       prediction = self.model.predict(input_features)
-      return False if prediction[0] == 1 else True
+      return True if prediction[0] == 1 else False

@@ -161,3 +161,20 @@ class MongoDBClient:
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in updating object in collection: " + collection + ". Error: " + str(e))
       return False
+
+  def update_one_with_custom_fields(self, collection, filter_obj, update_obj, upsert = False):
+    db = self.client[self.db]
+    try:
+      col = db[collection]
+    except Exception as e:
+      logger.error("Database client " + self.name + ": Could not find collection: " + collection + ". Error: " + str(e))
+      return False
+    try:
+      result = col.update_one(filter_obj, update_obj, upsert)
+      if result.modified_count != 1:
+        logger.error("Database client " + self.name + ": Error in updating object in collection: " + collection + ". Error: Object not found in collection or no changes made.")
+        return False
+      return True
+    except Exception as e:
+      logger.error("Database client " + self.name + ": Error in updating object in collection: " + collection + ". Error: " + str(e))
+      return False

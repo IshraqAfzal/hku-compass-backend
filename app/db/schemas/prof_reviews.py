@@ -31,7 +31,7 @@ prof_reviews_schema = {
       "bsonType": "bool"
     },
     "RATING": {
-      "bsonType": "int"
+      "bsonType": "double"
     },
     "HELPFUL": {
       "bsonType": "int"
