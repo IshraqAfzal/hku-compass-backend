@@ -10,12 +10,11 @@ router = APIRouter(
 )
 
 @router.get("/get-user-data")
-async def get_user_data(request: Request, user_id = "0000000000000044756d6d79"):
-  user = request.app.state.db.find_one('users', {"_id" : ObjectId(user_id)})
+async def get_user_data(request: Request, email = "test@hku.hk"):
+  user = request.app.state.db.find_one('users', {"EMAIL" : email})
   return user
 
 user_model_test = {
-  "USER_ID" : "0000000000000044756d6d79",
   "EMAIL" : "test@hku.hk",
   "IS_ONBOARDED" : False
 }
@@ -27,7 +26,6 @@ class CourseHistoryModel(BaseModel):
   IS_REVIEWED : bool
 
 class UserUpdateModel(BaseModel):
-  USER_ID : str
   EMAIL : str
   FULLNAME : Optional[str] = None
   DEGREE : Optional[str] = None
@@ -49,13 +47,11 @@ class UserUpdateModel(BaseModel):
 @router.post("/update-user-data")
 async def update_user_data(request: Request, user : UserUpdateModel):
   user = BaseModel.model_dump(user)
-  user["_id"] = ObjectId(user["USER_ID"])
-  del user["USER_ID"]
   keys = [key for key in user]
   for key in keys:
     if user[key] is None:
       del user[key]
-  success = request.app.state.db.update_one('users', {"_id" : user["_id"]}, user)
+  success = request.app.state.db.update_one('users', {"EMAIL" : user["EMAIL"]}, user)
   return success
 
 @router.post("/set-transcript-info")
