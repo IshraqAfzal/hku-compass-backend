@@ -78,7 +78,7 @@ async def get_reviews(request: Request, course_code = "COMP3322"):
       review["INSTRUCTOR_NAME"] = "Tam Tat Chun"
     review["USER_DEPARTMENT"] = "Computer Science"
     review["USER_FACULTY"] = "Engineering"
-    review["USER_PROFILE_PIC"] = random.randint(1,3)
+    review["USER_PROFILE_PIC"] = "/user-profile-pics/profile-pic.svg"
   return reviews
 
 @router.get("/get-reviews-by-user")

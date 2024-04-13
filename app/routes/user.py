@@ -54,7 +54,7 @@ async def update_user_data(request: Request, user : UserUpdateModel):
   success = request.app.state.db.update_one('users', {"EMAIL" : user["EMAIL"]}, user)
   return success
 
-@router.post("/set-transcript-info")
+@router.post("/get-transcript-info")
 async def set_transcript_info(request: Request, user_id):
   pdf_file = await request.form()
   parsed_pdf = request.app.state.models.transcript_parser(pdf_file)
@@ -68,4 +68,4 @@ async def set_transcript_info(request: Request, user_id):
     } for course in courses]
   }
   success = request.app.state.db.update_one('users', {"_id" : ObjectId(user_id)}, course_history)
-  return {"PARSED_DATA": parsed_pdf, "SUCCESS": success}
+  return {"COURSE_HISTORY": course_history["COURSE_HISTORY"], "SUCCESS": success}

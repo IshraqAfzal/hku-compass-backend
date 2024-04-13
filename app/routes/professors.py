@@ -34,7 +34,7 @@ async def get_reviews(request: Request, prof_id = "atctam_cs"):
   for review in reviews:
     review["USER_DEPARTMENT"] = "Computer Science"
     review["USER_FACULTY"] = "Engineering"
-    review["USER_PROFILE_PIC"] = random.randint(1,3)
+    review["USER_PROFILE_PIC"] = "/user-profile-pics/profile-pic.svg"
   return reviews
 
 @router.get("/get-reviews-by-course")
@@ -44,7 +44,7 @@ async def get_reviews_by_course(request: Request, course_code = "COMP3322"):
   for review in reviews:
     review["USER_DEPARTMENT"] = "Computer Science"
     review["USER_FACULTY"] = "Engineering"
-    review["USER_PROFILE_PIC"] = random.randint(1,3)
+    review["USER_PROFILE_PIC"] = "/user-profile-pics/profile-pic.svg"
   return reviews
 
 @router.get("/get-reviews-by-user")
@@ -54,7 +54,7 @@ async def get_reviews_by_user(request: Request, course_code = "COMP3322", user_i
   for review in reviews:
     review["USER_FACULTY"] = "Engineering"
     review["USER_DEPARTMENT"] = "Computer Science"
-    review["USER_PROFILE_PIC"] = random.randint(1, 3)
+    review["USER_PROFILE_PIC"] = "/user-profile-pics/profile-pic.svg"
   return reviews
 
 review_model_test = {
