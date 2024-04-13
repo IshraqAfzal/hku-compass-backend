@@ -67,5 +67,4 @@ async def set_transcript_info(request: Request, user_id):
       "IS_REVIEWED" : False
     } for course in courses]
   }
-  success = request.app.state.db.update_one('users', {"_id" : ObjectId(user_id)}, course_history)
   return {"COURSE_HISTORY": course_history["COURSE_HISTORY"], "SUCCESS": success}
