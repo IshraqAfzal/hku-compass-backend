@@ -11,7 +11,7 @@ router = APIRouter(
 
 @router.get("/get-user-data")
 async def get_user_data(request: Request, email = "test@hku.hk"):
-  user = request.app.state.db.find_one('users', {"EMAIL" : email})
+  user = request.app.state.db.find_one("users", {"EMAIL" : email})
   return user
 
 user_model_test = {
@@ -51,8 +51,9 @@ async def update_user_data(request: Request, user : UserUpdateModel):
   for key in keys:
     if user[key] is None:
       del user[key]
-  success = request.app.state.db.update_one('users', {"EMAIL" : user["EMAIL"]}, user)
-  return success
+  success = request.app.state.db.update_one("users", {"EMAIL" : user["EMAIL"]}, user)
+  user = request.app.state.db.find_one("users", {"EMAIL" : user["EMAIL"]})
+  return {"SUCCESS" : success, "USER" : user}
 
 @router.post("/get-transcript-info")
 async def set_transcript_info(request: Request, pdf_file: UploadFile):
@@ -60,7 +61,7 @@ async def set_transcript_info(request: Request, pdf_file: UploadFile):
   parsed_pdf = request.app.state.models.transcript_parser(contents)
   courses = parsed_pdf["Courses"]
   course_history = [{
-      "COURSE_CODE" : course['Course Code'].split(" ")[0] + course['Course Code'].split(" ")[1],
+      "COURSE_CODE" : course["Course Code"].split(" ")[0] + course["Course Code"].split(" ")[1],
       "YEAR" : course["Term"].split(" ")[0],
       "SEM" : course["Grade"],
       "IS_REVIEWED" : False
