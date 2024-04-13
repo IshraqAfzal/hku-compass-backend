@@ -55,7 +55,7 @@ async def update_user_data(request: Request, user : UserUpdateModel):
   return success
 
 @router.post("/get-transcript-info")
-async def set_transcript_info(request: Request, user_id):
+async def set_transcript_info(request: Request):
   pdf_file = await request.form()
   parsed_pdf = request.app.state.models.transcript_parser(pdf_file)
   courses = parsed_pdf["Courses"]
@@ -67,4 +67,4 @@ async def set_transcript_info(request: Request, user_id):
       "IS_REVIEWED" : False
     } for course in courses]
   }
-  return {"COURSE_HISTORY": course_history["COURSE_HISTORY"], "SUCCESS": success}
+  return course_history["COURSE_HISTORY"]
