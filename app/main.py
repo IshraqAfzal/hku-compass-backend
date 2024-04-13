@@ -1,16 +1,15 @@
 from dotenv import load_dotenv
 from pathlib import Path
-from fastapi import FastAPI, Depends, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, Depends
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from .routes import courses
-from .middleware.catchExceptions import CatchExceptionsMiddleware
-from .middleware.requestLogging import ReqLogMiddleware
+from .middleware.catch_exceptions import CatchExceptionsMiddleware
+from .middleware.request_logging import ReqLogMiddleware
 from .logs.logger import get_logger
-from .middleware.dbConnectivity import DBMiddleware
+from .middleware.db_connectivity import DBMiddleware
 from .db.client import MongoDBClient
 from .routes import test, courses, docs, utils, mock, auth, user, professors, ml
 from .data.data_collection_job import DataJob
