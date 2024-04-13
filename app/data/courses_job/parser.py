@@ -1,4 +1,4 @@
-import re, random, datetime
+import random, datetime
 from ...utils.data.create_objectid import create_objectid
 from ...utils.data.strm import decode_strm
 
@@ -25,34 +25,21 @@ def parse_json(data, logger):
         courses_obj[course_code]['COURSE_CODE'] = course_code
         history_obj[course_code]['COURSE_CODE'] = course_code
         id_to_code_map[datum["CRSE_ID"]] = course_code
-        # courses_obj[course_code]['COURSE_ID'] = create_objectid(course_code)
-        # history_obj[course_code]['COURSE_ID'] = create_objectid(course_code)
-        # courses_obj[course_code]['CRSE_ID'] = str(course_code)
-        # history_obj[course_code]['CRSE_ID'] = str(course_code)
         courses_obj[course_code]['TNL'] = []
       if sub_code not in subclasses_obj:
         subclasses_obj[sub_code] = {}
-        # subclasses_obj[sub_code]['COURSE_ID'] = create_objectid(course_code)
-        # subclasses_obj[sub_code]['SUBCLASS_ID'] = create_objectid(sub_code)
         subclasses_obj[sub_code]['COURSE_CODE'] = course_code
         subclasses_obj[sub_code]['SUBCLASS_CODE'] = sub_code
         subclasses_obj[sub_code]['TIMINGS'] = []
-      # courses_obj[course_code]['STRM'] = datum['STRM']
       history_obj[course_code]['STRM'] = datum['STRM']
       history_obj[course_code]['YEAR'] = decode_strm(datum['STRM'])[0]
       history_obj[course_code]['SEM'] = decode_strm(datum['STRM'])[1]
-      # courses_obj[course_code]['COURSE_CODE'] = datum['SUBJECT_AREA'] + datum['CATALOG_NBR']
-      # history_obj[course_code]['COURSE_CODE'] = datum['SUBJECT_AREA'] + datum['CATALOG_NBR']
-      # courses_obj[course_code]['SUBJECT_AREA'] = datum['SUBJECT_AREA']
-      # courses_obj[course_code]['CATALOG_NUMBER'] = datum['CATALOG_NBR']
       courses_obj[course_code]['COURSE_TITLE'] = datum['COURSE_TITLE_LONG']
       courses_obj[course_code]['CREDITS'] = int(datum['CRSE_UNITS']) if datum['CRSE_UNITS'] is not None else None
-      # courses_obj[course_code]['ACAD_GROUP'] = datum['ACAD_GROUP']
-      courses_obj[course_code]['FACULTY'] = datum['FACULTY_DESC']
+      courses_obj[course_code]['FACULTY'] = datum['FACULTY_DESC'] if not any(pattern in course_code for pattern in ['CCCH', 'CCGL', 'CCHU', 'CCST']) else "COMMON CORE"
       history_obj[course_code]['INSTRUCTORS_PLACEHOLDER'] = datum['INSTRUCTOR_DISP']
       subclasses_obj[sub_code]['INSTRUCTORS_PLACEHOLDER'] = datum['INSTRUCTOR_DISP']
       courses_obj[course_code]['ENROLLMENT_REQUIREMENTS'] = datum['ENROLLMENT_REQUIREMENTS']
-      # courses_obj[course_code]['ENROLLMENT_REQ_COURSES'] = []
       # TODO: rename the fields
       courses_obj[course_code]['RATING_COUNT'] = random.randint(10, 100)
       courses_obj[course_code]['RATING'] = generate_random_number(1,5) * courses_obj[course_code]['RATING_COUNT']
@@ -60,8 +47,6 @@ def parse_json(data, logger):
       courses_obj[course_code]['GRADING'] = generate_random_number(1,5) * courses_obj[course_code]['RATING_COUNT']
       courses_obj[course_code]['WORKLOAD'] = generate_random_number(1,5) * courses_obj[course_code]['RATING_COUNT']
       courses_obj[course_code]['DIFFICULTY'] = generate_random_number(1,5) * courses_obj[course_code]['RATING_COUNT']
-      # if datum['ENROLLMENT_REQUIREMENTS'] is not None:
-      #   courses_obj[course_code]['ENROLLMENT_REQ_COURSES'] = re.compile(r'\b[A-Z]{4}\d{4}\b').findall(datum['ENROLLMENT_REQUIREMENTS'])
       courses_obj[course_code]['COURSE_DESCRIPTION'] = datum['COURSE_DESCRIPTION']
       enrollments.append({
         "COURSE_CODE" : course_code,
@@ -75,14 +60,7 @@ def parse_json(data, logger):
 
   try:
     for datum in data['patterns']:
-      # course_code = datum['crse_id']
       sub_code = datum['course_subclass']
-      # if sub_id not in subclasses_obj:
-      #   subclasses_obj[sub_id] = {}
-      #   subclasses_obj[sub_id]['COURSE_ID'] = create_objectid(course_id)
-      #   subclasses_obj[sub_id]['SUBCLASS_ID'] = create_objectid(sub_id)
-      #   subclasses_obj[sub_id]['TIMINGS'] = []
-      # subclasses_obj[sub_code]['STRM'] = datum['strm']
       subclasses_obj[sub_code]['YEAR'] = decode_strm(datum['strm'])[0]
       subclasses_obj[sub_code]['SEM'] = decode_strm(datum['strm'])[1]
       subclasses_obj[sub_code]['SUBCLASS'] = datum['course_subclass'].split("-")[-1]

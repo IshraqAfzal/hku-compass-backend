@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Query
+from fastapi import APIRouter, Request, UploadFile
 from ..utils.data.create_objectid import create_objectid
 from bson import ObjectId
 from pydantic import BaseModel, ConfigDict
@@ -55,9 +55,9 @@ async def update_user_data(request: Request, user : UserUpdateModel):
   return success
 
 @router.post("/get-transcript-info")
-async def set_transcript_info(request: Request):
-  pdf_file = await request.form()
-  parsed_pdf = request.app.state.models.transcript_parser(pdf_file)
+async def set_transcript_info(request: Request, pdf_file: UploadFile):
+  contents = await pdf_file.read()
+  parsed_pdf = request.app.state.models.transcript_parser(contents)
   courses = parsed_pdf["Courses"]
   course_history = [{
       "COURSE_CODE" : course['Course Code'].split(" ")[0] + course['Course Code'].split(" ")[1],

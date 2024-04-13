@@ -1,9 +1,2 @@
 TODO:
-
-dashboard for cron jobs
-translation for comments in other languages
-disclaimers
-summer sem
-log checking
-overall schedukes - for the entire year
-add security - for admin - covered by api gateway??
+Clean up requirements.txt
