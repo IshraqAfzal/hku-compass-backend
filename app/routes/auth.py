@@ -31,6 +31,7 @@ async def change_password(request: Request, data : LoginModel):
 
 class RegisterModel(LoginModel):
   FULLNAME : str
+  PROFILE_PIC : str
 
 @router.post("/register")
 async def register(request: Request, data : RegisterModel):
