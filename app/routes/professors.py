@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Query
 from ..utils.data.create_objectid import create_objectid
-import random, datetime
+from ..utils.datetime.hk_time_now import hk_time_now
 from bson import ObjectId
 from pydantic import BaseModel, ConfigDict
 from typing import List, Any
@@ -22,9 +22,10 @@ async def get_all(request: Request):
 @router.get("/get")
 async def get(request: Request, prof_id = 'atctam_cs'):
   professor = request.app.state.db.find_one("professors", {"PROF_ID" : create_objectid(prof_id)})
-  professor["RATING"] /= float(professor["RATING_COUNT"])
-  professor["CLARITY"] /= float(professor["RATING_COUNT"])
-  professor["ENGAGEMENT"] /= float(professor["RATING_COUNT"])
+  if "PROF_ID" in professor:
+    professor["RATING"] /= float(professor["RATING_COUNT"])
+    professor["CLARITY"] /= float(professor["RATING_COUNT"])
+    professor["ENGAGEMENT"] /= float(professor["RATING_COUNT"])
   return professor
 
 @router.get("/get-reviews")
@@ -92,7 +93,7 @@ class ReviewModel(BaseModel):
 @router.post("/create-or-update-review")
 async def create_or_update_review(request: Request, data : ReviewModel):
   given_review = BaseModel.model_dump(data)
-  given_review["DATETIME"] = datetime.datetime.now()
+  given_review["DATETIME"] = hk_time_now()
   given_review["USER_ID"] = ObjectId(given_review["USER_ID"])
   given_review["PROF_ID"] = ObjectId(given_review["PROF_ID"])
   review_from_collection = request.app.state.db.find_one("prof_reviews", {"COURSE_CODE" : given_review["COURSE_CODE"], "USER_ID" : given_review["USER_ID"], "PROF_ID" : given_review["PROF_ID"]})

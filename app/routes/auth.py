@@ -36,5 +36,18 @@ class RegisterModel(LoginModel):
 @router.post("/register")
 async def register(request: Request, data : RegisterModel):
   user_data = BaseModel.model_dump(data)
+  user_data["DEPARTMENT"] = ""
+  user_data["FACULTY"] = ""
+  user_data["FACULTY"] = ""
+  user_data["YEAR_OF_STUDY"] = ""
+  user_data["MAJORS"] = []
+  user_data["MINORS"] = []
+  user_data["DEGREE"] = ""
+  user_data["IS_ONBOARDED"] = False
+  user_data["COURSE_HISTORY"] = []
+  user_data["BOOKMARKS"] = []
+  user_data["CART"] = []
+  user_data["HELPFUL_REVIEWS"] = []
+  user_data["NOT_HELPFUL_REVIEWS"] = []
   success = request.app.state.db.update_one('users', {}, user_data, True)
   return success

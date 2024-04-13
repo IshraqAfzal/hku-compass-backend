@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Query
 from ..utils.data.create_objectid import create_objectid
-from ..utils.typing.objectid import PyObjectId
+from ..utils.datetime.hk_time_now import hk_time_now
 from bson import ObjectId
 from pydantic import BaseModel, ConfigDict
 from typing import List, Any
@@ -37,11 +37,12 @@ async def get_all(request: Request):
 @router.get("/get")
 async def get(request: Request, course_code = "COMP3322"):
   course = request.app.state.db.find_one("courses", {"COURSE_CODE" : course_code})
-  course["RATING"] /= float(course["RATING_COUNT"])
-  course["USEFULNESS"] /= float(course["RATING_COUNT"])
-  course["GRADING"] /= float(course["RATING_COUNT"])
-  course["WORKLOAD"] /= float(course["RATING_COUNT"])
-  course["DIFFICULTY"] /= float(course["RATING_COUNT"])
+  if "COURSE_CODE" in course:
+    course["RATING"] /= float(course["RATING_COUNT"])
+    course["USEFULNESS"] /= float(course["RATING_COUNT"])
+    course["GRADING"] /= float(course["RATING_COUNT"])
+    course["WORKLOAD"] /= float(course["RATING_COUNT"])
+    course["DIFFICULTY"] /= float(course["RATING_COUNT"])
   return course
 
 @router.get("/get-subclasses")
@@ -143,7 +144,7 @@ class ReviewModel(BaseModel):
 @router.post("/create-or-update-review")
 async def create_or_update_review(request: Request, data : ReviewModel):
   given_review = BaseModel.model_dump(data)
-  given_review["DATETIME"] = datetime.datetime.now()
+  given_review["DATETIME"] = hk_time_now()
   given_review["USER_ID"] = ObjectId(given_review["USER_ID"])
   given_review["PROF_IDS"] = [ObjectId(prof_id) for prof_id in given_review["PROF_IDS"]]
   review_from_collection = request.app.state.db.find_one("course_reviews", {"COURSE_CODE" : given_review["COURSE_CODE"], "USER_ID" : given_review["USER_ID"]})

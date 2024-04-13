@@ -1,6 +1,7 @@
 import random, datetime
 from ...utils.data.create_objectid import create_objectid
 from ...utils.data.strm import decode_strm
+from ...utils.datetime.hk_time_now import hk_time_now
 
 def generate_random_number(x, y):
   return float(random.randint(x, y))
@@ -53,7 +54,7 @@ def parse_json(data, logger):
         "SUBCLASS_CODE" : sub_code,
         "QUOTA" : datum['CLASS_QUOTA'],
         "APPROVED_HEAD_COUNT" : datum['APPROVED_HEAD_CNT'],
-        "LAST_UPDATED" : datetime.datetime.now()
+        "LAST_UPDATED" : hk_time_now()
       })
   except Exception as ex:
     logger.error(ex)

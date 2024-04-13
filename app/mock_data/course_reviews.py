@@ -1,11 +1,11 @@
 from bson import ObjectId
-import datetime
+from ..utils.datetime.hk_time_now import hk_time_now
 
 mock_course_reviews = [
   {
     "COMMENT": "Great practical approach! Loved getting hands-on experience with web development languages like PHP and JavaScript.",
     "COURSE_CODE": "COMP3322",
-    "DATETIME": datetime.datetime.now(),
+    "DATETIME": hk_time_now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
     "HELPFUL": 10,
@@ -24,7 +24,7 @@ mock_course_reviews = [
   {
     "COMMENT": "Appreciated the emphasis on staying current with industry trends. Learning about HTML5 and web services was particularly insightful.",
     "COURSE_CODE": "COMP3322",
-    "DATETIME": datetime.datetime.now(),
+    "DATETIME": hk_time_now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
     "HELPFUL": 10,
@@ -43,7 +43,7 @@ mock_course_reviews = [
   {
     "COMMENT": "Wished there was more focus on theoretical concepts behind internet protocols. Understanding the fundamentals would've been beneficial.",
     "COURSE_CODE": "COMP3322",
-    "DATETIME": datetime.datetime.now(),
+    "DATETIME": hk_time_now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
     "HELPFUL": 10,
@@ -62,7 +62,7 @@ mock_course_reviews = [
   {
     "COMMENT": "Found the heavy reliance on continuous assessment a bit overwhelming. It felt like a constant pressure to perform.",
     "COURSE_CODE": "COMP3322",
-    "DATETIME": datetime.datetime.now(),
+    "DATETIME": hk_time_now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
     "HELPFUL": 10,
@@ -81,7 +81,7 @@ mock_course_reviews = [
   {
     "COMMENT": "Meh, didn't like it.",
     "COURSE_CODE": "COMP3322",
-    "DATETIME": datetime.datetime.now(),
+    "DATETIME": hk_time_now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
     "HELPFUL": 10,
@@ -100,7 +100,7 @@ mock_course_reviews = [
   {
     "COMMENT": "Boring course.",
     "COURSE_CODE": "COMP3322",
-    "DATETIME": datetime.datetime.now(),
+    "DATETIME": hk_time_now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
     "HELPFUL": 10,
@@ -119,7 +119,7 @@ mock_course_reviews = [
   {
     "COMMENT": "GET RICH QUICK! Learn web development with our super-secret techniques and become a millionaire overnight! Click here for more info! $$$",
     "COURSE_CODE": "COMP3322",
-    "DATETIME": datetime.datetime.now(),
+    "DATETIME": hk_time_now(),
     "DIFFICULTY": 3.0,
     "GRADING": 4.0,
     "HELPFUL": 10,

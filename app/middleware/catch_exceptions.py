@@ -2,6 +2,8 @@ from ..logs.logger import get_logger
 from fastapi import Request, HTTPException
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
+import traceback
+from io import StringIO
 
 logger = get_logger()
 class CatchExceptionsMiddleware(BaseHTTPMiddleware):
@@ -14,8 +16,11 @@ class CatchExceptionsMiddleware(BaseHTTPMiddleware):
                 content={"error": "Client Error", "message": str(http_exception.detail)},
             )
         except Exception as e:
-            logger.exception(msg=e.__class__.__name__, args=e.args)
+            traceback_buffer = StringIO()
+            traceback.print_exc(file=traceback_buffer)
+            traceback_str = traceback_buffer.getvalue()
+            logger.error(traceback_str)
             return JSONResponse(
                 status_code=500,
-                content={"error": "Internal Server Error", "message": "An unexpected error occurred."},
+                content={"error": "Internal Server Error", "message": str(e)},
             )
