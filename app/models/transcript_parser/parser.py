@@ -1,5 +1,5 @@
 import PyPDF2
-import re
+import re, io
 from typing import BinaryIO
 
 
@@ -13,7 +13,8 @@ def extract_text_from_pdf(pdf_file: BinaryIO):
 
 
 def extract_transcript_info(pdf_file: BinaryIO):
-    pdf_text = extract_text_from_pdf(pdf_file)
+    pdf_data = io.BytesIO(pdf_file)
+    pdf_text = extract_text_from_pdf(pdf_data)
     student_info = {}
     courses = []
 
