@@ -33,6 +33,9 @@ async def get_reviews(request: Request, prof_id = "atctam_cs"):
   reviews = request.app.state.db.find("prof_reviews", {"PROF_ID" : create_objectid(prof_id)})
   reviews = [review for review in reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
   for review in reviews:
+    if review["COURSE_CODE"] == "COMP3322":
+      prof = request.app.state.db.find_one("professors", {"PROF_ID" : create_objectid("atctam_cs")})
+      review["PROF_NAME"] = prof["FULLNAME"]
     review["USER_DEPARTMENT"] = "Computer Science"
     review["USER_FACULTY"] = "Engineering"
     review["USER_PROFILE_PIC"] = "/user-profile-pics/profile-pic.svg"
@@ -43,6 +46,9 @@ async def get_reviews_by_course(request: Request, course_code = "COMP3322"):
   reviews = request.app.state.db.find("prof_reviews", {"COURSE_CODE" : course_code})
   reviews = [review for review in reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
   for review in reviews:
+    if review["COURSE_CODE"] == "COMP3322":
+      prof = request.app.state.db.find_one("professors", {"PROF_ID" : create_objectid("atctam_cs")})
+      review["PROF_NAME"] = prof["FULLNAME"]
     review["USER_DEPARTMENT"] = "Computer Science"
     review["USER_FACULTY"] = "Engineering"
     review["USER_PROFILE_PIC"] = "/user-profile-pics/profile-pic.svg"
@@ -53,6 +59,9 @@ async def get_reviews_by_user(request: Request, course_code = "COMP3322", user_i
   reviews = request.app.state.db.find("prof_reviews", {"COURSE_CODE" : course_code, "USER_ID" : ObjectId(user_id)})
   reviews = [review for review in reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
   for review in reviews:
+    if review["COURSE_CODE"] == "COMP3322":
+      prof = request.app.state.db.find_one("professors", {"PROF_ID" : create_objectid("atctam_cs")})
+      review["PROF_NAME"] = prof["FULLNAME"]
     review["USER_FACULTY"] = "Engineering"
     review["USER_DEPARTMENT"] = "Computer Science"
     review["USER_PROFILE_PIC"] = "/user-profile-pics/profile-pic.svg"

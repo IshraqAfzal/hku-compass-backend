@@ -76,9 +76,10 @@ async def get_reviews(request: Request, course_code = "COMP3322"):
   reviews = [review for review in reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
   for review in reviews:
     if course_code == "COMP3322":
+      prof = request.app.state.db.find_one("professors", {"PROF_ID" : create_objectid("atctam_cs")})
       review["PROF_ID_NAME_MAP"] = {
-        "PROF_ID" : create_objectid("atctam_cs"),
-        "PROF_NAME" : "Tam Tat Chun"
+        "PROF_ID" : prof["PROF_ID"],
+        "PROF_NAME" : prof["FULLNAME"]
       }
     review["USER_DEPARTMENT"] = "Computer Science"
     review["USER_FACULTY"] = "Engineering"
@@ -91,9 +92,10 @@ async def get_reviews_by_user(request: Request, course_code = "COMP3322", user_i
   reviews = [review for review in reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
   for review in reviews:
     if course_code == "COMP3322":
+      prof = request.app.state.db.find_one("professors", {"PROF_ID" : create_objectid("atctam_cs")})
       review["PROF_ID_NAME_MAP"] = {
-        "PROF_ID" : create_objectid("atctam_cs"),
-        "PROF_NAME" : "Tam Tat Chun"
+        "PROF_ID" : prof["PROF_ID"],
+        "PROF_NAME" : prof["FULLNAME"]
       }
   return reviews
 
