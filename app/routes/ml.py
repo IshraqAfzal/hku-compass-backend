@@ -21,6 +21,13 @@ async def get_n_recommended_courses_from_uba(request: Request, difficulty : floa
     "WORKLOAD" : workload
   }
   rec_courses = request.app.state.models.recommendation_engine.find_closest_courses(preferences, n)
+  for course in rec_courses:
+    del course["TNL"]
+    course["RATING"] /= float(course["RATING_COUNT"])
+    course["USEFULNESS"] /= float(course["RATING_COUNT"])
+    course["GRADING"] /= float(course["RATING_COUNT"])
+    course["WORKLOAD"] /= float(course["RATING_COUNT"])
+    course["DIFFICULTY"] /= float(course["RATING_COUNT"])
   return rec_courses
 
 reviews_test = [{

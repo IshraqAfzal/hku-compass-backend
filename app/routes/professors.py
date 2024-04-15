@@ -28,6 +28,12 @@ async def get(request: Request, prof_id = 'atctam_cs'):
     professor["ENGAGEMENT"] /= float(professor["RATING_COUNT"])
   return professor
 
+@router.get("/get-history")
+async def get(request: Request, prof_id = "Anthony T.C. Tam"):
+  history = request.app.state.db.find_all("course_history")
+  history = [his for his in history if (prof_id in his["INSTRUCTORS_PLACEHOLDER"])]
+  return history
+
 @router.get("/get-reviews")
 async def get_reviews(request: Request, prof_id = "atctam_cs"):
   reviews = request.app.state.db.find("prof_reviews", {"PROF_ID" : create_objectid(prof_id)})
