@@ -153,10 +153,7 @@ class MongoDBClient:
       logger.error("Database client " + self.name + ": Could not find collection: " + collection + ". Error: " + str(e))
       return False
     try:
-      result = col.update_one(filter_obj,  {"$set": new_data}, upsert)
-      if result.modified_count != 1:
-        logger.error("Database client " + self.name + ": Error in updating object in collection: " + collection + ". Error: Object not found in collection or no changes made.")
-        return False
+      result = col.update_one(filter_obj, {"$set": new_data}, upsert)
       return True
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in updating object in collection: " + collection + ". Error: " + str(e))
@@ -171,9 +168,6 @@ class MongoDBClient:
       return False
     try:
       result = col.update_one(filter_obj, update_obj, upsert)
-      if result.modified_count != 1:
-        logger.error("Database client " + self.name + ": Error in updating object in collection: " + collection + ". Error: Object not found in collection or no changes made.")
-        return False
       return True
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in updating object in collection: " + collection + ". Error: " + str(e))

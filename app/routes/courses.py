@@ -3,7 +3,7 @@ from ..utils.data.create_objectid import create_objectid
 from ..utils.datetime.hk_time_now import hk_time_now
 from bson import ObjectId
 from pydantic import BaseModel, ConfigDict
-from typing import List, Any
+from typing import List, Optional
 from pymongo import UpdateOne
 import datetime, random
 
@@ -125,7 +125,7 @@ review_model_test = {
 class ReviewModel(BaseModel):
   COURSE_CODE : str
   USER_ID : str
-  PROF_IDS : List[str]
+  PROF_IDS : Optional[List[str]]
   COMMENT : str
   RATING : float 
   DIFFICULTY : float
