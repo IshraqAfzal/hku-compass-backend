@@ -79,6 +79,6 @@ class CourseReviewsModel(BaseModel):
 async def sort_by_relevance_for_course(request: Request, data : CourseReviewsModel):
   data = BaseModel.model_dump(data)
   course = request.app.state.db.find_one("courses", {"COURSE_CODE" : data["COURSE_CODE"]})
-  description = course["COURSE_DESCRIPTION"]
+  description = course["COURSE_DESCRIPTION"] if "COURSE_CODE" in course else "This is a course description."
   sorted_reviews = request.app.state.models.relevance.sort_texts_on_relevance(description, data["REVIEWS"])
   return sorted_reviews
