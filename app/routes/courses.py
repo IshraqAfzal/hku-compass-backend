@@ -77,10 +77,10 @@ async def get_reviews(request: Request, course_code = "COMP3322"):
   for review in reviews:
     if course_code == "COMP3322":
       prof = request.app.state.db.find_one("professors", {"PROF_ID" : create_objectid("atctam_cs")})
-      review["PROF_ID_NAME_MAP"] = {
+      review["PROF_ID_NAME_MAP"] = [{
         "PROF_ID" : prof["PROF_ID"],
         "PROF_NAME" : prof["FULLNAME"]
-      }
+      }]
     review["USER_DEPARTMENT"] = "Computer Science"
     review["USER_FACULTY"] = "Engineering"
     review["USER_PROFILE_PIC"] = "/user-profile-pics/profile-pic.svg"
@@ -93,10 +93,10 @@ async def get_reviews_by_user(request: Request, course_code = "COMP3322", user_i
   for review in reviews:
     if course_code == "COMP3322":
       prof = request.app.state.db.find_one("professors", {"PROF_ID" : create_objectid("atctam_cs")})
-      review["PROF_ID_NAME_MAP"] = {
+      review["PROF_ID_NAME_MAP"] = [{
         "PROF_ID" : prof["PROF_ID"],
         "PROF_NAME" : prof["FULLNAME"]
-      }
+      }]
   return reviews
 
 @router.get("/get-all-reviews-by-user-and-course-code")
