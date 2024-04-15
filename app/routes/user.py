@@ -61,9 +61,8 @@ async def set_transcript_info(request: Request, pdf_file: UploadFile):
   parsed_pdf = request.app.state.models.transcript_parser(contents)
   courses = parsed_pdf["Courses"]
   course_history = [{
-      "COURSE_CODE" : course["Course Code"].split(" ")[0] + course["Course Code"].split(" ")[1],
+      "COURSE_CODE" : course["Course Code"].replace(" ", ""),
       "YEAR" : course["Term"].split(" ")[0],
-      "SEM" : course["Grade"],
-      "IS_REVIEWED" : False
+      "SEM" : course["Grade"]
     } for course in courses]
   return course_history

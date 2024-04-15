@@ -3,6 +3,7 @@ from pathlib import Path
 from fastapi import FastAPI, Depends
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 
 from .routes import courses
@@ -11,7 +12,7 @@ from .middleware.request_logging import ReqLogMiddleware
 from .logs.logger import get_logger
 from .middleware.db_connectivity import DBMiddleware
 from .db.client import MongoDBClient
-from .routes import test, courses, docs, utils, mock, auth, user, professors, ml
+from .routes import test, courses, docs, utils, mock, auth, user, professors, ml, static
 from .data.data_collection_job import DataJob
 from .models.ml_models import MLModels
 
@@ -56,6 +57,9 @@ app.include_router(docs.router)
 app.include_router(ml.router) 
 app.include_router(mock.router)
 app.include_router(professors.router) 
+app.include_router(static.router) 
 app.include_router(test.router) 
 app.include_router(user.router) 
 app.include_router(utils.router) 
+
+app.mount("/static", StaticFiles(directory="app/static"), name="static")

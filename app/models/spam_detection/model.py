@@ -36,7 +36,7 @@ class SpamDetection():
     joblib.dump(self.model, self.model_path)
 
   def is_spam(self, review):
-      review = [review]
-      input_features = self.feature_extraction.transform(review)
-      prediction = self.model.predict(input_features)
-      return True if prediction[0] == 1 else False
+    review = [review]
+    input_features = self.feature_extraction.transform(review)
+    prediction = self.model.predict(input_features)
+    return True if prediction[0] == 1 else False
