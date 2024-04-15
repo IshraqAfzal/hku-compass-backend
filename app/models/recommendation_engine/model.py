@@ -26,14 +26,8 @@ class RecommendationEngine():
         distance = math.sqrt(sum((preferences[metric] - scores[metric]) ** 2 for metric in preferences))
         closest_courses.append((course, distance))
     closest_courses.sort(key=lambda x: x[1])
-    result = [course[0] for course in closest_courses[:n]] if n <= len(closest_courses) - 1 else closest_courses
-    ret = []
-    for r in result:
-      ret.append({
-        "COURSE_CODE" : r.split("_")[0],
-        "COURSE_TITLE" : r.split("_")[1]
-      })
-    return ret
-
-
+    selected_courses = [course[0] for course in closest_courses[:n]] if n <= len(closest_courses) - 1 else closest_courses
+    selected_course_codes = [course.split("_")[0] for course in selected_courses]
+    return_courses = [course for course in courses if course["COURSE_CODE"] in selected_course_codes]
+    return return_courses
 
