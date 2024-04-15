@@ -55,7 +55,6 @@ reviews_model_test = {
 class CourseReviewModel(BaseModel):
   COURSE_CODE : str
   USER_ID : str
-  PROF_IDS : List[str]
   COMMENT : str
   RATING : float 
   DIFFICULTY : float

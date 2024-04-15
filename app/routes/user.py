@@ -21,10 +21,17 @@ async def get_user_data(request: Request, user_id = "5f94a577fcaee5e5f36dc0f6"):
   prof_reviews = request.app.state.db.find("prof_reviews", {"USER_ID" : ObjectId(user_id)})
   course_reviews = [review for review in course_reviews if review["COMMENT"] is not None and request.app.state.models.spam.is_spam(review["COMMENT"])]
   prof_reviews = [review for review in prof_reviews if review["COMMENT"] is not None and request.app.state.models.spam.is_spam(review["COMMENT"])]
-  return {
-    "COURSE_REVIEWS" : course_reviews,
-    "PROF_REVIEWS" : prof_reviews,
-  }
+  return {"COURSE_REVIEWS" : course_reviews, "PROF_REVIEWS" : prof_reviews}
+
+@router.get("/get-course-reviews")
+async def get_user_data(request: Request, user_id = "5f94a577fcaee5e5f36dc0f6"):
+  course_reviews = request.app.state.db.find("course_reviews", {"USER_ID" : ObjectId(user_id)})
+  return course_reviews
+
+@router.get("/get-prof-reviews")
+async def get_user_data(request: Request, user_id = "5f94a577fcaee5e5f36dc0f6"):
+  prof_reviews = request.app.state.db.find("prof_reviews", {"USER_ID" : ObjectId(user_id)})
+  return prof_reviews
 
 user_model_test = {
   "EMAIL" : "test@hku.hk",
