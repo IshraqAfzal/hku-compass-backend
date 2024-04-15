@@ -48,6 +48,9 @@ class UserUpdateModel(BaseModel):
   BOOKMARKS : Optional[List[str]] = None
   CART : Optional[List[str]] = None
   IS_ONBOARDED : Optional[bool] = None
+  HELPFUL_REVIEWS : Optional[str] = None
+  NOT_HELPFUL_REVIEWS : Optional[str] = None
+  IS_ONBOARDED : Optional[str] = None
   model_config = ConfigDict(
     arbitrary_types_allowed = True,
     json_encoders={ObjectId: str},
