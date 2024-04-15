@@ -16,10 +16,10 @@ class RecommendationEngine():
     courses_data = {}
     for course in courses:
       courses_data[course["COURSE_CODE"] + "_" + course["COURSE_TITLE"]] = {
-        "DIFFICULTY" : course["DIFFICULTY"],
-        "GRADING" : course["GRADING"],
-        "USEFULNESS" : course["USEFULNESS"],
-        "WORKLOAD" : course["WORKLOAD"]
+        "DIFFICULTY" : course["DIFFICULTY"] / course["RATING_COUNT"],
+        "GRADING" : course["GRADING"] / course["RATING_COUNT"],
+        "USEFULNESS" : course["USEFULNESS"] / course["RATING_COUNT"],
+        "WORKLOAD" : course["WORKLOAD"] / course["RATING_COUNT"]
       }
     closest_courses = []
     for course, scores in courses_data.items():
