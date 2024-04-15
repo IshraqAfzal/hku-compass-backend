@@ -49,5 +49,5 @@ async def register(request: Request, data : RegisterModel):
   user_data["CART"] = []
   user_data["HELPFUL_REVIEWS"] = []
   user_data["NOT_HELPFUL_REVIEWS"] = []
-  success = request.app.state.db.update_one('users', {}, user_data, True)
+  success = request.app.state.db.update_one('users', {"EMAIL" : user_data["EMAIL"]}, user_data, True)
   return success

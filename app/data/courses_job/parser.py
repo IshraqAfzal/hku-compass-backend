@@ -37,7 +37,7 @@ def parse_json(data, logger):
       history_obj[course_code]['SEM'] = decode_strm(datum['STRM'])[1]
       courses_obj[course_code]['COURSE_TITLE'] = datum['COURSE_TITLE_LONG']
       courses_obj[course_code]['CREDITS'] = int(datum['CRSE_UNITS']) if datum['CRSE_UNITS'] is not None else None
-      courses_obj[course_code]['FACULTY'] = datum['FACULTY_DESC'] if not any(pattern in course_code for pattern in ['CCCH', 'CCGL', 'CCHU', 'CCST']) else "COMMON CORE"
+      courses_obj[course_code]['FACULTY'] = datum['FACULTY_DESC'] if not any(pattern in course_code for pattern in ['CCCH', 'CCGL', 'CCHU', 'CCST']) else "Common Core"
       history_obj[course_code]['INSTRUCTORS_PLACEHOLDER'] = datum['INSTRUCTOR_DISP']
       subclasses_obj[sub_code]['INSTRUCTORS_PLACEHOLDER'] = datum['INSTRUCTOR_DISP']
       courses_obj[course_code]['ENROLLMENT_REQUIREMENTS'] = datum['ENROLLMENT_REQUIREMENTS']

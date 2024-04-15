@@ -23,7 +23,7 @@ class CourseHistoryModel(BaseModel):
   COURSE_CODE : str
   YEAR : str
   SEM : str
-  IS_REVIEWED : bool
+  IS_REVIEWED : Optional[bool]
 
 class UserUpdateModel(BaseModel):
   EMAIL : str
