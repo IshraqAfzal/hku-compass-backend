@@ -11,6 +11,7 @@ class UBA():
     course = self.db.find_one('courses', {"COURSE_CODE" : course_code})
     title = course["COURSE_CODE"] + "_" + course['COURSE_TITLE']
     courses = self.db.find_all('courses')
+    courses = [course for course in courses if "COMP" in course["COURSE_CODE"]]
     overviews = [course['COURSE_DESCRIPTION'] for course in courses]
     tfv = TfidfVectorizer(min_df=3, max_features=None,
                           strip_accents='unicode', analyzer='word',
