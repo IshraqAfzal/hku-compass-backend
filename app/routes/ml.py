@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from pydantic import BaseModel, ConfigDict
-from typing import List
+from typing import List, Optional, Any
 
 router = APIRouter(
   prefix="/ml",
@@ -8,12 +8,12 @@ router = APIRouter(
 )
 
 @router.get("/get-n-recommended-courses-from-uba")
-async def get_n_recommended_courses_from_uba(request: Request, course_code = "COMP3322", n : int = 5):
+async def get_n_recommended_courses_from_uba(request : Request, course_code = "COMP3322", n : int = 5):
   rec_courses = request.app.state.models.uba.give_recommendations(course_code, n)
   return rec_courses
 
 @router.get("/get-n-recommended-courses-from-recommender-engine")
-async def get_n_recommended_courses_from_uba(request: Request, difficulty : float = 1, usefulness : float = 5, grading : float = 5, workload : float = 1, n : int = 5):
+async def get_n_recommended_courses_from_uba(request : Request, difficulty : float = 1, usefulness : float = 5, grading : float = 5, workload : float = 1, n : int = 5):
   preferences = {
     "DIFFICULTY" : difficulty,
     "USEFULNESS" : usefulness,
@@ -52,22 +52,28 @@ reviews_model_test = {
   "REVIEWS" : reviews_test
 }
 
-class CourseReviewModel(BaseModel):
-  COURSE_CODE : str
-  USER_ID : str
+class ReviewModel(BaseModel):
   COMMENT : str
-  RATING : float 
-  DIFFICULTY : float
-  GRADING : float 
-  USEFULNESS : float
-  WORKLOAD : float 
-  IS_VERIFIED : bool 
-  YEAR : str 
-  SEM : str
+  COURSE_CODE : Optional[str]
+  USER_ID : Optional[str]
+  RATING : Optional[float] 
+  DIFFICULTY : Optional[float]
+  ENGAGEMENT : Optional[float]
+  CLARITY : Optional[float]
+  PROF_IDS : Optional[List[str]]
+  PROF_ID : Optional[str]
+  PROF_ID_NAME_MAP : Optional[Any]
+  PROF_NAME : Optional[str]
+  GRADING : Optional[float] 
+  USEFULNESS : Optional[float]
+  WORKLOAD : Optional[float] 
+  IS_VERIFIED : Optional[bool] 
+  YEAR : Optional[str] 
+  SEM : Optional[str]
 
-class CourseReviewsModel(BaseModel):
+class ReviewsModel(BaseModel):
   COURSE_CODE : str
-  REVIEWS : List[CourseReviewModel]
+  REVIEWS : List[ReviewModel]
   model_config = ConfigDict(
     json_schema_extra={
       "example": reviews_model_test
@@ -75,7 +81,7 @@ class CourseReviewsModel(BaseModel):
   )
 
 @router.post("/sort-by-relevance-for-course")
-async def sort_by_relevance_for_course(request: Request, data : CourseReviewsModel):
+async def sort_by_relevance_for_course(request : Request, data : ReviewsModel):
   data = BaseModel.model_dump(data)
   course = request.app.state.db.find_one("courses", {"COURSE_CODE" : data["COURSE_CODE"]})
   description = course["COURSE_DESCRIPTION"] if "COURSE_CODE" in course else "This is a course description."

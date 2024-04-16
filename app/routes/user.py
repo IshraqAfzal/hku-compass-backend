@@ -54,7 +54,6 @@ class UserUpdateModel(BaseModel):
   COURSE_HISTORY : Optional[List[CourseHistoryModel]] = None
   BOOKMARKS : Optional[List[str]] = None
   CART : Optional[List[str]] = None
-  IS_ONBOARDED : Optional[bool] = None
   HELPFUL_REVIEWS : Optional[str] = None
   NOT_HELPFUL_REVIEWS : Optional[str] = None
   IS_ONBOARDED : Optional[str] = None
