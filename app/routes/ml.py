@@ -53,8 +53,10 @@ reviews_model_test = {
 }
 
 class ReviewModel(BaseModel):
+  _id : Optional[Any] = None
   COMMENT : str
   COURSE_CODE : Optional[str] = None
+  DATETIME  : Optional[Any] = None
   USER_ID : Optional[str] = None
   RATING : Optional[float] = None
   DIFFICULTY : Optional[float] = None
@@ -70,6 +72,12 @@ class ReviewModel(BaseModel):
   IS_VERIFIED : Optional[bool] = None
   YEAR : Optional[str] = None
   SEM : Optional[str] = None
+  HELPFUL : Optional[int] = None
+  NOT_HELPFUL : Optional[int] = None
+  USER_DEPARTMENT : Optional[str] = None
+  USER_FACULTY : Optional[str] = None
+  USER_PROFILE_PIC : Optional[str] = None
+
 
 class ReviewsModel(BaseModel):
   COURSE_CODE : str
