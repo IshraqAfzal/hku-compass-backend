@@ -24,7 +24,7 @@ class UBA():
     idx = indices[title]
     sig_scores = list(enumerate(sig[idx]))
     sig_scores = sorted(sig_scores, key=lambda x: x[1], reverse=True)
-    sig_scores = sig_scores[1:number] if number < len(sig_scores) else sig_scores  # Exclude the input course itself
+    sig_scores = sig_scores[1:number + 1] if number < len(sig_scores) else sig_scores  # Exclude the input course itself
     course_indices = [i[0] for i in sig_scores]
     recommended_courses = [courses[i] for i in course_indices]
     return recommended_courses
