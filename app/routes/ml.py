@@ -54,22 +54,22 @@ reviews_model_test = {
 
 class ReviewModel(BaseModel):
   COMMENT : str
-  COURSE_CODE : Optional[str]
-  USER_ID : Optional[str]
-  RATING : Optional[float] 
-  DIFFICULTY : Optional[float]
-  ENGAGEMENT : Optional[float]
-  CLARITY : Optional[float]
-  PROF_IDS : Optional[List[str]]
-  PROF_ID : Optional[str]
-  PROF_ID_NAME_MAP : Optional[Any]
-  PROF_NAME : Optional[str]
-  GRADING : Optional[float] 
-  USEFULNESS : Optional[float]
-  WORKLOAD : Optional[float] 
-  IS_VERIFIED : Optional[bool] 
-  YEAR : Optional[str] 
-  SEM : Optional[str]
+  COURSE_CODE : Optional[str] = None
+  USER_ID : Optional[str] = None
+  RATING : Optional[float] = None
+  DIFFICULTY : Optional[float] = None
+  ENGAGEMENT : Optional[float] = None
+  CLARITY : Optional[float] = None
+  PROF_IDS : Optional[List[str]] = None
+  PROF_ID : Optional[str] = None
+  PROF_ID_NAME_MAP : Optional[Any] = None
+  PROF_NAME : Optional[str] = None
+  GRADING : Optional[float] = None
+  USEFULNESS : Optional[float] = None
+  WORKLOAD : Optional[float] = None
+  IS_VERIFIED : Optional[bool] = None
+  YEAR : Optional[str] = None
+  SEM : Optional[str] = None
 
 class ReviewsModel(BaseModel):
   COURSE_CODE : str
