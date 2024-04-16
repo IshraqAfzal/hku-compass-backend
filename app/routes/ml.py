@@ -57,13 +57,13 @@ class ReviewModel(BaseModel):
   COMMENT : str
   COURSE_CODE : Optional[str] = None
   DATETIME  : Optional[Any] = None
-  USER_ID : Optional[str] = None
+  USER_ID : Optional[Any] = None
   RATING : Optional[float] = None
   DIFFICULTY : Optional[float] = None
   ENGAGEMENT : Optional[float] = None
   CLARITY : Optional[float] = None
-  PROF_IDS : Optional[List[str]] = None
-  PROF_ID : Optional[str] = None
+  PROF_IDS : Optional[List[Any]] = None
+  PROF_ID : Optional[Any] = None
   PROF_ID_NAME_MAP : Optional[Any] = None
   PROF_NAME : Optional[str] = None
   GRADING : Optional[float] = None
