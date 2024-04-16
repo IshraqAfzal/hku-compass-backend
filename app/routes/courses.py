@@ -89,7 +89,7 @@ async def get_reviews(request: Request, course_code = "COMP3322"):
 @router.get("/get-reviews-by-user")
 async def get_reviews_by_user(request: Request, course_code = "COMP3322", user_id = "5f94a577fcaee5e5f36dc0f1"):
   reviews = request.app.state.db.find("course_reviews", {"COURSE_CODE" : course_code, "USER_ID" : ObjectId(user_id)})
-  reviews = [review for review in reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
+  # reviews = [review for review in reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
   for review in reviews:
     if course_code == "COMP3322":
       prof = request.app.state.db.find_one("professors", {"PROF_ID" : create_objectid("atctam_cs")})
@@ -102,9 +102,9 @@ async def get_reviews_by_user(request: Request, course_code = "COMP3322", user_i
 @router.get("/get-all-reviews-by-user-and-course-code")
 async def get_all_reviews_by_user_and_course_code(request: Request, course_code = "COMP3322", user_id = "5f94a577fcaee5e5f36dc0f1"):
   course_reviews = request.app.state.db.find("course_reviews", {"COURSE_CODE" : course_code, "USER_ID" : ObjectId(user_id)})
-  course_reviews = [review for review in course_reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
+  # course_reviews = [review for review in course_reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
   prof_reviews = request.app.state.db.find("prof_reviews", {"COURSE_CODE" : course_code, "USER_ID" : ObjectId(user_id)})
-  prof_reviews = [review for review in prof_reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
+  # prof_reviews = [review for review in prof_reviews if review["COMMENT"] is not None and (not request.app.state.models.spam.is_spam(review["COMMENT"]))]
   return {"COURSE_REVIEWS" : course_reviews, "PROF_REVIEWS" : prof_reviews}
 
 review_model_test = {
