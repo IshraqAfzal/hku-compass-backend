@@ -62,6 +62,11 @@ async def clear_collection_sftl(request : Request, background_tasks : Background
   s = request.app.state.db.clear('sftl')
   return "The collection 'sftl' was cleared." if s else "The collection 'sftl' was not cleared, check error logs for details."
 
+@router.get("/clear-collection-users")
+async def clear_collection_sftl(request : Request, background_tasks : BackgroundTasks): 
+  s = request.app.state.db.clear('users')
+  return "The collection 'users' was cleared." if s else "The collection 'users' was not cleared, check error logs for details."
+
 @router.get("/get-all-subject-areas")
 async def get_all_subject_areas(request : Request):
   courses = request.app.state.db.find_all("courses")

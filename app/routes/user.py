@@ -56,7 +56,7 @@ class UserUpdateModel(BaseModel):
   CART : Optional[List[str]] = None
   HELPFUL_REVIEWS : Optional[str] = None
   NOT_HELPFUL_REVIEWS : Optional[str] = None
-  IS_ONBOARDED : Optional[str] = None
+  IS_ONBOARDED : Optional[bool] = None
   model_config = ConfigDict(
     arbitrary_types_allowed = True,
     json_encoders={ObjectId: str},
