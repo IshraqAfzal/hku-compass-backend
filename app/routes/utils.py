@@ -8,7 +8,6 @@ router = APIRouter(
   prefix="/utils",
   tags=["Utility Functions"]
 )
-# TODO: add passwords for these routes
 
 @router.get("/trigger-general-courses-job")
 async def trigger_general_courses_job(request : Request, background_tasks : BackgroundTasks): 

@@ -19,6 +19,7 @@ def is_element_present_class(driver, class_name):
     except NoSuchElementException:
         return False
 
+# Fetches auth bearer token to all the API
 def get_bearer_token(driver, logger):
   logger.info('Fetching Bearer Token')
   url = "https://class-planner.hku.hk/"

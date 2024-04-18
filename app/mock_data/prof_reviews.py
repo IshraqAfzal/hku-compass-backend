@@ -5,7 +5,7 @@ import random
 def generate_random_number(x, y):
   return float(random.randint(x, y))
 
-
+# Mock professor reviews for Dr.Tam
 mock_prof_reviews = [
   {
     "COURSE_CODE": "COMP3322",

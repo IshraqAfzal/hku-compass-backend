@@ -2,6 +2,7 @@ from .course_reviews import mock_course_reviews
 from .prof_reviews import mock_prof_reviews
 from pymongo import UpdateOne
 
+# Pushes mock data to the DB collections
 def push_mock_data(logger, db):
   try:
     logger.info("Pushing mock reviews to database.")

@@ -5,6 +5,7 @@ import random
 def generate_random_number(x, y):
   return float(random.randint(x, y))
 
+# Mock course reviews for COMP3322
 mock_course_reviews = [
   {
     "COMMENT": "Great practical approach! Loved getting hands-on experience with web development languages like PHP and JavaScript.",

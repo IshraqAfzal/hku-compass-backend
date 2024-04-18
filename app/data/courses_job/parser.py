@@ -1,11 +1,11 @@
-import random, datetime
-from ...utils.data.create_objectid import create_objectid
+import random
 from ...utils.data.strm import decode_strm
 from ...utils.datetime.hk_time_now import hk_time_now
 
 def generate_random_number(x, y):
   return float(random.randint(x, y))
 
+# Parses returned json from an API call to DB-storable format
 def parse_json(data, logger):
   courses_obj = {}
   courses = []
@@ -41,7 +41,6 @@ def parse_json(data, logger):
       history_obj[course_code]['INSTRUCTORS_PLACEHOLDER'] = datum['INSTRUCTOR_DISP']
       subclasses_obj[sub_code]['INSTRUCTORS_PLACEHOLDER'] = datum['INSTRUCTOR_DISP']
       courses_obj[course_code]['ENROLLMENT_REQUIREMENTS'] = datum['ENROLLMENT_REQUIREMENTS']
-      # TODO: rename the fields
       courses_obj[course_code]['RATING_COUNT'] = random.randint(10, 100)
       courses_obj[course_code]['RATING'] = generate_random_number(1,5) * courses_obj[course_code]['RATING_COUNT']
       courses_obj[course_code]['USEFULNESS'] = generate_random_number(1,5) * courses_obj[course_code]['RATING_COUNT']

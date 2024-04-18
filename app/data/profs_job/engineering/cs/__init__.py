@@ -1,6 +1,7 @@
 from .professors import collect_prof_data
 from .db import write
 
+# The main collection job for CS professors
 def collect(db, logger, driver):
   global last_profs
   logger.info("Starting CS Job")

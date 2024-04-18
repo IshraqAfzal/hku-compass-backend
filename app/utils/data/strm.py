@@ -1,5 +1,7 @@
 from datetime import datetime
+# STRM is a unique property used by the HKU courses api, used to signify the current year and semester
 
+# Calculate curret STRM
 def calculate_strm():
   flag = "4"
   current_date = datetime.now().date()
@@ -16,6 +18,7 @@ def calculate_strm():
     strms.append(flag + str(year)[2:-1] + '8')
   return strms
 
+# Decode a given STRM into a year 
 def decode_strm(strm : str):
   year = "20" + strm[1:3] + "-" + str(int(strm[1:3]) + 1)
   semester = strm[-1]

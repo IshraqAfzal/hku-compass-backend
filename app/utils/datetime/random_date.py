@@ -2,6 +2,7 @@ import random
 from datetime import datetime, timedelta
 import pytz
 
+# Generate a random datetime in the last six months of current date, used for mock data.
 def random_date_last_six_months():
     hong_kong_tz = pytz.timezone('Asia/Hong_Kong')
     end_date = datetime.now(tz=hong_kong_tz)

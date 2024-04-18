@@ -5,6 +5,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 import traceback
 from io import StringIO
 
+# Unisersal Exception Handler for the server
 logger = get_logger()
 class CatchExceptionsMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):

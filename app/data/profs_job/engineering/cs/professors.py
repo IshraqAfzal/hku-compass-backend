@@ -7,6 +7,7 @@ from .....utils.data.create_objectid import create_objectid
 def generate_random_number(x, y):
   return float(random.randint(x, y))
 
+# Collect all professor information and return that data
 def collect_prof_data(driver, logger):
   try:
     prof_links = get_prof_profile_links(driver)
@@ -17,7 +18,7 @@ def collect_prof_data(driver, logger):
   except Exception as e:
     logger.error("Error while collecting professor data. Error: " + str(e))
 
-
+# Get a list of links linking to the pages for professors
 def get_prof_profile_links(driver):
   prof_links = []
   url = "https://www.cs.hku.hk/people/academic-staff"
@@ -34,6 +35,7 @@ def get_prof_profile_links(driver):
           prof_links.append(href)
   return prof_links
 
+# Parse the returned HTML data into JSON
 def get_prof_info(driver, url):
   ret = {}
   driver.get(url)
