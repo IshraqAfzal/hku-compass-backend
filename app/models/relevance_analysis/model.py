@@ -6,6 +6,7 @@ from ..sentiment_analysis.model import SentimentAnalysis
 
 class RelevanceAnalysis():
   def __init__(self, sentiment : SentimentAnalysis) -> None:
+    # Initialization with a sentiment analysis model and loading BERT and spaCy models
     self.sentiment = sentiment
     self.model_name = "bert-base-uncased"
     self.tokenizer = BertTokenizer.from_pretrained(self.model_name)
@@ -13,11 +14,13 @@ class RelevanceAnalysis():
     self.nlp = spacy.load("en_core_web_sm")
 
   def polarity_scores_roberta(self, text):
+    # Get sentiment scores using the sentiment analysis model
     scores_dict = self.sentiment.get_sentiment_scores(text)
     total = scores_dict['roberta_neg'] + scores_dict['roberta_pos']
     return total
   
   def calculate_similarity(self, text1 : str, text2 : str):
+      # Calculate the cosine similarity between two texts using BERT embeddings
       maxlength = max(len(text1.split()), len(text2.split()))
       input_ids1 = self.tokenizer.encode(text1, add_special_tokens=True, max_length=maxlength, truncation=True,
                                     padding='max_length')
@@ -62,9 +65,11 @@ class RelevanceAnalysis():
     return len(text2) / len(text1)
 
   def calculate_relevance_score(self, description, text):
+    # Compute a relevance score combining similarity, action verb count, text ratio, and sentiment
     return self.calculate_similarity(description, text) + self.count_action_verbs(text) + self.calculate_text_ratio(description, text) + self.polarity_scores_roberta(text)
   
   def sort_texts_on_relevance(self, description, texts):
+    # Sort a list of texts by their relevance score in descending order
     relevance_scores = {}
     for t in texts:
       text = t['COMMENT']

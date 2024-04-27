@@ -2,15 +2,18 @@ import math, json
 
 class RecommendationEngine():
   def __init__(self, db) -> None:
+    # Initialize the engine with a database connection.
     self.db = db
-  
+
   def load_course_data(self):
+    # Retrieve all course data from the database
     courses = self.db.find_all('courses')
     return courses
 
   def find_closest_courses(self, preferences, n):
     courses = self.load_course_data()
     courses_data = {}
+    # Normalize course attributes by the number of ratings
     for course in courses:
       courses_data[course["COURSE_CODE"] + "_" + course["COURSE_TITLE"]] = {
         "DIFFICULTY" : course["DIFFICULTY"] / course["RATING_COUNT"],
@@ -19,18 +22,23 @@ class RecommendationEngine():
         "WORKLOAD" : course["WORKLOAD"] / course["RATING_COUNT"]
       }
     closest_courses = []
+    # Compute Euclidean distance for each course based on preferences
     for course, scores in courses_data.items():
         distance = math.sqrt(sum((preferences[metric] - scores[metric]) ** 2 for metric in preferences))
         closest_courses.append((course, distance))
+    # Sort courses by proximity to student preferences
     closest_courses.sort(key=lambda x: x[1])
+    # Select top n courses closest to preferences
     selected_courses = [course[0] for course in closest_courses[:n]] if n <= len(closest_courses) - 1 else closest_courses
     selected_course_codes = [course.split("_")[0] for course in selected_courses]
+    # Return the selected course details
     return_courses = [course for course in courses if course["COURSE_CODE"] in selected_course_codes]
     return return_courses
 
   def recommend_courses(self):
     # original_data = studyplan
 
+    # Load student profile from a JSON file
     with open('studentProfile.json') as json_file:
         student_transcript = json.load(json_file)
 
@@ -48,7 +56,7 @@ class RecommendationEngine():
     else:
         return "Student has completed all years."
 
-    # Retrieve courses available for the next academic year    
+    # Retrieve courses available for the next academic year
     # next_year_courses = original_data.get(next_year)
     electives_to_be_taken = []
 
@@ -61,7 +69,7 @@ class RecommendationEngine():
     # If elective courses are available, recommend them
     for elective_taken in student_transcript[current_year]["discipline_elective_courses"]:
         electives_to_be_taken.append(self.find_closest_courses(elective_taken))
-        
+
     next_year_courses.popitem()
 
     return (next_year_courses, electives_to_be_taken)
