@@ -30,6 +30,7 @@ def get_bearer_token(driver, logger):
       EC.presence_of_element_located((By.TAG_NAME, "input"))
     )
     email_input = driver.find_element(By.TAG_NAME, 'input')
+    logger.info("HKU_USERNAME",os.getenv("HKU_USERNAME"))
     email_input.send_keys(os.getenv("HKU_USERNAME"))
     email_input.send_keys(Keys.RETURN)
     WebDriverWait(driver, 10).until(

@@ -84,7 +84,7 @@ scipy==1.11.3
 seaborn==0.13.0
 selenium==4.13.0
 selenium-wire==5.1.0
-sentencepiece==0.1.99
+sentencepiece==0.2.0
 shellescape==3.8.1
 six==1.16.0
 smart-open==6.4.0
@@ -113,7 +113,6 @@ tzdata==2023.3
 tzlocal==5.2
 urllib3==2.0.7
 uvicorn==0.23.2
-uvloop==0.17.0
 wasabi==1.1.2
 watchfiles==0.20.0
 wcwidth==0.2.6

@@ -1,4 +1,3 @@
-
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os, uuid
@@ -14,7 +13,6 @@ from .schemas.users import users_validator
 from ..logs.logger import logger
 from bson.json_util import dumps
 import json
-
 # A class for the client for the DB connection
 class MongoDBClient:
   def __init__(self, name = str(uuid.uuid1)):
@@ -25,10 +23,8 @@ class MongoDBClient:
     self.db = str(os.getenv("DB"))
     logger.info("Database client " + self.name + ": Database being used is " + str(self.db))
     self.connect()
-
   def __del__(self):
     self.close()
-
   # Attempts to connect to DB
   def connect(self):
     try:
@@ -40,12 +36,10 @@ class MongoDBClient:
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in connecting to MongoDB. Error: " + str(e))
       self.connection_status = False
-
   # Closes DB connection
   def close(self):
     self.client.close()
     logger.info("Database client " + self.name + ": Database connection closed.")
-
   # Adds schemas to all collections of the DB 
   def add_schemas(self):
     db = self.client[self.db]
@@ -58,7 +52,6 @@ class MongoDBClient:
           logger.error("Database client " + self.name + ": Error in adding schema to the " + name + " collection. MongoDB responsed with ok = 0.0")
       except Exception as e:
           logger.error("Database client " + self.name + ": Error in adding schema to the " + name + " collection. Error: " + str(e))
-
   # Performs a list of writes/updates to a given collection
   def bulk_write(self, collection, ops_array):
     db = self.client[self.db]
@@ -106,7 +99,6 @@ class MongoDBClient:
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in operation finding all objects from collection: " + collection + ". Error: " + str(e))
       return []
-
   # Returns an object from the collection given a list of filters
   def find_one(self, collection, filter_obj):
     db = self.client[self.db]
@@ -122,7 +114,6 @@ class MongoDBClient:
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in operation finding one object from collection: " + collection + ". Error: " + str(e))
       return {}
-
   # Removes all objects from the collection
   def clear(self, collection):
     db = self.client[self.db]
@@ -137,7 +128,6 @@ class MongoDBClient:
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in operation deleting all objects from collection: " + collection + ". Error: " + str(e))
       return False
-
   # Deletes a given object from the collection based on the given filters
   def delete_one(self, collection, filter_obj):
     db = self.client[self.db]
@@ -152,7 +142,6 @@ class MongoDBClient:
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in operation deleting object from collection: " + collection + ". Error: " + str(e))
       return False
-
   # Updates an object to the given data based on a list of filters
   def update_one(self, collection, filter_obj, new_data, upsert = False):
     db = self.client[self.db]
@@ -167,7 +156,6 @@ class MongoDBClient:
     except Exception as e:
       logger.error("Database client " + self.name + ": Error in updating object in collection: " + collection + ". Error: " + str(e))
       return False
-
   # Updates on object based on the given update comments and list of filters 
   def update_one_with_custom_fields(self, collection, filter_obj, update_obj, upsert = False):
     db = self.client[self.db]

@@ -23,9 +23,15 @@ async def general_courses_job(logger, db):
           logger.error("API Call responsed with None data")
           continue
         logger.info("Response Received")
+        logger.info(res_json)
         
         courses, subclasses, sftl, enrollments, history = parse_json(res_json, logger) # Parse API response
         logger.info("JSON Parsed")
+        logger.info(courses)
+        logger.info(sftl)
+        logger.info(enrollments)
+        logger.info(subclasses)
+        logger.info(history)
         
         # Make update objects for bulk writing to the database
         courses_update_operations = [
@@ -87,6 +93,7 @@ async def general_courses_job(logger, db):
     logger.info("Courses job finished.")
     return True
   else:
+    logger.info(fin)
     logger.info("Courses job ran into errors.")
     return False
 
@@ -100,6 +107,7 @@ def get_response(logger, strm, acad_group, bearer_token):
   data = None
   if res.status_code == 200:
     data = res.json()
+    logger.info("RESPONSE SUCCESS: successful in calling hku class planner API")
   elif res.status_code == 401:
     logger.error("Error in getting Auth Bearer Token")
   else:
