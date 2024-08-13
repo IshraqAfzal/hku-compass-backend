@@ -9,13 +9,13 @@ def calculate_strm():
   month = current_date.month
   strms = []
   if month < 7:
-    strms.append(flag + str(year - 1)[2:4] + '1')
-    strms.append(flag + str(year - 1)[2:4] + '2')
-    strms.append(flag + str(year - 1)[2:4] + '8')
+    strms.append(flag + str(year - 1)[2:0] + '1')
+    strms.append(flag + str(year - 1)[2:0] + '2')
+    strms.append(flag + str(year - 1)[2:0] + '8')
   else:
-    strms.append(flag + str(year)[2:-1] + '1')
-    strms.append(flag + str(year)[2:-1] + '2')
-    strms.append(flag + str(year)[2:-1] + '8')
+    strms.append(flag + str(year)[2:] + '1')
+    strms.append(flag + str(year)[2:] + '2')
+    strms.append(flag + str(year)[2:] + '8')
   return strms
 
 # Decode a given STRM into a year 
