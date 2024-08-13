@@ -1,6 +1,4 @@
-**/.env
 **/__pycache__
 **/*.DS_Store
 test
-.venv
 .idea
