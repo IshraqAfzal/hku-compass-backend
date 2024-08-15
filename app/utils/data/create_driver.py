@@ -13,9 +13,10 @@ def create_driver():
         options.add_argument("--no-sandbox")
 
         # Specify the path of the ChromeDriver
-        chrome_driver_path = r"C:\Users\ishraq\Downloads\chromedriver.exe"
-        service = Service(chrome_driver_path)
-        driver = webdriver.Chrome(service=service, options=options)
+        #chrome_driver_path = r"C:\Users\ishraq\Downloads\chromedriver.exe"
+        #service = Service(chrome_driver_path)
+        #driver = webdriver.Chrome(service=service, options=options)
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
         return driver
     except Exception as e:
         logging.error(f"Error creating Chrome driver: {e}")
