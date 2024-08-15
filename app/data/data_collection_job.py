@@ -13,8 +13,8 @@ class DataJob:
   # Set up the timeed jobs
   def setup(self):
     self.logger.info("Setting up jobs")
-    self.scheduler.add_job(general_courses_job, 'cron', month='8-9', hour='*', minute='27', args=(self.logger, self.db))
-    self.scheduler.add_job(profs_job, 'cron', month='8-9', day_of_week="*", hour='*', minute='31', args=(self.db, self.logger))
+    self.scheduler.add_job(general_courses_job, 'cron', month='8-9', hour='*', minute='50', args=(self.logger, self.db))
+    self.scheduler.add_job(profs_job, 'cron', month='8-9', day_of_week="*", hour='*', minute='55', args=(self.db, self.logger))
 
   # Start the jobs
   def run(self):

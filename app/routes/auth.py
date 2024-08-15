@@ -19,6 +19,7 @@ class LoginModel(BaseModel):
   PASSWORD : str
 
 # Logs in a user
+
 @router.post("/login")
 async def login(data : LoginModel, request : Request):
   data = BaseModel.model_dump(data)
