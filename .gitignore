@@ -4,3 +4,4 @@
 test
 .venv
 .idea
+.env
