@@ -59,6 +59,3 @@ courses_schema = {
     "COURSE_TITLE"
   ]
 }
-courses_validator = {
-  "$jsonSchema" : courses_schema
-}

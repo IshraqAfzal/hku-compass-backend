@@ -15,7 +15,7 @@ class UBA():
     title = course["COURSE_CODE"] + "_" + course['COURSE_TITLE']
     # Retrieve all courses from the database
     courses = self.db.find_all('courses')
-    courses = [course for course in courses if "COMP" in course["COURSE_CODE"]]
+    #courses = [course for course in courses if "COMP" in course["COURSE_CODE"]]
     overviews = [course['COURSE_DESCRIPTION'] for course in courses]
 
     # Initialize a TF-IDF Vectorizer

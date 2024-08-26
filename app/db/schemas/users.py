@@ -88,6 +88,4 @@ users_schema = {
     "EMAIL"
   ]
 }
-users_validator = {
-  "$jsonSchema" : users_schema
-}
+

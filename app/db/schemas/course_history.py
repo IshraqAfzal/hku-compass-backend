@@ -35,6 +35,4 @@ course_history_schema = {
     "COURSE_CODE"
   ]
 }
-course_history_validator = {
-  "$jsonSchema" : course_history_schema
-}
+

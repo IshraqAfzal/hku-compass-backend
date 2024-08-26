@@ -60,6 +60,3 @@ course_reviews_schema = {
     "DATETIME"
   ]
 }
-course_reviews_validator = {
-  "$jsonSchema" : course_reviews_schema
-}

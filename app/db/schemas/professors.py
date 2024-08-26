@@ -40,6 +40,3 @@ professors_schema = {
     "FACULTY"
   ]
 }
-professors_validator = {
-  "$jsonSchema" : professors_schema
-}

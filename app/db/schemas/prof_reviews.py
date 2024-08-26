@@ -49,6 +49,4 @@ prof_reviews_schema = {
     "DATETIME"
   ]
 }
-prof_reviews_validator = {
-  "$jsonSchema" : prof_reviews_schema
-}
+

@@ -59,6 +59,3 @@ subclasses_schema = {
     "SUBCLASS"
   ]
 }
-subclasses_validator = {
-  "$jsonSchema" : subclasses_schema
-}

@@ -21,6 +21,3 @@ enrollments_schema = {
     "SUBCLASS_CODE"
   ]
 }
-enrollments_validator = {
-  "$jsonSchema" : enrollments_schema
-}

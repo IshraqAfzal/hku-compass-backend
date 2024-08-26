@@ -29,6 +29,3 @@ sftl_schema = {
     "COURSE_CODE"
   ]
 }
-sftl_validator = {
-  "$jsonSchema" : sftl_schema
-}
